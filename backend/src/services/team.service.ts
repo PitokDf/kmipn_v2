@@ -7,7 +7,8 @@ export async function getAllTeamService() {
             Category: { select: { categoriName: true } },
             Lecture: { select: { name: true } },
             TeamMember: true,
-            Proposal: { select: { fileLink: true } }
+            Proposal: { select: { fileLink: true } },
+            Submission: { select: { id: true, title: true } }
         }
     })
 

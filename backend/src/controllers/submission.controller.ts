@@ -3,7 +3,7 @@ import { handlerAnyError } from "../errors/api_errors";
 import { ResponseApiType } from "../types/api_types";
 import { findTeamUser } from "../services/user.service";
 import { uploadFileToDrive } from "../services/google_drive.service";
-import { createSubmissionService } from "../services/submission.service";
+import { createSubmissionService, deleteSubmissionService, getAllSubmission, updateSubmissionService } from "../services/submission.service";
 
 export async function createSubmissionController(req: Request, res: Response<ResponseApiType>) {
     try {
@@ -37,6 +37,51 @@ export async function createSubmissionController(req: Request, res: Response<Res
         return res.status(201).json({
             success: true,
             message: `Berhasil menyimpan submission "${title}"`,
+            data: submission
+        })
+    } catch (error) {
+        return handlerAnyError(error, res)
+    }
+}
+
+export async function getAllSubmissionController(req: Request, res: Response<ResponseApiType>) {
+    try {
+
+        const submissions = await getAllSubmission()
+
+        return res.status(200).json({
+            success: true,
+            message: `Berhasil mendapatkan data submission`,
+            data: submissions
+        })
+    } catch (error) {
+        return handlerAnyError(error, res)
+    }
+}
+
+export async function updateSubmissionController(req: Request, res: Response<ResponseApiType>) {
+    try {
+        const { id } = req.params
+        const { status } = req.body
+        const submission = await updateSubmissionService(Number(id), status)
+
+        return res.status(200).json({
+            success: true,
+            message: `Berhasil mengupdate submission team "${submission.Team.name}"`,
+            data: submission
+        })
+    } catch (error) {
+        return handlerAnyError(error, res)
+    }
+}
+export async function deleteSubmissionController(req: Request, res: Response<ResponseApiType>) {
+    try {
+        const { id } = req.params
+        const submission = await deleteSubmissionService(Number(id))
+
+        return res.status(200).json({
+            success: true,
+            message: `Berhasil menghapus submission team "${submission.Team.name}"`,
             data: submission
         })
     } catch (error) {

@@ -2,7 +2,10 @@ import { prisma } from "../configs/prisma";
 import { AppError } from "../errors/api_errors";
 
 export const getAllDataCategory = async () => {
-    const categori = await prisma.category.findMany({ orderBy: { id: "desc" }, include: { _count: true } });
+    const categori = await prisma.category.findMany({
+        orderBy: { id: "desc" },
+        include: { _count: true, Team: { select: { _count: true } } }
+    });
     return categori;
 }
 

@@ -3,12 +3,12 @@ import authRouter from "./auth.routes";
 import dashboardRouter from "./dashboard.route";
 import { jwtCheckToken } from "../middlewares/jwt_check_token";
 import proposalRouter from "./propsal.routes";
-import { uploadDrive } from "../middlewares/multerDrive";
 import teamMemberRouter from "./team_member.routes";
 import categoryRouter from "./category.routes";
 import teamRouter from "./team.routes";
 import userRouter from "./user.routes";
 import submissionRouter from "./submissions.routes";
+import reportRouter from "./report.routes";
 
 const apiRoute = Router()
 
@@ -20,5 +20,6 @@ apiRoute.use("/category", categoryRouter)
 apiRoute.use("/teams", jwtCheckToken, teamRouter)
 apiRoute.use("/users", jwtCheckToken, userRouter)
 apiRoute.use("/submissions", jwtCheckToken, submissionRouter)
+apiRoute.use("/reports", jwtCheckToken, reportRouter)
 
 export default apiRoute

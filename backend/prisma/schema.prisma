@@ -63,7 +63,7 @@ model Proposal {
 
 model Submission {
   id          Int              @id @default(autoincrement())
-  teamId      Int              @unique
+  teamId      Int
   round       Round
   title       String?
   description String?
@@ -86,7 +86,7 @@ model Team {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @default(now())
   Proposal    Proposal[]
-  Submission  Submission?
+  Submission  Submission[]
   Category    Category     @relation(fields: [categoryID], references: [id], onDelete: Cascade)
   Lecture     Lecture      @relation(fields: [lectureID], references: [id], onDelete: Cascade)
   TeamMember  TeamMember[]
