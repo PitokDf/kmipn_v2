@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Legend } from "recharts";
 import { Download, FileText, Users } from "lucide-react";
+import { CategoryChart } from "@/components/features/admin/CategoryChart";
 
 export default function TeamsReportPage() {
     const [user] = useState({
@@ -14,12 +15,12 @@ export default function TeamsReportPage() {
     });
 
     const teamsByCategory = [
-        { category: "Software Development", count: 42 },
-        { category: "IoT", count: 36 },
-        { category: "AI", count: 28 },
-        { category: "Cybersecurity", count: 22 },
-        { category: "Data Science", count: 18 },
-        { category: "UI/UX", count: 10 },
+        { name: "Software Development", count: 42 },
+        { name: "IoT", count: 36 },
+        { name: "AI", count: 28 },
+        { name: "Cybersecurity", count: 22 },
+        { name: "Data Science", count: 18 },
+        { name: "UI/UX", count: 10 },
     ];
 
     const teamsByInstitution = [
@@ -94,28 +95,7 @@ export default function TeamsReportPage() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Teams by Category</CardTitle>
-                            <CardDescription>
-                                Distribution of teams across competition categories
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="h-80">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={teamsByCategory}>
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="category" />
-                                        <YAxis />
-                                        <Tooltip />
-                                        <Legend />
-                                        <Bar dataKey="count" name="Number of Teams" fill="hsl(var(--chart-1))" />
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </div>
-                        </CardContent>
-                    </Card>
+                    <CategoryChart data={teamsByCategory} />
 
                     <Card>
                         <CardHeader>
@@ -156,7 +136,7 @@ export default function TeamsReportPage() {
                                     {teamsByCategory.map((item, index) => (
                                         <div key={index} className="flex items-center justify-between">
                                             <div>
-                                                <p className="font-medium">{item.category}</p>
+                                                <p className="font-medium">{item.name}</p>
                                                 <p className="text-sm text-muted-foreground">
                                                     {Math.round((item.count / 156) * 100)}% of total teams
                                                 </p>

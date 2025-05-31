@@ -1,6 +1,10 @@
 'use client'
 
-import { Home, Users, MapPin, Clock, ClipboardListIcon, GraduationCap, CalendarIcon, ChevronDown, ChevronRight, LucideProps, Trophy, LayoutDashboard, FileText, Users2, LucideFileText, FolderKanban, UserCog, FileSearch, FileEdit, Upload } from "lucide-react"
+import {
+    Users, ChevronDown, ChevronRight, LucideProps,
+    LayoutDashboard, FolderKanban, UserCog, FileSearch,
+    FileEdit, Upload, ClipboardCheck, Flag, BarChart3
+} from "lucide-react"
 import {
     Sidebar,
     SidebarContent,
@@ -36,16 +40,10 @@ const items: itemsLink[] = [
     { title: "Team", url: "/admin/teams", role: ["admin", "operator"], icon: Users },
     { title: "Users", url: "/admin/users", role: ["admin"], icon: UserCog },
     { title: "Proposals", url: "/admin/proposals", role: ["admin", "operator"], icon: FileSearch },
-    { title: "Assessments", url: "/admin/assessments", role: ["admin", "operator"], icon: FileSearch },
+    { title: "Assessments", url: "/admin/assessments", role: ["admin", "operator"], icon: ClipboardCheck },
+    { title: "Rounds", url: "/admin/rounds", role: ["admin", "operator"], icon: Flag },
     {
-        title: "Competition", url: "/admin/competition", role: ["admin", "operator"], icon: FileSearch,
-        submenu: [
-            { title: "Judging", url: '/admin/competition/judging' },
-            { title: "Rounds", url: '/admin/competition/rounds' },
-        ]
-    },
-    {
-        title: "report", url: "/admin/reports", role: ["admin", "operator"], icon: FileSearch, submenu: [
+        title: "Report", url: "/admin/reports", role: ["admin", "operator"], icon: BarChart3, submenu: [
             { title: "Assessments", url: "/admin/reports/assessments" },
             { title: "Teams", url: "/admin/reports/teams" },
         ]

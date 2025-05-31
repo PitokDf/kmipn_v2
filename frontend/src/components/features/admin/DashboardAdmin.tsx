@@ -42,16 +42,8 @@ export default function DashboardAdmin() {
                 />
             </div>
             <div className="grid gap-3 lg:grid-cols-6">
-                <Card className="md:col-span-4">
-                    <CardHeader>
-                        <CardTitle>Team Registrations by Category</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="h-[400px]">
-                            <CategoryChart data={data?.teamCategoryData!} />
-                        </div>
-                    </CardContent>
-                </Card>
+                <CategoryChart className={"md:col-span-4"} data={data?.teamCategoryData!} />
+
                 <TimeLineInfo className="md:col-span-2" />
                 <Card className="md:col-span-3">
                     <CardHeader>
