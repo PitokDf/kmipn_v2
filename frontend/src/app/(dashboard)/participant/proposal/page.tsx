@@ -6,6 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProposalForm from "@/components/features/participant/proposal/ProposalForm";
 import { CurrentProposal } from "@/components/features/participant/proposal/CurrentProposal";
 import Link from "next/link";
+import { Download } from "lucide-react";
 
 export default function ProposalsPage() {
 
@@ -18,13 +19,22 @@ export default function ProposalsPage() {
             Kirimkan dan kelola proposal tim Anda
           </p>
         </div>
+        <Link
+          className="w-fit"
+          href={"/files/BUKU PANDUAN KMIPN VII.pdf"}
+          target="_blank"
+          rel="noopener noreferrer"
+          download={"PANDUAN-KMIPN.pdf"}>
+          <Button variant="outline" className="w-full bg-green-500 hover:bg-green-500/80 text-white">
+            <Download /> Unduh Pedoman sebagai PDF
+          </Button>
+        </Link>
       </div>
 
       <Tabs defaultValue="current" className="space-y-4">
         <TabsList>
           <TabsTrigger value="current">Proposal Saat Ini</TabsTrigger>
           <TabsTrigger value="submit">Submit Proposal</TabsTrigger>
-          <TabsTrigger value="guidelines">Panduan</TabsTrigger>
         </TabsList>
 
         <TabsContent value="current">
@@ -33,29 +43,6 @@ export default function ProposalsPage() {
 
         <TabsContent value="submit">
           <ProposalForm />
-        </TabsContent>
-
-        <TabsContent value="guidelines">
-          <Card>
-            <CardHeader>
-              <CardTitle>Pedoman Proposal</CardTitle>
-              <CardDescription>
-                Pedoman dan persyaratan penting untuk pengajuan proposal Anda
-              </CardDescription>
-            </CardHeader>
-            <CardFooter>
-              <Link
-                className="w-full"
-                href={"/files/BUKU PANDUAN KMIPN VII.pdf"}
-                target="_blank"
-                rel="noopener noreferrer"
-                download={"PANDUAN-KMIPN.pdf"}>
-                <Button variant="outline" className="w-full bg-green-500 hover:bg-green-500/80 text-white">
-                  Unduh Pedoman sebagai PDF
-                </Button>
-              </Link>
-            </CardFooter>
-          </Card>
         </TabsContent>
       </Tabs>
     </>

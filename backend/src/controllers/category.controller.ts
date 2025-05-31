@@ -47,10 +47,11 @@ export async function getCategoryStatsController(req: Request, res: Response<Res
         const categoryStats = categories.map(c => {
             const teams = c.Team.length;
             const proposals = c.Team.filter(t => t.Proposal.length > 0).length;
+            const submissions = c.Team.filter(t => t.Submission).length
             const deadline = new Date(c.deadline)
             const timeDiff = deadline.getTime() - now.getTime()
             const daysUntilDeadline = Math.max(Math.ceil(timeDiff / (1000 * 60 * 60 * 24)), 0); // biar gak minus
-            const submissionRate = teams > 0 ? Math.round((proposals / teams) * 100) : 0;
+            const submissionRate = teams > 0 ? Math.round((submissions / teams) * 100) : 0;
 
             return {
                 name: c.categoriName,
@@ -66,6 +67,11 @@ export async function getCategoryStatsController(req: Request, res: Response<Res
             return cur + proposal
         }, 0)
 
+        const totSubmission = categories.reduce((cur, val) => {
+            const submission = val.Team.filter(t => t.Submission).length
+            return cur + submission
+        }, 0)
+
         const teamTot = categories.reduce((c, cur) => {
             return c + cur.Team.length
         }, 0)
@@ -77,7 +83,7 @@ export async function getCategoryStatsController(req: Request, res: Response<Res
                 categoryStats,
                 totalTeams: teamTot,
                 totalProposals: totProposals,
-                submissionRate: (totProposals / teamTot) * 100,
+                submissionRate: (totSubmission / teamTot) * 100,
             }
         })
     } catch (error) {

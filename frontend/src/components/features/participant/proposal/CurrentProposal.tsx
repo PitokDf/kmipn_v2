@@ -122,7 +122,7 @@ export function CurrentProposal() {
                     )}
             </CardContent>
             <CardFooter className="flex justify-end gap-4">
-                {data?.title && dashboard?.verified && (
+                {data?.title && dashboard?.verified && data.status !== "approve" && (
                     <>
                         <ReplaceFileProposal id={data.id} />
                     </>

@@ -41,9 +41,10 @@ export async function getCategoryStats() {
         include: {
             Team: {
                 include: {
-                    Proposal: true
+                    Proposal: true,
+                    Submission: true
                 }
-            }
+            },
         }
     })
     return categories

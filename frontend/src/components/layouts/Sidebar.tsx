@@ -1,6 +1,6 @@
 'use client'
 
-import { Home, Users, MapPin, Clock, ClipboardListIcon, GraduationCap, CalendarIcon, ChevronDown, ChevronRight, LucideProps, Trophy, LayoutDashboard, FileText, Users2, LucideFileText, FolderKanban, UserCog, FileSearch, FileEdit } from "lucide-react"
+import { Home, Users, MapPin, Clock, ClipboardListIcon, GraduationCap, CalendarIcon, ChevronDown, ChevronRight, LucideProps, Trophy, LayoutDashboard, FileText, Users2, LucideFileText, FolderKanban, UserCog, FileSearch, FileEdit, Upload } from "lucide-react"
 import {
     Sidebar,
     SidebarContent,
@@ -55,7 +55,7 @@ const items: itemsLink[] = [
     { title: "Dashboard", url: "/participant", role: ["participant"], icon: LayoutDashboard },
     { title: "My Team", url: "/participant/team", role: ["participant"], icon: Users },
     { title: "Proposal", url: "/participant/proposal", role: ["participant"], icon: FileEdit },
-    { title: "Submission", url: "/participant/submission", role: ["participant"], icon: FileSearch },
+    { title: "Submission", url: "/participant/submission", role: ["participant"], icon: Upload },
 ]
 
 export function AppSidebar() {

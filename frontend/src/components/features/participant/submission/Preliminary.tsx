@@ -8,8 +8,7 @@ import { useUser } from "@/context/UserContext"
 import { getInfoSubmission } from "@/lib/apis/team"
 import { formatTanggal } from "@/lib/formatTanggal"
 import { useQuery } from "@tanstack/react-query"
-import { AlertCircle, CheckCircle, Clock, FileText, XCircle } from "lucide-react"
-import { useEffect, useState } from "react"
+import { CheckCircle, Clock, FileText, XCircle } from "lucide-react"
 import { SubmissionForm } from "./SubmissionForm"
 import Link from "next/link"
 
@@ -98,7 +97,7 @@ export function Preliminary() {
                                         <Clock className="h-4 w-4" />
                                         <AlertTitle>Under Review</AlertTitle>
                                         <AlertDescription>
-                                            Your submission is currently being reviewed. Results will be announced on August 1, 2025.
+                                            Your submission is currently being reviewed.
                                         </AlertDescription>
                                     </Alert>
                                 )}
