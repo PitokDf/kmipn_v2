@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { getTeamMemberByUserIDService } from "../services/team_member.service";
+import { getAllTeamMemberService, getTeamMemberByUserIDService } from "../services/team_member.service";
 import { handlerAnyError } from "../errors/api_errors";
 import { ResponseApiType } from "../types/api_types";
 import { $Enums } from "@prisma/client";
@@ -7,6 +7,7 @@ import { uploadFileToDrive } from "../services/google_drive.service";
 import { prisma } from "../configs/prisma";
 import { generateToken } from "../utils/jwt";
 import { emitToAdmin } from "../socket";
+import { format } from "@fast-csv/format";
 // import { createTeamMember, getTeamMemberByUserIDService } from "../services/TeamMemberService";
 // import { AppError } from "../utils/AppError";
 // import { ResponseApi } from "../types/ApiType";
@@ -289,54 +290,35 @@ export const getTeamMemberByUserID = async (req: Request, res: Response<Response
 //     await csvWritter.writeRecords(records);
 // }
 
-// export const downloadAttendace = async (req: Request, res: Response) => {
-//     try {
-//         // Ambil data dari database
-//         const attendance = await db.teamMember.findMany({
-//             select: {
-//                 name: true,
-//                 nim: true,
-//                 prodi: true,
-//                 team: {
-//                     select: {
-//                         name: true,
-//                         institution: true,
-//                     },
-//                 },
-//             },
-//             where: {
-//                 team: {
-//                     NOT: { verified: false }
-//                 }
-//             },
-//             orderBy: {
-//                 team: { name: "asc" }
-//             }
-//         });
+export const downloadAttendace = async (req: Request, res: Response) => {
+    try {
+        // Ambil data dari database
 
-//         // Set header untuk download file
-//         res.setHeader('Content-Type', 'text/csv');
-//         res.setHeader('Content-Disposition', 'attachment; filename="attendance.csv"');
+        const attendance = await getAllTeamMemberService()
 
-//         // Stream CSV ke client
-//         const csvStream = format({ headers: true });
-//         csvStream.pipe(res);
+        // Set header untuk download file
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', 'attachment; filename="list-members.csv"');
 
-//         // Masukkan data ke stream
-//         attendance.forEach((member) => {
-//             csvStream.write({
-//                 Name: member.name,
-//                 NIM: member.nim,
-//                 Prodi: member.prodi,
-//                 'Team Name': member.team.name,
-//                 Institution: member.team.institution,
-//             });
-//         });
+        // Stream CSV ke client
+        const csvStream = format({ headers: true });
+        csvStream.pipe(res);
 
-//         // Akhiri stream
-//         csvStream.end();
-//     } catch (error) {
-//         console.error('Error generating CSV:', error);
-//         res.status(500).json({ message: 'Error generating CSV' });
-//     }
-// }
+        // Masukkan data ke stream
+        attendance.forEach((member) => {
+            csvStream.write({
+                Nama: member.name,
+                NIM: member.nim,
+                Prodi: member.prodi,
+                'Nama Tim': member.Team.name,
+                Politeknik: member.Team.institution,
+            });
+        });
+
+        // Akhiri stream
+        csvStream.end();
+    } catch (error) {
+        console.error('Error generating CSV:', error);
+        res.status(500).json({ message: 'Error generating CSV' });
+    }
+}

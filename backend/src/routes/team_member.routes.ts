@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getTeamMemberByUserID, saveTeamMember } from "../controllers/team_member.controller";
+import { downloadAttendace, getTeamMemberByUserID, saveTeamMember } from "../controllers/team_member.controller";
 import { uploadDrive } from "../middlewares/multerDrive";
 
 const teamMemberRouter = Router()
@@ -14,6 +14,6 @@ teamMemberRouter.post(
     ]),
     saveTeamMember
 );
-// teamMemberRouter.get("/", getTeamMemberByUserID)
+teamMemberRouter.get("/download-list-members", downloadAttendace)
 
 export default teamMemberRouter

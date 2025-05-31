@@ -13,6 +13,7 @@ import { Team, TeamMember } from "@/types/api";
 import { TeamMemberDetailDialog } from "@/components/features/admin/teams/DetailTeamMember";
 import { DeleteTeam } from "@/components/features/admin/teams/DeleteTeam";
 import { VerifyTeam } from "@/components/features/admin/teams/VerifyTeam";
+import { ExportData } from "@/components/features/admin/teams/ExportData";
 
 export default function TeamsPage() {
     const [currentTeam, setCurrentTeam] = useState<Team | null>(null);
@@ -61,10 +62,7 @@ export default function TeamsPage() {
                         Manage and monitor competition teams
                     </p>
                 </div>
-                <Button variant="outline">
-                    <Download className="mr-2 h-4 w-4" />
-                    Export Data
-                </Button>
+                <ExportData />
             </div>
 
             <Tabs defaultValue="all" className="space-y-4">

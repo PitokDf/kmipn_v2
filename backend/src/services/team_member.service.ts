@@ -25,3 +25,29 @@ export const getTeamMemberByUserIDService = async (userID: string) => {
     if (!teamMemberByUser) throw new AppError("Team member not found", 404);
     return teamMemberByUser;
 }
+
+export async function getAllTeamMemberService() {
+    const teamMembers = await prisma.teamMember.findMany({
+        select: {
+            name: true,
+            nim: true,
+            prodi: true,
+            Team: {
+                select: {
+                    name: true,
+                    institution: true,
+                },
+            },
+        },
+        where: {
+            Team: {
+                NOT: { verified: false }
+            }
+        },
+        orderBy: {
+            Team: { name: "asc" }
+        }
+    })
+
+    return teamMembers
+}
