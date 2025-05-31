@@ -114,29 +114,6 @@ export function ListProposals({
                     </CardContent>
                     <CardFooter className="flex justify-end gap-4">
                         {proposal.status !== 'approve' && (<Button variant="outline" onClick={() => onReview && onReview(proposal)}>Review Proposal</Button>)}
-                        {proposal.status === "approve" && (
-                            <>
-                                <Button variant="secondary" onClick={() => { }}>
-                                    Send to Final Round
-                                </Button>
-                                {/* <Dialog open={!!confirmMap[proposal.id]} onOpenChange={(open) => setConfirmMap(prev => ({ ...prev, [proposal.id]: open }))}>
-                                                        <DialogContent>
-                                                            <DialogHeader>
-                                                                <DialogTitle>Confirm Promotion</DialogTitle>
-                                                                <DialogDescription>
-                                                                    Are you sure you want to send this proposal to the final round?
-                                                                </DialogDescription>
-                                                            </DialogHeader>
-                                                            <DialogFooter>
-                                                            <Button variant="outline" onClick={() => setConfirmMap(prev => ({ ...prev, [proposal.id]: false }))}>
-                                                                    Cancel
-                                                                </Button>
-                                                                <Button onClick={() => handleSendFinal(proposal.id)}>Yes, Send</Button>
-                                                            </DialogFooter>
-                                                        </DialogContent>
-                                                    </Dialog> */}
-                            </>
-                        )}
                         <Button
                             className="bg-red-600 hover:bg-red-600/90"
                             onClick={() => { onDelete && onDelete(proposal) }}>

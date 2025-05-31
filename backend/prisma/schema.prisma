@@ -62,12 +62,18 @@ model Proposal {
 }
 
 model Submission {
-  id        Int              @id @default(autoincrement())
-  teamId    Int              @unique
-  round     Round
-  status    statusSubmission @default(pending)
-  createdAt DateTime         @default(now())
-  Team      Team             @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  id          Int              @id @default(autoincrement())
+  teamId      Int              @unique
+  round       Round
+  title       String?
+  description String?
+  githubUrl   String?
+  fileUrl     String?
+  fileName    String?
+  status      statusSubmission @default(pending)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @default(now()) @updatedAt
+  Team        Team             @relation(fields: [teamId], references: [id], onDelete: Cascade)
 }
 
 model Team {

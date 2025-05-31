@@ -42,3 +42,12 @@ export const unVerifyTeamService = async (teamID: number) => {
     if (!unverifiedTeam) throw new AppError("Failed unverified team", 400);
     return unverifiedTeam;
 }
+
+export async function getInfoSubmissionService(userId: string) {
+    const team = await prisma.team.findFirst({
+        where: { TeamMember: { every: { userId } } },
+        select: { Submission: true, Category: { select: { categoriName: true } } }
+    })
+
+    return { ...team?.Submission, category: team?.Category.categoriName }
+}

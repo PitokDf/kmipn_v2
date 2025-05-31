@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
+// import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip, Legend, LineChart, Line } from "recharts";
@@ -41,7 +41,7 @@ export default function AssessmentsReportPage() {
   ];
 
   return (
-    <DashboardLayout user={user}>
+    <>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-3xl font-bold">Assessments Report</h1>
@@ -232,6 +232,6 @@ export default function AssessmentsReportPage() {
           </CardContent>
         </Card>
       </div>
-    </DashboardLayout>
+    </>
   );
 }

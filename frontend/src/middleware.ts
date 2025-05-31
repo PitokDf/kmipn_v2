@@ -1,9 +1,5 @@
-import { getToken } from "next-auth/jwt";
-import jwt from "jsonwebtoken"
 import { jwtVerify } from "jose"
 import { NextRequest, NextResponse } from "next/server";
-import { jwtDecode } from "jwt-decode";
-import { User } from "./types/type";
 
 
 const SECRET_KEY = process.env.JWT_SECRET || ""
@@ -14,13 +10,19 @@ const allowedPathByRole: { [key: string]: string[] } = {
         "/participant",
         "/participant/team",
         "/participant/complete-team",
-        "/participant/proposal"
+        "/participant/proposal",
+        "/participant/submission",
     ],
     "admin": [
         "/admin",
         "/admin/categories",
         "/admin/proposals",
         "/admin/submission",
+        "/admin/assessments",
+        "/admin/competition/judging",
+        "/admin/competition/rounds",
+        "/admin/reports/assessments",
+        "/admin/reports/teams",
         "/admin/teams",
         "/admin/users",
     ],

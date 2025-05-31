@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
+// import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -89,7 +89,7 @@ export default function JudgingPage() {
             header: "Status",
             cell: ({ row }) => {
                 const status = row.getValue("status") as "pending" | "completed" | "in_progress";
-                return <StatusBadge status={status} />;
+                return <StatusBadge status={status as any} />;
             },
         },
         {
@@ -140,7 +140,7 @@ export default function JudgingPage() {
     ];
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h1 className="text-3xl font-bold">Judging Management</h1>
@@ -386,7 +386,7 @@ export default function JudgingPage() {
                                                 <p className="font-medium">
                                                     {new Date(assignment.deadline).toLocaleDateString()}
                                                 </p>
-                                                <StatusBadge status={assignment.status} />
+                                                <StatusBadge status={assignment.status as any} />
                                             </div>
                                         </div>
                                     ))}
@@ -395,4 +395,10 @@ export default function JudgingPage() {
                     </Card>
                 </div>
 
-                <Alert></Alert>
+                <Alert>
+
+                </Alert>
+            </div>
+        </>
+    )
+}

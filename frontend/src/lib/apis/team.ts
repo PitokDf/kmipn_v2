@@ -15,3 +15,8 @@ export async function verifyTeam(teamID: number) {
     const res = await axiosInstace.post(`/teams/verify/${teamID}`)
     return res.data
 }
+
+export async function getInfoSubmission(userId: string) {
+    const res = await axiosInstace.get(`/teams/${userId}/submission`)
+    return res.data.data
+}

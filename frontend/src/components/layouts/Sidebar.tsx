@@ -36,11 +36,26 @@ const items: itemsLink[] = [
     { title: "Team", url: "/admin/teams", role: ["admin", "operator"], icon: Users },
     { title: "Users", url: "/admin/users", role: ["admin"], icon: UserCog },
     { title: "Proposals", url: "/admin/proposals", role: ["admin", "operator"], icon: FileSearch },
+    { title: "Assessments", url: "/admin/assessments", role: ["admin", "operator"], icon: FileSearch },
+    {
+        title: "Competition", url: "/admin/competition", role: ["admin", "operator"], icon: FileSearch,
+        submenu: [
+            { title: "Judging", url: '/admin/competition/judging' },
+            { title: "Rounds", url: '/admin/competition/rounds' },
+        ]
+    },
+    {
+        title: "report", url: "/admin/reports", role: ["admin", "operator"], icon: FileSearch, submenu: [
+            { title: "Assessments", url: "/admin/reports/assessments" },
+            { title: "Teams", url: "/admin/reports/teams" },
+        ]
+    },
 
     // participant accesss
     { title: "Dashboard", url: "/participant", role: ["participant"], icon: LayoutDashboard },
     { title: "My Team", url: "/participant/team", role: ["participant"], icon: Users },
     { title: "Proposal", url: "/participant/proposal", role: ["participant"], icon: FileEdit },
+    { title: "Submission", url: "/participant/submission", role: ["participant"], icon: FileSearch },
 ]
 
 export function AppSidebar() {

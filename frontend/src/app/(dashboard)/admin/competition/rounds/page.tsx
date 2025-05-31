@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { DashboardLayout } from "@/components/layout/dashboard-layout";
+// import { DashboardLayout } from "@/components/layout/dashboard-layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -45,7 +45,7 @@ export default function RoundsPage() {
     ]);
 
     return (
-        <DashboardLayout user={user}>
+        <>
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h1 className="text-3xl font-bold">Competition Rounds</h1>
@@ -385,6 +385,6 @@ export default function RoundsPage() {
                     </Card>
                 </TabsContent>
             </Tabs>
-        </DashboardLayout>
+        </>
     );
 }

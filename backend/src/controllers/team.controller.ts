@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ResponseApiType } from "../types/api_types";
 import { AppError, handlerAnyError } from "../errors/api_errors";
-import { deleteTeamService, getAllTeamService, unVerifyTeamService, verifyTeamService } from '../services/team.service';
+import { deleteTeamService, getAllTeamService, getInfoSubmissionService, unVerifyTeamService, verifyTeamService } from '../services/team.service';
 import { sendEmail } from '../utils/mailer';
 import { replacePlaceholders } from '../utils/replace_placeholder';
 import { readHtmlFile } from '../utils/read_html_file';
@@ -28,6 +28,33 @@ export async function getAllTeamController(req: Request, res: Response<ResponseA
             success: true,
             message: "berhasil mendapatkan data",
             data: teamsMap
+        })
+    } catch (error) {
+        return handlerAnyError(error, res)
+    }
+}
+
+export async function getInfoSubmissionController(req: Request, res: Response<ResponseApiType>) {
+    try {
+        const { id } = req.params
+
+        const submission = await getInfoSubmissionService(id)
+        const submissionMap = {
+            id: submission?.id,
+            teamId: submission?.teamId,
+            round: submission?.round,
+            status: submission?.status,
+            createdAt: submission?.createdAt,
+            title: submission?.title,
+            category: submission.category,
+            fileLink: submission.fileUrl,
+            fileName: submission.fileName
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Berhasil mendapatkan data",
+            data: submissionMap
         })
     } catch (error) {
         return handlerAnyError(error, res)

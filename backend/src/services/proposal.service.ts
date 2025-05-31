@@ -75,15 +75,7 @@ export const updateProposalService = async (id: number, status: $Enums.statusPro
         }
     });
     if (!proposal) throw new AppError("Proposal tidak ditemukan", 404);
-    if (status === "approve") {
-        await prisma.submission.create({
-            data: {
-                round: "preliminary",
-                teamId: proposal.teamId,
-                status: "pending"
-            }
-        })
-    }
+
     await prisma.proposal.update({ where: { id: Number(id) }, data: { comments: comments, status } });
     const filePath = path.join(__dirname, '../templates/TeamReview.html')
     let emailContent = await readHtmlFile(filePath);
