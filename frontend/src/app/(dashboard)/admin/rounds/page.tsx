@@ -7,6 +7,7 @@ import { SubmissionTable } from "@/components/features/admin/submission/Submissi
 import { Submission } from "@/types/api";
 import { UpdateSubmission } from "@/components/features/admin/submission/UpdateSubmission";
 import { DeleteSubmission } from "@/components/features/admin/submission/DeleteSubmission";
+import { DownloadFileSubmission } from "@/components/features/admin/submission/DownloadSubmission";
 
 export default function RoundsPage() {
     const [activeTab, setAvtiveTab] = useState("penyisihan")
@@ -25,6 +26,7 @@ export default function RoundsPage() {
                         Manage and monitor competition rounds
                     </p>
                 </div>
+                <DownloadFileSubmission />
             </div>
 
             <Tabs defaultValue="penyisihan"

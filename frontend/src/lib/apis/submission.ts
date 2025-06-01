@@ -15,3 +15,8 @@ export async function updateSuubmission(id: number, status: string): Promise<Sub
     const res = await axiosInstace.put(`/submissions/${id}`, { status })
     return res.data.data
 }
+
+export async function donwloadSubmission() {
+    const res = await axiosInstace.get("/submissions/download", { responseType: "blob" })
+    return res
+}

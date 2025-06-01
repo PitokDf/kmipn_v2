@@ -1,10 +1,11 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { handlerAnyError } from "../errors/api_errors";
 import { ResponseApiType } from "../types/api_types";
 import { findTeamUser } from "../services/user.service";
-import { uploadFileToDrive } from "../services/google_drive.service";
+import { drive, uploadFileToDrive } from "../services/google_drive.service";
 import { createSubmissionService, deleteSubmissionService, getAllSubmission, updateSubmissionService } from "../services/submission.service";
 import { emitToAdmin, emitToUser } from "../socket";
+import archiver from "archiver";
 
 export async function createSubmissionController(req: Request, res: Response<ResponseApiType>) {
     try {
@@ -107,5 +108,49 @@ export async function deleteSubmissionController(req: Request, res: Response<Res
         })
     } catch (error) {
         return handlerAnyError(error, res)
+    }
+}
+
+
+export const downloadAllSubmission = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const submissions = (await getAllSubmission()).filter(sub => sub.teamId);
+        const latestSubmissions = Object.values(
+            submissions.reduce((acc, sub) => {
+                const teamId = sub.Team.id
+                const current = acc[teamId]
+
+                if (!current || sub.createdAt > current.createdAt) {
+                    acc[teamId] = sub
+                }
+
+                return acc
+            }, {} as Record<number, typeof submissions[0]>)
+        )
+
+
+        res.attachment("submissions.zip");
+
+        if (latestSubmissions.length === 0) {
+            return res.status(404).json({ message: "Tidak ada submission yang ditemukan!." })
+        }
+
+        res.setHeader('Content-Type', "application/zip")
+        res.setHeader('Content-Disposition', `attachment; filename="submissions.zip"`)
+
+        const archive = archiver("zip", { zlib: { level: 9 } });
+        archive.on("error", err => next(err))
+        archive.pipe(res);
+
+        for (const p of latestSubmissions) {
+            const driveRes = await drive.files.get(
+                { fileId: p.fileUrl?.match(/\/d\/(.+?)\//)?.[1], alt: "media" },
+                { responseType: "stream" }
+            );
+            archive.append(driveRes.data as import("stream").Readable, { name: `${p.Team.name}_${p.title}.zip` })
+        }
+        await archive.finalize()
+    } catch (error: any) {
+        next(error)
     }
 }
