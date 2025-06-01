@@ -34,7 +34,7 @@ export function DeleteTeam({
             description={`Kamu yakin ingin menghapus team ini ${data.name}? aksi ini tidak dapat dibatalkan!`}
             title="Hapus Team"
             onLoading={isPending}
-            onConfirm={() => { mutateAsync(data.id) }}
+            onConfirm={async () => { mutateAsync(data.id) }}
         />
     )
 }

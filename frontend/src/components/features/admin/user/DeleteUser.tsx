@@ -33,7 +33,7 @@ export function DeleteUser({
             description={`Kamu yakin ingin menghapus user ini ${data.name}? aksi ini tidak dapat dibatalkan!`}
             title="Hapus User"
             onLoading={isPending}
-            onConfirm={() => { mutateAsync(data.id) }}
+            onConfirm={async () => { mutateAsync(data.id) }}
         />
     )
 }
