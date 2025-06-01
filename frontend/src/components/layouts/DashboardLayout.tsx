@@ -7,8 +7,7 @@ import { useUser } from '@/context/UserContext';
 import socket from '@/lib/socket';
 import { toast } from 'sonner';
 import { useQueryClient } from '@tanstack/react-query';
-import { useWindowFocus } from '@/hooks/useWindowFocus';
-// import socket from '@/app/socket';
+import { useSocketRegister } from '@/hooks/use-socket-register';
 
 interface DashboardLayoutProps {
     children?: React.ReactNode;
@@ -17,7 +16,7 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const user = useUser()
-    const registered = useRef(false)
+    useSocketRegister(socket, user)
 
     useEffect(() => {
         const handleResize = () => {
@@ -36,12 +35,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
     const qc = useQueryClient()
 
-    useWindowFocus(() => {
-        if (!registered.current && user?.id) {
-            socket.emit('register', { userId: user?.id })
-            registered.current = true
-        }
-    })
+
+    // useWindowFocus(() => {
+    //     if (!registered.current && user?.id) {
+    //         socket.emit('register', { userId: user?.id })
+    //         registered.current = true
+    //     }
+    // })
 
     useEffect(() => {
         if (!user?.id) return
@@ -61,6 +61,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 qc.invalidateQueries({ queryKey: ["proposal"] })
             },
 
+            "submission:update": (d: any) => {
+                toast.info(d.message, { position: "top-center" })
+                qc.invalidateQueries({ queryKey: ["dashboard_participant"] })
+                qc.invalidateQueries({ queryKey: ["submission_preliminary"] })
+                qc.invalidateQueries({ queryKey: ["category_stats"] })
+            },
+
             "team:new": (d: any) => {
                 toast.info(d.message, { position: "top-center" })
                 qc.invalidateQueries({ queryKey: ["dashboard_admin"] })
@@ -78,6 +85,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         Object.entries(handlers).forEach(([event, fn]) => socket.on(event, fn))
         return () => Object.entries(handlers).forEach(([event, fn]) => socket.off(event, fn))
     }, [user?.id, qc])
+
     return (
         <>
             <div className="flex h-screen w-screen ">

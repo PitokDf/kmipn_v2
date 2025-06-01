@@ -22,7 +22,7 @@ export async function getDashboardData(req: Request, res: Response<ResponseApiTy
                 category: infor?.Team.Category.categoriName,
                 institution: infor?.Team.institution,
                 proposal: infor?.Team.Proposal.pop()?.status,
-                submission: infor?.Team.Submission,
+                submission: infor?.Team.Submission[0],
                 teamMember: infor?.Team.TeamMember
             }
         })

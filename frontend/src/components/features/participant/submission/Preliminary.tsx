@@ -115,9 +115,9 @@ export function Preliminary() {
                                 {status === "failed" && (
                                     <Alert variant="destructive">
                                         <XCircle className="h-4 w-4" />
-                                        <AlertTitle>Tidak Terpilih</AlertTitle>
+                                        <AlertTitle>Belum Lolos di Babak {round === "preliminary" ? "Penyisihan" : "Final"}</AlertTitle>
                                         <AlertDescription>
-                                            Sayangnya, tim Anda tidak terpilih untuk babak {round === "preliminary" ? "penyisihan" : "final"}. Terima kasih atas partisipasi Anda.
+                                            Terima kasih atas antusiasme dan kerja keras tim Anda. Sayangnya, tim Anda belum berhasil lolos dari babak {round === "preliminary" ? "Penyisihan" : "Final"}. Tetap semangat untuk tantangan berikutnya!
                                         </AlertDescription>
                                     </Alert>
                                 )}

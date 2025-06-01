@@ -107,7 +107,7 @@ export default function TeamsPage() {
                 </TabsContent>
             </Tabs>
 
-            {currentTeam !== null && dialogs.detailMember && (
+            {dialogs.detailMember && currentTeam !== null && (
                 <TeamMemberDetailDialog
                     member={currentMember || []}
                     open={dialogs.detailMember}
@@ -115,7 +115,7 @@ export default function TeamsPage() {
                 />
             )}
 
-            {currentTeam !== null && dialogs.deleteTeam && (
+            {dialogs.deleteTeam && currentTeam !== null && (
                 <DeleteTeam
                     data={currentTeam}
                     open={dialogs.deleteTeam}
@@ -123,7 +123,7 @@ export default function TeamsPage() {
                 />
             )}
 
-            {currentTeam !== null && dialogs.verifyTeam && (
+            {dialogs.verifyTeam && currentTeam !== null && (
                 <VerifyTeam
                     data={currentTeam}
                     open={dialogs.verifyTeam}

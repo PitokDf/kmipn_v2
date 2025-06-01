@@ -47,7 +47,7 @@ export async function getCategoryStatsController(req: Request, res: Response<Res
         const categoryStats = categories.map(c => {
             const teams = c.Team.length;
             const proposals = c.Team.filter(t => t.Proposal.length > 0).length;
-            const submissions = c.Team.filter(t => t.Submission).length
+            const submissions = c.Team.filter(t => t.Submission.length).length
             const deadline = new Date(c.deadline)
             const timeDiff = deadline.getTime() - now.getTime()
             const daysUntilDeadline = Math.max(Math.ceil(timeDiff / (1000 * 60 * 60 * 24)), 0); // biar gak minus
@@ -68,7 +68,7 @@ export async function getCategoryStatsController(req: Request, res: Response<Res
         }, 0)
 
         const totSubmission = categories.reduce((cur, val) => {
-            const submission = val.Team.filter(t => t.Submission).length
+            const submission = val.Team.filter(t => t.Submission.length).length
             return cur + submission
         }, 0)
 

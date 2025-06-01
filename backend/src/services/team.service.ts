@@ -47,8 +47,8 @@ export const unVerifyTeamService = async (teamID: number) => {
 export async function getInfoSubmissionService(userId: string) {
     const team = await prisma.team.findFirst({
         where: { TeamMember: { every: { userId } } },
-        select: { Submission: true, Category: { select: { categoriName: true } } }
+        select: { Submission: { take: 1, orderBy: { id: "desc" } }, Category: { select: { categoriName: true } } }
     })
 
-    return { ...team?.Submission, category: team?.Category.categoriName }
+    return { ...team?.Submission[0], category: team?.Category.categoriName }
 }

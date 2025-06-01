@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils";
 
-type StatusType = 
-  | "approve" 
-  | "pending" 
-  | "rejected" 
-  | "passed" 
-  | "failed" 
-  | "verified" 
+type StatusType =
+  | "approve"
+  | "pending"
+  | "rejected"
+  | "passed"
+  | "failed"
+  | "verified"
   | "unverified";
 
 interface StatusBadgeProps {
@@ -15,33 +15,33 @@ interface StatusBadgeProps {
 }
 
 const statusConfig: Record<StatusType, { color: string; label: string }> = {
-  approve: { 
-    color: "bg-green-100 text-green-800 border-green-200", 
-    label: "Approved" 
+  approve: {
+    color: "bg-green-100 text-green-800 border-green-200",
+    label: "Approved"
   },
-  pending: { 
-    color: "bg-yellow-100 text-yellow-800 border-yellow-200", 
-    label: "Pending" 
+  pending: {
+    color: "bg-yellow-100 text-yellow-800 border-yellow-200",
+    label: "Pending"
   },
-  rejected: { 
-    color: "bg-red-100 text-red-800 border-red-200", 
-    label: "Rejected" 
+  rejected: {
+    color: "bg-red-100 text-red-800 border-red-200",
+    label: "Rejected"
   },
-  passed: { 
-    color: "bg-green-100 text-green-800 border-green-200", 
-    label: "Passed" 
+  passed: {
+    color: "bg-green-100 text-green-800 border-green-200",
+    label: "Passed"
   },
-  failed: { 
-    color: "bg-red-100 text-red-800 border-red-200", 
-    label: "Failed" 
+  failed: {
+    color: "bg-red-100 text-red-800 border-red-200",
+    label: "Failed"
   },
-  verified: { 
-    color: "bg-blue-100 text-blue-800 border-blue-200", 
-    label: "Verified" 
+  verified: {
+    color: "bg-blue-100 text-blue-800 border-blue-200",
+    label: "Verified"
   },
-  unverified: { 
-    color: "bg-gray-100 text-gray-800 border-gray-200", 
-    label: "Unverified" 
+  unverified: {
+    color: "bg-gray-100 text-gray-800 border-gray-200",
+    label: "Unverified"
   },
 };
 
@@ -51,7 +51,7 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border",
+        "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border h-fit",
         config.color,
         className
       )}

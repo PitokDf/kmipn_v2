@@ -13,8 +13,17 @@ export interface DashboardData {
 }
 
 export interface Submission {
-    status: string
+    id: number
+    teamId: number
     round: string
+    title: string
+    githubUrl: string
+    fileUrl: string
+    fileName: string
+    status: string
+    createdAt: string
+    updatedAt: string
+    teamName: string
 }
 
 export interface User {

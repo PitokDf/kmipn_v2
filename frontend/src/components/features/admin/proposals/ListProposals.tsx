@@ -29,7 +29,10 @@ export function ListProposals({
     })
 
     const filtered = proposals?.filter(p => {
-        const matchesTab = activeTab === "all" || (activeTab === "pending" && p.status === "pending") || (activeTab === "approve" && p.status === "approve") || (activeTab === "rejected" && p.status === "rejected");
+        const matchesTab = activeTab === "all" ||
+            (activeTab === "pending" && p.status === "pending") ||
+            (activeTab === "approve" && p.status === "approve") ||
+            (activeTab === "rejected" && p.status === "rejected");
         const matchesSearch = p.title.toLowerCase().includes(searchParams.toLowerCase()) || p.teamName.toLowerCase().includes(searchParams.toLowerCase());
         const matchesCategory = categoryFilter === "all" || p.teamCategory === categoryFilter;
         return matchesTab && matchesSearch && matchesCategory;
@@ -75,7 +78,7 @@ export function ListProposals({
                                 </div>
                                 <Link
                                     className="w-fit"
-                                    href={proposal.fileLink}
+                                    href={`https://drive.google.com/uc?export=download&id=${proposal.fileLink.match(/\/d\/(.+?)\//)?.[1]}`}
                                     target="_blank">
                                     <Button variant="outline">
                                         <Download className="h-4 w-4 mr-2" /> Unduh

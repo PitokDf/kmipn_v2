@@ -4,6 +4,7 @@ import { ResponseApiType } from "../types/api_types";
 import { findTeamUser } from "../services/user.service";
 import { uploadFileToDrive } from "../services/google_drive.service";
 import { createSubmissionService, deleteSubmissionService, getAllSubmission, updateSubmissionService } from "../services/submission.service";
+import { emitToAdmin, emitToUser } from "../socket";
 
 export async function createSubmissionController(req: Request, res: Response<ResponseApiType>) {
     try {
@@ -33,6 +34,9 @@ export async function createSubmissionController(req: Request, res: Response<Res
         const fileLink = uploadResult.webViewLink;
 
         const submission = await createSubmissionService(description, fileLink!, githubUrl, Number(team?.id), title, fileName!)
+        emitToAdmin("submission:update", {
+            message: `Pengajuan baru dari tim: ${team?.name}`
+        })
 
         return res.status(201).json({
             success: true,
@@ -46,13 +50,25 @@ export async function createSubmissionController(req: Request, res: Response<Res
 
 export async function getAllSubmissionController(req: Request, res: Response<ResponseApiType>) {
     try {
-
         const submissions = await getAllSubmission()
+        const submissionMap = submissions.map((submission) => ({
+            id: submission.id,
+            teamId: submission.teamId,
+            round: submission.round,
+            title: submission.title,
+            githubUrl: submission.githubUrl,
+            fileUrl: submission.fileUrl,
+            fileName: submission.fileName,
+            status: submission.status,
+            createdAt: submission.createdAt,
+            updatedAt: submission.updatedAt,
+            teamName: submission.Team.name
+        }))
 
         return res.status(200).json({
             success: true,
             message: `Berhasil mendapatkan data submission`,
-            data: submissions
+            data: submissionMap
         })
     } catch (error) {
         return handlerAnyError(error, res)
@@ -64,6 +80,11 @@ export async function updateSubmissionController(req: Request, res: Response<Res
         const { id } = req.params
         const { status } = req.body
         const submission = await updateSubmissionService(Number(id), status)
+
+        emitToUser(submission.Team.TeamMember[0].userId!, "submission:update", {
+            message: `Pengajuan tim anda sudah di update, status "${status}"`
+        })
+        console.log(`emit to user ${submission.Team.TeamMember[0].userId!}`);
 
         return res.status(200).json({
             success: true,

@@ -1,5 +1,6 @@
 import { $Enums } from "@prisma/client";
 import { prisma } from "../configs/prisma";
+import { deleteFileFromDrive } from "./google_drive.service";
 
 export async function createSubmissionService(
     description: string,
@@ -37,14 +38,18 @@ export async function updateSubmissionService(id: number, status: $Enums.statusS
     const submission = await prisma.submission.update({
         where: { id },
         data: { status },
-        include: { Team: { select: { name: true } } }
+        include: { Team: { include: { TeamMember: { where: { role: "leader" }, select: { userId: true } } } } }
     })
 
-    if (submission.round === "preliminary" && submission.status === "passed") {
-        const data = { ...submission, status: "pending", round: "final" }
-        console.log(data);
 
-        await prisma.submission.create({
+    if (submission.round === "preliminary" && submission.status === "passed") {
+        const existing = await prisma.submission.findFirst({
+            where: {
+                teamId: submission.teamId, round: "final"
+            }
+        })
+
+        !existing && await prisma.submission.create({
             data: {
                 Team: { connect: { id: submission.teamId } },
                 round: "final",
@@ -66,6 +71,12 @@ export async function deleteSubmissionService(id: number) {
         where: { id },
         include: { Team: { select: { name: true } } }
     })
+    const teams = await prisma.submission.findMany({ where: { teamId: deleted.teamId } })
+
+    if (teams.length == 0) {
+        const fileId = deleted.fileUrl?.match(/\/d\/(.+?)\//)?.[1]
+        await deleteFileFromDrive(fileId!)
+    }
 
     return deleted
 }

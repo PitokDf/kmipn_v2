@@ -6,6 +6,7 @@ import { getDashboardParticipantData } from "@/lib/apis/dashboard";
 import { useQuery } from "@tanstack/react-query";
 import { FlagIcon, Users } from "lucide-react";
 import { TimeLineInfo } from "../admin/TimeLineInfo";
+import { StatusBadge } from "@/components/ui/status-badge";
 
 
 export function DashboardInformation() {
@@ -28,7 +29,17 @@ export function DashboardInformation() {
                 />
                 <StatisticsCard
                     title="Ronde"
-                    value={`${data?.submission ? `${data?.submission?.status} - ${data?.submission?.round}` : "Pending"}  `}
+                    value={<>
+                        {data?.submission ? (
+                            <div className="flex gap-2">
+                                <span>
+                                    {data?.submission?.round === "preliminary" ? "Penyisihan" : "Final"}
+                                </span>
+                                <StatusBadge status={data?.submission.status as any} />
+                            </div>
+                        )
+                            : "Pending"}
+                    </>}
                     icon={FlagIcon}
                 />
             </div>

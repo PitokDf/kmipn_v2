@@ -24,6 +24,7 @@ export async function getDashboardParticipantDataService(userId: string) {
                             status: true,
                             round: true,
                         },
+                        orderBy: { id: "desc" }
                     },
                     TeamMember: {
                         select: {
