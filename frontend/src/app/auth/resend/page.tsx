@@ -1,40 +1,32 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-
 import { Metadata } from "next";
-import RegisterForm from "@/components/auth/RegisterForm";
-import ThemeToggle from "@/components/theme-toogle";
+import ResendEmailForm from "@/components/auth/ResendEmailVerifikasi";
 
 export const metadata: Metadata = {
-    title: "Register | KMIPN VII ",
-    description: "Register untuk memulai bergabung ke KMIPN"
+    title: "Resend Email | KMIPN VII ",
+    description: "Masukkan email untuk menerima link verifikasi."
 }
 
-export default function RegisterPage() {
+export default function ForgotPasswordPage() {
     return (
         <Card className="w-full max-w-md">
             <CardHeader className="space-y-1">
-                <div className="flex w-full justify-end">
-                    <ThemeToggle />
-                </div>
-                <div className="flex justify-center mb-4">
-                    <span className="text-xl font-bold ">KMIPN VII</span>
-                </div>
                 <CardTitle className="text-2xl font-bold text-center">
-                    Buat Akun
+                    Kirim Ulang Email Verifikasi
                 </CardTitle>
                 <CardDescription className="text-center">
-                    Masukkan detail kamu untuk register KMIPN
+                    Masukkan email untuk menerima verifikasi link
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <RegisterForm />
+                <ResendEmailForm />
             </CardContent>
             <CardFooter className="flex md:flex-row flex-col space-y-2 justify-between">
                 <div className="text-sm text-center">
-                    Sudah punya akun?{" "}
+                    Kembali ke halaman{" "}
                     <Link href="/auth/login" className="text-blue-600 hover:text-blue-500">
-                        Login
+                        Login?
                     </Link>
                 </div>
                 <div className="text-sm text-center">

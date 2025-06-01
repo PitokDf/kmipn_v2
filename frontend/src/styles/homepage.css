@@ -68,7 +68,7 @@
         @apply bg-background text-foreground;
         overflow-x: hidden;
         scrollbar-width: thin;
-        scrollbar-color: theme("colors.blue.600") theme("colors.gray.200");
+        scrollbar-color: theme("colors.orange.600") theme("colors.gray.200");
     }
 
     /* Custom Scrollbar Styles */
@@ -83,12 +83,12 @@
     }
 
     ::-webkit-scrollbar-thumb {
-        background: theme("colors.blue.600");
+        background: theme("colors.orange.600");
         border-radius: 4px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: theme("colors.blue.700");
+        background: theme("colors.orange.700");
     }
 
     /* Smooth Scrolling */

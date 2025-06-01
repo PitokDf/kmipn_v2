@@ -92,14 +92,14 @@ export const loginService = async (email: string, password: string) => {
 
 export const forgotPasswordService = async (email: string) => {
     const checkEmail = await prisma.user.findFirst({ where: { email } })
-    if (!checkEmail) throw new AppError("Email tidak terdaftar", 400);
+    if (!checkEmail) throw new AppError(`${email} tidak terdaftar`, 400);
 
     const token = await prisma.userToken.findFirst({
         where: { User: { email: email } }
     });
 
     if (token?.expiresAt! > new Date()) {
-        throw new AppError("Anda sudah meminta link reset password, tunggu 1 jam untuk mecoba lagi.", 400)
+        throw new AppError("Anda telah mengajukan permintaan reset kata sandi. Mohon tunggu selama 1 jam sebelum mencoba kembali.", 400)
     }
 
     if (token && (token.expiresAt < new Date())) {
@@ -117,11 +117,11 @@ export const forgotPasswordService = async (email: string) => {
         }
     });
 
-    const resetLink = `${process.env.FRONTEND_URL}/auth/reset-password/${resetToken}`;
+    const resetLink = `${process.env.FRONTEND_URL}/auth/forgot-password/${resetToken}`;
     const filePath = path.join(__dirname, '../templates/EmailResetPassword.html')
     let emailContent = await readHtmlFile(filePath);
     const placeholders = {
-        "{{resetLink}}": resetLink
+        "{{ resetLink }}": resetLink
     };
     emailContent = replacePlaceholders(emailContent, placeholders);
 
@@ -141,12 +141,16 @@ export const checkTokenResetService = async (token: string) => {
     // melakukan pengecekan apakah token sudah expire atau belum
     if (usertToken.expiresAt < new Date()) throw new AppError("Token expired", 400);
     // hapus token dari table user token setelah proses berhasil
-    await prisma.userToken.delete({ where: { id: usertToken.id } });
+    // await prisma.userToken.delete({ where: { id: usertToken.id } });
     return usertToken.userId;
 }
 
 export const resetPasswordService = async (password: string, userId: string) => {
-    const userUpdated = await prisma.user.update({ data: { password }, where: { id: userId } });
+    const userUpdated = await prisma.user.update({
+        data: { password }, where: { id: userId },
+        include: { UserToken: { select: { id: true } } }
+    });
+    await prisma.userToken.delete({ where: { id: userUpdated.UserToken[0].id } });
     return userUpdated;
 }
 
@@ -154,13 +158,16 @@ export const resendEmailVerifikasiService = async (email: string) => {
     const user = await prisma.user.findFirst({
         where: { email }
     });
+
+    if (!user) throw new AppError(`${email} tidak terdaftar!`)
+
     if (user?.verified) throw new AppError("Anda sudah terverifikasi!", 400);
 
     const userToken = await prisma.userToken.findFirst({
         where: { userId: user?.id }
     });
 
-    if (userToken) throw new AppError("Email verifikasi sudah terkirim!", 400);
+    if (userToken) throw new AppError("Email verifikasi sudah dikirim sebelumnya!", 400);
     sendEmailVerfikasi(user!, "")
     return true
 }

@@ -8,13 +8,15 @@ import { Submission } from "@/types/api";
 import { UpdateSubmission } from "@/components/features/admin/submission/UpdateSubmission";
 import { DeleteSubmission } from "@/components/features/admin/submission/DeleteSubmission";
 import { DownloadFileSubmission } from "@/components/features/admin/submission/DownloadSubmission";
+import { SubmissionDetailDialog } from "@/components/features/admin/submission/SubmissionDetail";
 
 export default function RoundsPage() {
     const [activeTab, setAvtiveTab] = useState("penyisihan")
     const [currentSubmission, setCurrentSubmission] = useState<Submission | null>(null)
     const [dialogs, setDialogs] = useState({
         update: false,
-        delete: false
+        delete: false,
+        showDetail: false
     })
 
     return (
@@ -44,8 +46,13 @@ export default function RoundsPage() {
                         </CardHeader>
                         <CardContent>
                             <SubmissionTable
+                                onDetail={(s) => {
+                                    console.log(s);
+
+                                    setCurrentSubmission(s)
+                                    setDialogs((prev => ({ ...prev, showDetail: true })))
+                                }}
                                 onDelete={(s) => {
-                                    console.log(s)
                                     setCurrentSubmission(s)
                                     setDialogs((prev => ({ ...prev, delete: true })))
                                 }}
@@ -73,6 +80,13 @@ export default function RoundsPage() {
                     data={currentSubmission}
                     open={dialogs.delete}
                     onOpenChange={(open) => setDialogs((prev) => ({ ...prev, delete: open }))}
+                />
+            )}
+            {dialogs.showDetail && currentSubmission !== null && (
+                <SubmissionDetailDialog
+                    submission={currentSubmission}
+                    isOpen={dialogs.showDetail}
+                    onOpenChange={(open) => setDialogs((prev) => ({ ...prev, showDetail: open }))}
                 />
             )}
         </>

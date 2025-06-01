@@ -35,9 +35,9 @@ const BackToTop = () => {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.5 }}
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 p-3 bg-blue-600 text-white rounded-full shadow-lg 
-            hover:bg-blue-700 transition-colors duration-300
-            focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+          className="fixed bottom-6 right-6 p-3 bg-orange-600 text-white rounded-full shadow-lg 
+            hover:bg-orange-700 transition-colors duration-300
+            focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2
             z-50"
           aria-label="Back to top"
         >

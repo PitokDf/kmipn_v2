@@ -18,16 +18,13 @@ export default function LoginPage() {
                     <ThemeToggle />
                 </div>
                 <div className="flex justify-center mb-4">
-                    <div className="flex items-center space-x-2">
-                        <Trophy className="h-8 w-8 text-blue-600" />
-                        <span className="text-xl font-bold ">KMIPN</span>
-                    </div>
+                    <span className="text-xl font-bold ">KMIPN VII</span>
                 </div>
                 <CardTitle className="text-2xl font-bold text-center">
-                    Log in to your account
+                    Login ke akun kamu
                 </CardTitle>
                 <CardDescription className="text-center">
-                    Enter your email and password to access your account
+                    Masukkan email dan password untuk masuk ke akunmu
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -35,9 +32,9 @@ export default function LoginPage() {
             </CardContent>
             <CardFooter className="flex md:flex-row flex-col space-y-2 justify-between">
                 <div className="text-sm text-center">
-                    Don't have an account?{" "}
+                    Belum punya akun?{" "}
                     <Link href="/auth/register" className="text-blue-600 hover:text-blue-500">
-                        Register
+                        Daftar
                     </Link>
                 </div>
                 <div className="text-sm text-center">

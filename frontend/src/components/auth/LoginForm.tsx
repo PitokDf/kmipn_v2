@@ -14,7 +14,7 @@ import { toast } from "sonner";
 
 const formSchema = z.object({
     email: z.string().email({
-        message: "Please enter a valid email address.",
+        message: "Masukkan email yang valid.",
     }),
     password: z.string().min(8, {
         message: "Password must be at least 8 characters.",
@@ -100,7 +100,7 @@ export default function LoginForm() {
                             <FormLabel>Email</FormLabel>
                             <FormControl>
                                 <Input
-                                    placeholder="Enter your email"
+                                    placeholder="Masukkan emailmu"
                                     type="email"
                                     {...field}
                                     disabled={isLoading}
@@ -119,7 +119,7 @@ export default function LoginForm() {
                             <FormControl>
                                 <div className="relative">
                                     <Input
-                                        placeholder="Enter your password"
+                                        placeholder="Masukkan passwordmu"
                                         type={showPassword ? "text" : "password"}
                                         {...field}
                                         disabled={isLoading}
@@ -149,8 +149,8 @@ export default function LoginForm() {
                 />
                 <div className="flex justify-end">
                     <div className="text-sm text-center">
-                        <Link href="/forgot-password" className="text-blue-600 hover:text-blue-500">
-                            Forgot your password?
+                        <Link href="/auth/forgot-password" className="text-blue-600 hover:text-blue-500">
+                            Lupa password?
                         </Link>
                     </div>
                 </div>

@@ -103,10 +103,10 @@ export default function RegisterForm() {
                     name="name"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Full Name</FormLabel>
+                            <FormLabel>Nama Lengkap</FormLabel>
                             <FormControl>
                                 <Input
-                                    placeholder="Enter your full name"
+                                    placeholder="Masukkan nama lengkap kamu"
                                     {...field}
                                     disabled={isLoading}
                                 />
@@ -123,7 +123,7 @@ export default function RegisterForm() {
                             <FormLabel>Email</FormLabel>
                             <FormControl>
                                 <Input
-                                    placeholder="Enter your email"
+                                    placeholder="Masukkan email kamu"
                                     type="email"
                                     {...field}
                                     disabled={isLoading}
@@ -175,7 +175,7 @@ export default function RegisterForm() {
                     name="confirmPassword"
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Confirm Password</FormLabel>
+                            <FormLabel>Konfirmasi Password</FormLabel>
                             <FormControl>
                                 <div className="relative">
                                     <Input
@@ -211,9 +211,9 @@ export default function RegisterForm() {
                         </FormItem>
                     )}
                 />
-                <Link href={"/auth/resend"} className="text-blue-500 text-sm pt-2">Resend email verifikasi?</Link>
+                <Link href={"/auth/resend"} className="text-blue-500 text-sm pt-2">Kirim ulang email verifikasi?</Link>
                 <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600" disabled={isLoading}>
-                    {isLoading ? "Creating account..." : "Register"}
+                    {isLoading ? "Membuat Akun..." : "Daftar"}
                 </Button>
             </form>
         </Form>

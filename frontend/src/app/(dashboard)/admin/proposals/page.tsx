@@ -73,21 +73,20 @@ export default function ProposalsPage() {
                 </TabsList>
 
                 <TabsContent value={activeTab}>
-                    <div className="grid gap-2 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                        <ListProposals
-                            activeTab={activeTab}
-                            categoryFilter={categoryFilter}
-                            searchParams={searchTerm}
-                            onReview={(proposal) => {
-                                setCurrentProposal(proposal)
-                                setIsDialogReviewOpen(true)
-                            }}
-                            onDelete={(proposal) => {
-                                setIsDeleteDialogOpen(true)
-                                setCurrentProposal(proposal)
-                            }}
-                        />
-                    </div>
+                    <ListProposals
+                        activeTab={activeTab}
+                        categoryFilter={categoryFilter}
+                        searchParams={searchTerm}
+                        onReview={(proposal) => {
+                            setCurrentProposal(proposal)
+                            setIsDialogReviewOpen(true)
+                        }}
+                        onDelete={(proposal) => {
+                            setIsDeleteDialogOpen(true)
+                            setCurrentProposal(proposal)
+                        }}
+                    />
+
                 </TabsContent>
             </Tabs>
 

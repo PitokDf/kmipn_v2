@@ -91,8 +91,7 @@ export const forgotPassword = async (req: Request, res: Response<ResponseApiType
         const resetService = await forgotPasswordService(email);
         return res.status(200).json({
             success: true,
-
-            message: "Link reset password telah dikirim ke email Anda!",
+            message: `Link reset password telah dikirim ke ${email}!`,
             data: resetService
         })
 
@@ -103,21 +102,24 @@ export const forgotPassword = async (req: Request, res: Response<ResponseApiType
 
 export const resetPassword = async (req: Request, res: Response) => {
     try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty())
-            return res.status(400)
-                .json(
-                    {
-                        success: false, message: "Password min 8 character, must contain at least one lowercase letter, one uppercase letter, one number letter, one symbol.",
-                    });
         const { password, userId } = req.body;
+        console.log(password);
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            console.log(errors.array());
+
+            return res.status(400).json({
+                success: false,
+                message: "Kata sandi minimal 8 karakter, dan harus mengandung setidaknya satu huruf kecil, satu huruf kapital, satu angka, dan satu simbol.",
+            });
+        }
+
         const hashedPassword = await hashing(password);
         const reset = await resetPasswordService(hashedPassword!, userId);
 
         return res.status(200).json({
             success: true,
-
-            message: "password berhasil dirubah.",
+            message: "password berhasil dirubah, ENJOYYY.",
             data: reset
         });
     } catch (error) {

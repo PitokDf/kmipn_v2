@@ -14,6 +14,7 @@ import Link from "next/link";
 type SubmissionTableProps = {
     onEdit: (submission: Submission) => void,
     onDelete: (submission: Submission) => void,
+    onDetail: (submission: Submission) => void,
     activeTab?: string
 }
 
@@ -21,6 +22,7 @@ export function SubmissionTable(
     {
         onEdit,
         onDelete,
+        onDetail,
         activeTab = "penyisihan"
     }: SubmissionTableProps) {
 
@@ -121,6 +123,11 @@ export function SubmissionTable(
                                 onSelect={e => e.preventDefault()}
                                 onClick={() => onEdit(submission)}
                             >Update Pengajuan
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onSelect={e => e.preventDefault()}
+                                onClick={() => onDetail(submission)}
+                            >Detail Pengajuan
                             </DropdownMenuItem>
                             <DropdownMenuItem
                                 onSelect={e => e.preventDefault()}
