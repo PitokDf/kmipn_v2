@@ -143,8 +143,9 @@ export const downloadAllSubmission = async (req: Request, res: Response, next: N
         archive.pipe(res);
 
         for (const p of latestSubmissions) {
+            const fileId = (p.fileUrl as any).match(/\/d\/(.+?)\//)?.[1]
             const driveRes = await drive.files.get(
-                { fileId: p.fileUrl?.match(/\/d\/(.+?)\//)?.[1], alt: "media" },
+                { fileId: fileId, alt: "media" },
                 { responseType: "stream" }
             );
             archive.append(driveRes.data as import("stream").Readable, { name: `${p.Team.name}_${p.title}.zip` })

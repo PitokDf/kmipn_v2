@@ -56,7 +56,7 @@ export const updateUser = async (req: Request, res: Response<ResponseApiType>) =
     try {
         const { id } = req.params
         const { email, password, nama, role } = req.body
-        let hashedPassword = null
+        let hashedPassword: string | null = null
         if (password) {
             hashedPassword = await hashing(password);
         }

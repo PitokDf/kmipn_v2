@@ -4,9 +4,10 @@
     "description": "project gak dibayar",
     "main": "index.js",
     "scripts": {
+        "popinstall": "prisma generate",
         "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
         "start": "node --openssl-legacy-provider dist/src/app.js",
-        "build": "tsc --project tsconfig.json && prisma generate"
+        "build": "tsc --project tsconfig.json"
     },
     "keywords": [
         "tugas",
