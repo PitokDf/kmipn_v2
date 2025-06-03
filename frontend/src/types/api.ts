@@ -145,3 +145,42 @@ export interface TeamMember {
     prodi: string
     fileKTM: string
 }
+
+export interface StatistikData {
+    categoryStatsData: CategoryStatsData[]
+    institutionStatsData: InstitutionStatsData[]
+    proposalStatusStatsData: ProposalStatusStatsData[]
+    scoreDistribution: ScoreDistribution[]
+    verifiedTeamStatsData: VerifiedTeamStatsData[]
+    submissionStatsData: SubmissionStatsData[]
+}
+
+export interface SubmissionStatsData {
+    round: string,
+    count: number
+}
+
+export interface CategoryStatsData {
+    category: string
+    count: number
+}
+
+export interface InstitutionStatsData {
+    institution: string
+    count: number
+}
+
+export interface ProposalStatusStatsData {
+    status: string
+    value: number
+}
+
+export interface ScoreDistribution {
+    range: string
+    value: number
+}
+
+export interface VerifiedTeamStatsData {
+    status: string
+    count: number
+}

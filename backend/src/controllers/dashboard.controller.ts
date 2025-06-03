@@ -96,6 +96,11 @@ export async function getStatsController(req: Request, res: Response<ResponseApi
             "Belum Terverifikasi": 0
         }
 
+        const defaultRoundSubmissionMap = {
+            "Penyisihan": 0,
+            "Final": 0
+        }
+
         verifiedTeamStats.forEach((team) => {
             defaultStatusTeamMap[team.verified ? "Terverifikasi" : "Belum Terverifikasi"] = team._count
         })
@@ -120,10 +125,14 @@ export async function getStatsController(req: Request, res: Response<ResponseApi
             { status: "Ditolak", value: defaultStatusProposalMap.rejected }
         ]
 
-        const submissionStatsData = submissionStats.forEach((submission) => ({
-            round: submission.round === "preliminary" ? "Penyisihan" : "Final",
-            count: submission._count
-        }))
+        submissionStats.forEach((sub) => {
+            defaultRoundSubmissionMap[sub.round === "preliminary" ? "Penyisihan" : "Final"] = sub._count
+        })
+
+        const submissionStatsData = [
+            { round: "Penyisihan", count: defaultRoundSubmissionMap.Penyisihan },
+            { round: "Final", count: defaultRoundSubmissionMap.Final },
+        ]
 
         const verifiedTeamStatsData = [
             { status: "Terverifikasi", count: defaultStatusTeamMap.Terverifikasi },
@@ -145,7 +154,9 @@ export async function getStatsController(req: Request, res: Response<ResponseApi
                 categoryStatsData,
                 institutionStatsData,
                 proposalStatusStatsData,
-                scoreDistribution,
+                scoreDistribution: Object.entries(scoreDistribution).map(([range, value]) => ({
+                    range, value
+                })),
                 submissionStatsData,
                 verifiedTeamStatsData
             }

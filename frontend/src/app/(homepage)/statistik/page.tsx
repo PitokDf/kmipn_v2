@@ -1,6 +1,8 @@
 'use client'
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getStatistikData } from "@/lib/apis/dashboard";
+import { useQuery } from "@tanstack/react-query";
 import { TrendingUp, Users, CheckCircle, Building, Trophy } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Bar, BarChart, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
@@ -55,6 +57,10 @@ const mockUserRoleData = [
 ];
 
 export default function StatistikPage() {
+    const { data, isPending: isLoading } = useQuery({
+        queryKey: ['statistik'],
+        queryFn: getStatistikData
+    })
     const [categoryData, setCategoryData] = useState([]);
     const [proposalStatusData, setProposalStatusData] = useState([]);
     const [verifiedTeams, setVerifiedTeams] = useState([]);
@@ -62,38 +68,38 @@ export default function StatistikPage() {
     const [submissionData, setSubmissionData] = useState([]);
     const [scoreDistribution, setScoreDistribution] = useState([]);
     const [userRoleData, setUserRoleData] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    // const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Simulate API call
-                setTimeout(() => {
-                    setCategoryData(mockCategoryData);
-                    setProposalStatusData(mockProposalStatusData);
-                    setVerifiedTeams(mockVerifiedTeams);
-                    setInstitutionData(mockInstitutionData);
-                    setSubmissionData(mockSubmissionData);
-                    setScoreDistribution(mockScoreDistribution);
-                    setUserRoleData(mockUserRoleData);
-                    setIsLoading(false);
-                }, 1000);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             // Simulate API call
+    //             setTimeout(() => {
+    //                 setCategoryData(mockCategoryData);
+    //                 setProposalStatusData(mockProposalStatusData);
+    //                 setVerifiedTeams(mockVerifiedTeams);
+    //                 setInstitutionData(mockInstitutionData);
+    //                 setSubmissionData(mockSubmissionData);
+    //                 setScoreDistribution(mockScoreDistribution);
+    //                 setUserRoleData(mockUserRoleData);
+    //                 setIsLoading(false);
+    //             }, 1000);
 
-                // Uncomment when API is ready
-                // const res = await axios.get("/api/statistics");
-                // const data = res.data;
-                // setCategoryData(data.categoryDistribution);
-                // setProposalStatusData(data.proposalStatuses);
-                // setVerifiedTeams(data.verifiedVsUnverified);
-                // setInstitutionData(data.topInstitutions);
-                // setRoundData(data.finalRoundProgress);
-            } catch (error) {
-                console.error("Error fetching statistics:", error);
-                setIsLoading(false);
-            }
-        };
-        fetchData();
-    }, []);
+    //             // Uncomment when API is ready
+    //             // const res = await axios.get("/api/statistics");
+    //             // const data = res.data;
+    //             // setCategoryData(data.categoryDistribution);
+    //             // setProposalStatusData(data.proposalStatuses);
+    //             // setVerifiedTeams(data.verifiedVsUnverified);
+    //             // setInstitutionData(data.topInstitutions);
+    //             // setRoundData(data.finalRoundProgress);
+    //         } catch (error) {
+    //             console.error("Error fetching statistics:", error);
+    //             setIsLoading(false);
+    //         }
+    //     };
+    //     fetchData();
+    // }, []);
 
     const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
         if (active && payload && payload.length) {
@@ -123,28 +129,28 @@ export default function StatistikPage() {
     const summaryStats = [
         {
             title: "Total Tim",
-            value: categoryData.reduce((sum, item) => sum + item.count, 0),
+            value: data?.categoryStatsData.reduce((sum, item) => sum + item.count, 0),
             icon: Users,
             color: "text-blue-600",
             bgColor: "bg-blue-50"
         },
         {
             title: "Proposal Approved",
-            value: proposalStatusData.find(item => item.status === "Approve")?.value || 0,
+            value: data?.proposalStatusStatsData.find(item => item.status === "Disetujui")?.value || 0,
             icon: CheckCircle,
             color: "text-green-600",
             bgColor: "bg-green-50"
         },
         {
             title: "Tim Terverifikasi",
-            value: verifiedTeams.find(item => item.status === "Terverifikasi")?.count || 0,
+            value: data?.verifiedTeamStatsData.find(item => item.status === "Terverifikasi")?.count || 0,
             icon: Trophy,
             color: "text-yellow-600",
             bgColor: "bg-yellow-50"
         },
         {
             title: "Institusi Aktif",
-            value: institutionData.length,
+            value: data?.institutionStatsData.length,
             icon: Building,
             color: "text-purple-600",
             bgColor: "bg-purple-50"
@@ -176,7 +182,7 @@ export default function StatistikPage() {
                                         <div>
                                             <p className="text-sm font-medium text-gray-600 mb-1">{stat.title}</p>
                                             <p className="text-3xl font-bold text-gray-900">
-                                                {isLoading ? "..." : stat.value.toLocaleString()}
+                                                {isLoading ? "..." : stat?.value!.toLocaleString()}
                                             </p>
                                         </div>
                                         <div className={`p-3 rounded-full ${stat.bgColor}`}>
@@ -199,11 +205,11 @@ export default function StatistikPage() {
                                     <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
                                     Distribusi Tim per Kategori
                                 </CardTitle>
-                                <p className="text-sm text-gray-600">Total {categoryData.reduce((sum, item) => sum + item.count, 0)} tim terdaftar</p>
+                                <p className="text-sm text-gray-600">Total {data?.categoryStatsData.reduce((sum, item) => sum + item.count, 0)} tim terdaftar</p>
                             </CardHeader>
                             <CardContent className="h-80">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={categoryData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                    <BarChart data={data?.categoryStatsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                                         <XAxis
                                             dataKey="category"
                                             tick={{ fontSize: 12 }}
@@ -234,7 +240,7 @@ export default function StatistikPage() {
                                 <ResponsiveContainer width="100%" height="100%">
                                     <PieChart>
                                         <Pie
-                                            data={proposalStatusData}
+                                            data={data?.proposalStatusStatsData}
                                             dataKey="value"
                                             nameKey="status"
                                             cx="50%"
@@ -267,7 +273,7 @@ export default function StatistikPage() {
                             </CardHeader>
                             <CardContent className="h-80">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={verifiedTeams} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                    <BarChart data={data?.verifiedTeamStatsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                                         <XAxis dataKey="status" tick={{ fontSize: 12 }} />
                                         <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
                                         <Tooltip content={<CustomTooltip />} />
@@ -290,7 +296,7 @@ export default function StatistikPage() {
                             </CardHeader>
                             <CardContent className="h-80">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart layout="vertical" data={institutionData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                    <BarChart layout="vertical" data={data?.institutionStatsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                                         <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12 }} />
                                         <YAxis
                                             type="category"
@@ -318,7 +324,7 @@ export default function StatistikPage() {
                             </CardHeader>
                             <CardContent className="h-80">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={submissionData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                    <BarChart data={data?.submissionStatsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                                         <XAxis dataKey="round" tick={{ fontSize: 12 }} />
                                         <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
                                         <Tooltip content={<CustomTooltip />} />
@@ -341,49 +347,17 @@ export default function StatistikPage() {
                             </CardHeader>
                             <CardContent className="h-80">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={scoreDistribution} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                    <BarChart data={data?.scoreDistribution!} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                                         <XAxis dataKey="range" tick={{ fontSize: 12 }} />
                                         <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
                                         <Tooltip content={<CustomTooltip />} />
-                                        <Bar dataKey="count" fill="#F97316" radius={[4, 4, 0, 0]} />
+                                        <Bar dataKey="value" fill="#F97316" radius={[4, 4, 0, 0]} />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </CardContent>
                         </Card>
                     )}
                 </div>
-
-                {/* User Role Distribution - Full Width */}
-                {isLoading ? (
-                    <Card className="animate-pulse">
-                        <CardHeader>
-                            <div className="h-6 bg-gray-200 rounded w-1/2"></div>
-                        </CardHeader>
-                        <CardContent className="h-80">
-                            <div className="h-full bg-gray-100 rounded"></div>
-                        </CardContent>
-                    </Card>
-                ) : (
-                    <Card className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
-                        <CardHeader className="pb-4">
-                            <CardTitle className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                                <div className="w-3 h-3 bg-indigo-500 rounded-full"></div>
-                                Distribusi Role User
-                            </CardTitle>
-                            <p className="text-sm text-gray-600">Pembagian user berdasarkan role dalam sistem</p>
-                        </CardHeader>
-                        <CardContent className="h-80">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={userRoleData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                                    <XAxis dataKey="role" tick={{ fontSize: 12 }} />
-                                    <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
-                                    <Tooltip content={<CustomTooltip />} />
-                                    <Bar dataKey="count" fill="#6366F1" radius={[4, 4, 0, 0]} />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </CardContent>
-                    </Card>
-                )}
             </div>
         </div>
     );

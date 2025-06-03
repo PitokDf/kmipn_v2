@@ -1,4 +1,4 @@
-import { DashboardAdmin, DashboardData } from "@/types/api";
+import { DashboardAdmin, DashboardData, StatistikData } from "@/types/api";
 import axiosInstace from "../axios";
 
 export async function getDashboardParticipantData(): Promise<DashboardData> {
@@ -32,5 +32,10 @@ export interface CategoryDistribution {
 
 export async function getReportTeam(): Promise<Data> {
     const res = await axiosInstace.get("/reports/team")
+    return res.data.data
+}
+
+export async function getStatistikData(): Promise<StatistikData> {
+    const res = await axiosInstace.get("/statistik")
     return res.data.data
 }
