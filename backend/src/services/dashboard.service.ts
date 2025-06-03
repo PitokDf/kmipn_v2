@@ -67,3 +67,40 @@ export default async function getDashboarAdminService() {
 
     return { countTeam, proposals, categories, recentTeam }
 }
+
+export async function getStats() {
+    const [
+        categoryStats,
+        proposalStatusStats,
+        verifiedTeamStats,
+        institutionStats,
+        submissionStats,
+        scoreDistributionData
+    ] = await Promise.all([
+        prisma.category.findMany({
+            select: {
+                categoriName: true,
+                _count: { select: { Team: true } }
+            }
+        }),
+        prisma.proposal.groupBy({ by: ['status'], _count: true }),
+        prisma.team.groupBy({ by: ['verified'], _count: true }),
+        prisma.team.groupBy({
+            by: ['institution'],
+            _count: true,
+            orderBy: { _count: { institution: 'desc' } },
+            take: 5
+        }),
+        prisma.submission.groupBy({ by: ['round'], _count: true }),
+        prisma.assesment.findMany({ select: { score: true } })
+    ])
+
+    return {
+        categoryStats,
+        proposalStatusStats,
+        verifiedTeamStats,
+        institutionStats,
+        submissionStats,
+        scoreDistributionData
+    }
+}

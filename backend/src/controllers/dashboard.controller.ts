@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ResponseApiType } from "../types/api_types";
 import { handlerAnyError } from "../errors/api_errors";
-import getDashboarAdminService, { getDashboardParticipantDataService } from "../services/dashboard.service";
+import getDashboarAdminService, { getDashboardParticipantDataService, getStats } from "../services/dashboard.service";
 
 export async function getDashboardData(req: Request, res: Response<ResponseApiType>) {
     try {
@@ -60,6 +60,95 @@ export async function getDashboarAdminController(req: Request, res: Response<Res
             success: true,
             message: "Berhasil mendapatkan data",
             data: dashboarData
+        })
+    } catch (error) {
+        return handlerAnyError(error, res)
+    }
+}
+
+export async function getStatsController(req: Request, res: Response<ResponseApiType>) {
+    try {
+        const {
+            categoryStats,
+            institutionStats,
+            proposalStatusStats,
+            scoreDistributionData,
+            submissionStats,
+            verifiedTeamStats
+        } = await getStats()
+
+        const scoreDistribution = {
+            '90-100': 0,
+            '80-89': 0,
+            '70-79': 0,
+            '60-69': 0,
+            '< 60': 0
+        }
+
+        const defaultStatusProposalMap = {
+            approve: 0,
+            pending: 0,
+            rejected: 0
+        }
+
+        const defaultStatusTeamMap = {
+            "Terverifikasi": 0,
+            "Belum Terverifikasi": 0
+        }
+
+        verifiedTeamStats.forEach((team) => {
+            defaultStatusTeamMap[team.verified ? "Terverifikasi" : "Belum Terverifikasi"] = team._count
+        })
+
+        proposalStatusStats.forEach((proposal) => {
+            defaultStatusProposalMap[proposal.status] = proposal._count
+        })
+
+        const categoryStatsData = categoryStats.map((category) => ({
+            category: category.categoriName,
+            count: category._count.Team
+        }))
+
+        const institutionStatsData = institutionStats.map((institution) => ({
+            institution: institution.institution,
+            count: institution._count
+        }))
+
+        const proposalStatusStatsData = [
+            { status: "Disetujui", value: defaultStatusProposalMap.approve },
+            { status: "Pending", value: defaultStatusProposalMap.pending },
+            { status: "Ditolak", value: defaultStatusProposalMap.rejected }
+        ]
+
+        const submissionStatsData = submissionStats.forEach((submission) => ({
+            round: submission.round === "preliminary" ? "Penyisihan" : "Final",
+            count: submission._count
+        }))
+
+        const verifiedTeamStatsData = [
+            { status: "Terverifikasi", count: defaultStatusTeamMap.Terverifikasi },
+            { status: "Belum Terverifikasi", count: defaultStatusTeamMap["Belum Terverifikasi"] },
+        ]
+
+        scoreDistributionData.forEach(({ score }) => {
+            if (score >= 90) scoreDistribution['90-100']++;
+            else if (score >= 80) scoreDistribution['80-89']++;
+            else if (score >= 70) scoreDistribution['70-79']++;
+            else if (score >= 60) scoreDistribution['60-69']++;
+            else scoreDistribution['< 60']++;
+        })
+
+        return res.status(200).json({
+            success: true,
+            message: "Berhasil mendapatkan data",
+            data: {
+                categoryStatsData,
+                institutionStatsData,
+                proposalStatusStatsData,
+                scoreDistribution,
+                submissionStatsData,
+                verifiedTeamStatsData
+            }
         })
     } catch (error) {
         return handlerAnyError(error, res)
