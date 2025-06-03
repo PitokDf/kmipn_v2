@@ -1,3 +1,5 @@
+import { AtSign, Youtube } from "lucide-react";
+
 const Footer = () => {
     return (
         <footer className="bg-gradient-to-br from-gray-800 via-gray-900 to-black text-white py-12">
@@ -57,8 +59,8 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-bold text-white mb-4">Contact Us</h3>
                         <ul className="space-y-2 text-gray-400">
-                            <li>Email: <a href="mailto:pitokfauzi@gmail.com" className="hover:text-blue-500">pitokfauzi@gmail.com</a></li>
-                            <li>Phone: <a href="tel:+6283180541892" className="hover:text-blue-500">+62 831-8054-1892</a></li>
+                            <li>Email: <a href="mailto:kmipn@ono.ac.id" className="hover:text-blue-500">kmipn@pnp.ac.id</a></li>
+                            <li>Phone: <a href="tel:+075172590" className="hover:text-blue-500">0751-72590</a></li>
                             <li>Address: Politeknik Negeri Padang</li>
                         </ul>
                     </div>
@@ -66,9 +68,9 @@ const Footer = () => {
                     {/* Social Media */}
                     <div>
                         <h3 className="text-lg font-bold text-white mb-4">Follow Us</h3>
-                        <div className="flex space-x-4">
+                        <div className="flex space-x-4 justify-start items-center">
                             <a
-                                href="https://www.facebook.com/fitodesrifauziganteng?locale=id_ID"
+                                href="https://www.facebook.com/share/16UCy9XJ3S/?mibextid=wwXIfr"
                                 target="_blank"
                                 className="text-gray-400 hover:text-blue-600 transition-colors"
                             >
@@ -83,7 +85,7 @@ const Footer = () => {
                                 </svg>
                             </a>
                             <a
-                                href="https://x.com/pitokdesri"
+                                href="https://x.com/kmipn7_pnp?s=21"
                                 target="_blank"
                                 className="text-gray-400 hover:text-blue-400 transition-colors"
                             >
@@ -98,7 +100,7 @@ const Footer = () => {
                                 </svg>
                             </a>
                             <a
-                                href="https://www.instagram.com/pittookkk/"
+                                href="https://www.instagram.com/kmipn7_pnp?igsh=MTkwMWhrYTMxOHJ3OA%3D%3D&utm_source=qr"
                                 target="_blank"
                                 className="text-gray-400 hover:text-pink-500 transition-colors"
                             >
@@ -112,13 +114,31 @@ const Footer = () => {
                                     <path d="M7.75 0h8.5A7.75 7.75 0 0 1 24 7.75v8.5A7.75 7.75 0 0 1 16.25 24h-8.5A7.75 7.75 0 0 1 0 16.25v-8.5A7.75 7.75 0 0 1 7.75 0zm0 1.5A6.25 6.25 0 0 0 1.5 7.75v8.5A6.25 6.25 0 0 0 7.75 22.5h8.5A6.25 6.25 0 0 0 22.5 16.25v-8.5A6.25 6.25 0 0 0 16.25 1.5h-8.5zM12 5.25A6.75 6.75 0 1 1 5.25 12 6.757 6.757 0 0 1 12 5.25zm0 1.5A5.25 5.25 0 1 0 17.25 12 5.257 5.257 0 0 0 12 6.75zm6.25-2.31a1.5 1.5 0 1 1-1.5 1.5 1.5 1.5 0 0 1 1.5-1.5z" />
                                 </svg>
                             </a>
+                            <a
+                                href="https://youtube.com/@kmipn7pnp?si=0U6XvZ9LgWr8eldU"
+                                target="_blank"
+                                className="text-gray-400 hover:text-red-500 transition-colors"
+                            >
+                                <span className="sr-only">Youtube</span>
+                                <Youtube className="w-7 h-7" />
+                            </a>
+                            <a
+                                href="https://www.tiktok.com/@kmipn.7.pnp?_t=ZS-8wOVEwdZYQR&_r=1"
+                                target="_blank"
+                                className="text-gray-400 hover:text-purple-100 flex justify-center items-center transition-colors"
+                            >
+                                <span className="sr-only">Tiktok</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-tiktok" viewBox="0 0 16 16">
+                                    <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z" />
+                                </svg>
+                            </a>
                         </div>
                     </div>
                 </div>
 
                 {/* Credits */}
                 <div className="mt-10 text-center text-gray-500 text-sm">
-                    <p>Developed by <span className="font-bold text-gray-300"><a target="_blank" href="https://github.com/PitokDf">Pito Desri Pauzi</a></span> © {new Date().getFullYear()}. All Rights Reserved.</p>
+                    <p>Developed by <span className="font-bold text-gray-300"><a target="_blank" href="https://www.pnp.ac.id/">Tim Web KMIPN VII Politeknik Negeri Padang</a></span> © {new Date().getFullYear()}. All Rights Reserved.</p>
                 </div>
             </div>
         </footer>

@@ -1,14 +1,25 @@
+import Image from 'next/image';
 import CountdownTimer from './CountdownTimer';
 import WaveBackground from './WaveBackground';
 
 const HeroSection = () => {
     return (
-        <section id='home' className="relative min-h-[600px] bg-gradient-to-br from-blue-600 via-blue-700 to-purple-800 overflow-hidden">
+        <section id='home' className="bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A]"
+        >
             <WaveBackground />
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-40">
                 <div className="text-center">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg">
-                        <span className="block">Welcome to <span className="text-yellow-300">KMIPN VII</span></span>
+                    <h1 className="text-4xl flex justify-center md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg">
+                        <span className="flex justify-center items-center flex-col">
+                            Welcome to
+                            <Image
+                                className='w-[200px] md:w-[400px]'
+                                height={200}
+                                width={400}
+                                alt='KMIPN 7 LOGO'
+                                src={"/images/logos/kmipn-7.png"}
+                            />
+                        </span>
                     </h1>
 
                     <p className="text-lg md:text-xl text-blue-100 mb-12 max-w-2xl mx-auto leading-relaxed">

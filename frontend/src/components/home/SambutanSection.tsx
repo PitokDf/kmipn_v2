@@ -33,6 +33,31 @@ const SambutanSection = () => {
 
                 {/* Content Section */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    {/* Text Section */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-gray-700 leading-relaxed space-y-6"
+                    >
+                        <p className="text-lg md:text-xl text-justify">
+                            <i>
+                                “Dengan penuh semangat, kami mengucapkan <strong>Selamat datang</strong>
+                                {" "}di ajang bergengsi <strong>Kompetisi Mahasiswa Bidang Informatika Politeknik Nasional (KMIPN) 2025</strong>.
+                                Dalam penyelenggaraan edisi ketujuh ini, <strong>Politeknik Negeri Padang</strong>
+                                {" "}dengan bangga menjadi tuan rumah yang menghadirkan energi baru dan pengalaman berkompetisi yang lebih menarik serta inspiratif.”
+                            </i>
+                        </p>
+                        <p className="text-lg md:text-xl text-justify">
+                            <i>
+                                “Seiring langkah menuju <strong>Indonesia Emas 2045</strong>, {" "}
+                                pendidikan tinggi vokasi terus memainkan peran strategis sebagai wadah {" "}
+                                tumbuhnya inovasi dan kreativitas mahasiswa di berbagai bidang ilmu pengetahuan. {" "}
+                                Mari kita sambut masa depan dengan kolaborasi dan karya terbaik anak bangsa.”
+                            </i>
+                        </p>
+                    </motion.div>
+
                     {/* Image Section */}
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
@@ -41,27 +66,12 @@ const SambutanSection = () => {
                         className="relative"
                     >
                         <img
-                            src="/images/developer.webp"
+                            src="/images/foto-direktur.png"
                             alt="Sambutan"
-                            className="rounded-lg shadow-lg"
+                            className="rounded-lg shadow-lg h-full"
                         />
                         {/* Decorative Element */}
                         <div className="absolute -top-6 -left-6 w-14 h-14 object-fill bg-blue-100 rounded-full shadow-md"></div>
-                    </motion.div>
-
-                    {/* Text Section */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="text-gray-700 leading-relaxed space-y-6"
-                    >
-                        <p className="text-lg md:text-xl">
-                            Selamat datang di <strong>Kompetisi Mahasiswa Bidang Informatika Politeknik Nasional (KMIPN) 2025</strong>. Pagelaran ketujuh ini, Politeknik Negeri Padang (PNP) menjadi tuan rumah dan akan membawa semangat baru untuk membawakan pengalaman berkompetisi yang lebih seru.
-                        </p>
-                        <p className="text-lg md:text-xl">
-                            Menuju Indonesia Emas 2045, pendidikan tinggi vokasi menjadi wadah bagi para mahasiswa untuk mengembangkan inovasi di seluruh bidang ilmu pengetahuan.
-                        </p>
                     </motion.div>
                 </div>
 
@@ -75,7 +85,7 @@ const SambutanSection = () => {
                     >
                         <strong>Tema: </strong>
                         <span className="text-blue-600 font-semibold">
-                            "Vokasi Mewujudkan Kampus Prestasi Menuju Inovasi Informatika"
+                            "Inovasi Vokasi dan Kreatifitas Informatika Menyongsong Indonesia Emas"
                         </span>
                     </motion.p>
                 </div>

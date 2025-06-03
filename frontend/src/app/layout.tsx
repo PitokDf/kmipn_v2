@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: 'KMIPN - Kompetisi Mahasiswa Informatika Politeknik Nasional',
   description:
     'KMIPN adalah kompetisi tahunan bergengsi untuk mahasiswa informatika Politeknik Nasional. Tunjukkan kemampuan coding, inovasi, dan kreativitas lo di sini!',
-  icons: 'https://media.licdn.com/dms/image/v2/D4D03AQG7TgglFclaIw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1730623577381?e=2147483647&v=beta&t=nc8TX7BlSQqDHoqMiREDbToogJ5UM0ANH_XkogtBEoY',
+  icons: '/images/logos/kmipn-logo.pnp',
   verification: {
     google: '7UVWLjtHfAA1ccchiarJNOFElAmh6e2a4nHTqbosAZU'
   },
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
       'Buktikan kemampuan team kamu di KMIPN! Kompetisi bergengsi yang menguji kreativitas dan skill coding mahasiswa informatika Politeknik Nasional.',
     url: 'kmipnpnp-develop.vercel.app',
     siteName: 'KMIPN',
-    images: ['https://media.licdn.com/dms/image/v2/D4D03AQG7TgglFclaIw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1730623577381?e=2147483647&v=beta&t=nc8TX7BlSQqDHoqMiREDbToogJ5UM0ANH_XkogtBEoY'],
+    images: ['/images/logos/kmipn-logo.png'],
     locale: 'id_ID',
     type: 'website'
   },
@@ -79,7 +79,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <link rel="icon"
-          href="https://media.licdn.com/dms/image/v2/D4D03AQG7TgglFclaIw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1730623577381?e=2147483647&v=beta&t=nc8TX7BlSQqDHoqMiREDbToogJ5UM0ANH_XkogtBEoY"
+          href="/images/logos/kmipn-logo.png"
           type="image/x-icon" />
         <ThemeProvider
           attribute={"class"}

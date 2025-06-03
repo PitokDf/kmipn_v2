@@ -321,6 +321,11 @@
 
 
 @layer base {
+  ::selection {
+    @apply bg-orange-600;
+    @apply text-orange-50
+  }
+
   * {
     @apply border-border;
   }

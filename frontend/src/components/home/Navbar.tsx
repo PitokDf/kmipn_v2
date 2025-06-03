@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { Menu, X, Home, MessageSquare, Calendar, List } from 'lucide-react';
+import { Menu, X, Home, MessageSquare, Calendar, List, ChartArea } from 'lucide-react';
 import Link from 'next/link';
 import { MenuItem } from '../navigation/types';
 import DesktopMenu from '../navigation/DesktopMenu';
 import LoginButton from '../navigation/LoginButton';
 import MobileMenu from '../navigation/MobileMenu';
+import Image from 'next/image';
 
 const menuItems: MenuItem[] = [
     {
@@ -29,6 +30,11 @@ const menuItems: MenuItem[] = [
         label: 'Kategori',
         icon: <List className="w-4 h-4" /> // Ikon untuk kategori (daftar kategori kompetisi) 
     },
+    {
+        href: '/statistik',
+        label: 'Statistik',
+        icon: <ChartArea className="w-4 h-4" /> // Ikon untuk kategori (daftar kategori kompetisi) 
+    },
 ];
 
 const Navbar = () => {
@@ -43,14 +49,50 @@ const Navbar = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
                     {/* Logo and Brand */}
-                    <div className="flex items-center">
+                    <div className="flex gap-3 items-center">
                         <Link
                             href="/"
                             className="flex items-center space-x-3 group"
                         >
-                            <span className="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors duration-300">
-                                KMIPN VII
-                            </span>
+                            <Image
+                                width={40}
+                                height={40}
+                                alt='kemdikbud logo'
+                                src={'/images/logos/kemdikbud.png'}
+                            />
+                        </Link>
+                        <Link
+                            href="/"
+                            className="flex items-center space-x-3 group"
+                        >
+                            <Image
+                                width={40}
+                                height={40}
+                                alt='bakorma logo'
+                                src={'/images/logos/bakorma.png'}
+                            />
+                        </Link>
+                        <Link
+                            href="/"
+                            className="flex items-center space-x-3 group"
+                        >
+                            <Image
+                                width={40}
+                                height={40}
+                                alt='pens logo'
+                                src={'/images/logos/pens.png'}
+                            />
+                        </Link>
+                        <Link
+                            href="/"
+                            className="flex items-center space-x-3 group"
+                        >
+                            <Image
+                                height={60}
+                                width={100}
+                                alt='kmipn 7 logo'
+                                src={'/images/logos/kmipn-7.png'}
+                            />
                         </Link>
                     </div>
 
