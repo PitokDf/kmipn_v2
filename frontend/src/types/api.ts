@@ -184,3 +184,12 @@ export interface VerifiedTeamStatsData {
     status: string
     count: number
 }
+
+
+export interface Timeline {
+    id: number
+    title: string
+    description: string
+    startTime: string | Date
+    endTime: string | Date
+}

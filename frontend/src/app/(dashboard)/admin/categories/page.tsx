@@ -1,19 +1,12 @@
 "use client";
 
 import { useState } from "react";
-// import { DashboardLayout } from "@/components/layout/dashboard-layout";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { CategoriesTable } from "@/components/features/admin/categories/CategoriesTable";
 import { CategoriesStatistik } from "@/components/features/admin/categories/CategoriesStatistik";
 import { AddCategory } from "@/components/features/admin/categories/AddCateory";
 import { Category } from "@/types/api";
-import { DeleteConfirmDialog } from "@/components/ui/delete-confirm-dialog";
 import { DeleteCateory } from "@/components/features/admin/categories/DeleteCategory";
 import { EditCategory } from "@/components/features/admin/categories/EditCategory";
 
