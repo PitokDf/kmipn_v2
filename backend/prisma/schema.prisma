@@ -170,11 +170,11 @@ model File {
 }
 
 model Timeline {
-    id          Int      @id @default(autoincrement())
+    id          Int       @id @default(autoincrement())
     title       String
-    description String   @db.Text
+    description String    @db.Text
     startTime   DateTime
-    endTime     DateTime
+    endTime     DateTime?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

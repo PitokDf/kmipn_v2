@@ -21,17 +21,15 @@ const DownloadAssetSection = () => {
                         initial={{ scale: 0.8, opacity: 0 }}
                         whileInView={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.6 }}
-                        className="w-20 h-1 bg-blue-600 mx-auto rounded"
+                        className="w-20 h-1 bg-orange-600 mx-auto rounded"
                     />
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                     {/* Download Panduan */}
                     <Link
-                        href="/files/BUKU PANDUAN KMIPN VII.pdf"
+                        href="https://drive.google.com/drive/folders/1a4NvVdGX92Zh1VbFp3eYHLzKarB97-Dt?usp=sharing"
                         target="_blank"
-                        rel="noopener noreferrer"
-                        download="PANDUAN-KMIPN.pdf"
                         className="group relative flex justify-end  w-full"
                     >
                         <motion.div
@@ -57,7 +55,10 @@ const DownloadAssetSection = () => {
                     </Link>
 
                     {/* Download Logo */}
-                    <Link href="#" className="group w-[320px]">
+                    <Link
+                        target='_blank'
+                        href="https://drive.google.com/drive/folders/1bFsRUUeCxZguOi0adeI67sUSrmVYPAIY"
+                        className="group w-[320px]">
                         <motion.div
                             animate={{ y: [0, -20, 0] }}
                             transition={{
@@ -72,11 +73,11 @@ const DownloadAssetSection = () => {
                                 width={320}
                                 height={320}
                                 src="/images/maskot edit kampus 2.png"
-                                alt="Download Logo"
+                                alt="Download Logo dan Asset"
                                 className="scale-x-[-1] transition-transform group-hover:scale-105"
                             />
                             <span className="text-lg font-semibold text-gray-800 group-hover:text-orange-600">
-                                Download Logo KMIPN
+                                Download Logo dan Asset KMIPN
                             </span>
                         </motion.div>
                     </Link>

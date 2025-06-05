@@ -204,8 +204,8 @@ export default function ProposalForm() {
                 ) : (
                     <Card>
                         <CardContent>
-                            <div className="flex h-20 justify-center items-center">
-                                <p className='text-muted-foreground'>Tidak dapat mengirim proposal untuk saat ini.</p>
+                            <div className="flex justify-center items-center py-10">
+                                <p className='text-muted-foreground text-center'>Tidak dapat mengirim proposal untuk saat ini.</p>
                             </div>
                         </CardContent>
                     </Card>

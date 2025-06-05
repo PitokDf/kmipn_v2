@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from "react"
-import { useForm, useFieldArray } from "react-hook-form"
+import { useForm, useFieldArray, useFormContext } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 // import { Button } from ""
@@ -26,7 +26,7 @@ const formSchema = z.object({
   members: z.array(
     z.object({
       name: z.string().min(3, "Nama anggota minimal 3 karakter"),
-      nim: z.string().length(12, "NIM harus 12 digit"),
+      nim: z.string().length(10, "NIM harus 10 digit"),
       prodi: z.string().nonempty("Prodi wajib diisi"),
       email: z.string().email("Email tidak valid"),
       noWa: z.string().nonempty("Nomor WhatsApp Wajib diisi"),
@@ -46,10 +46,12 @@ type FormValues = z.infer<typeof formSchema>
 
 export default function CompleteForm() {
   const [isLoading, setIsLoading] = useState(false)
+  const user = useUser()
   const { data, isPending, error } = useQuery({
     queryKey: ["categories"],
     queryFn: getAllCategory
   })
+
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -70,6 +72,13 @@ export default function CompleteForm() {
       ],
     },
   })
+
+  useEffect(() => {
+    if (user?.email) {
+      form.setValue(`members.0.email`, user.email)
+      form.setValue(`members.0.name`, user.name)
+    }
+  }, [user?.email, form])
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -112,7 +121,6 @@ export default function CompleteForm() {
     }
   }
 
-  const user = useUser()
 
   return (
     <Form {...form}>
@@ -168,7 +176,6 @@ export default function CompleteForm() {
               <FormLabel>Asal Politeknik</FormLabel>
               <FormControl>
                 <ListPoliteknik onValueChange={field.onChange} value={field.value} />
-                {/* <Input {...field} disabled={isLoading} placeholder="Masukkan asal politeknik" /> */}
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -229,7 +236,9 @@ export default function CompleteForm() {
                   <FormItem>
                     <FormLabel>NIM</FormLabel>
                     <FormControl>
-                      <Input {...field} disabled={isLoading} placeholder={index === 0 ? "NIM Ketua" : "NIM Anggota"} />
+                      <Input {...field}
+                        disabled={isLoading}
+                        placeholder={index === 0 ? "NIM Ketua" : "NIM Anggota"} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -254,9 +263,8 @@ export default function CompleteForm() {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        value={index === 0 ? user?.email : field.value}
-                        onChange={field.onChange}
-                        disabled={isLoading}
+                        {...field}
+                        disabled={isLoading || index == 0}
                         placeholder={index === 0 ? "Email Ketua" : "Email Anggota"} />
                     </FormControl>
                     <FormMessage />

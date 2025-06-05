@@ -4,7 +4,9 @@ import { prisma } from "../configs/prisma";
 export class TimelineService {
 
     async getAllTimelines(): Promise<Timeline[]> {
-        return await prisma.timeline.findMany()
+        return await prisma.timeline.findMany({
+            orderBy: { createdAt: 'asc' }
+        })
     }
 
     async createTimeline(data: Pick<Timeline, 'title' | 'startTime' | 'endTime' | 'description'>): Promise<Timeline> {

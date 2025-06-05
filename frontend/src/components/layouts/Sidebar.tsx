@@ -100,6 +100,7 @@ const items: itemsLink[] = [
         url: "/admin/timeline",
         icon: CalendarClock,
         badge: "Admin",
+        description: "Create Competition Timeline",
         role: ["admin"],
     },
     {

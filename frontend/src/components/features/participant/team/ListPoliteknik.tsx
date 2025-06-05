@@ -22,7 +22,7 @@ export function ListPoliteknik({ onValueChange, value }: { value: string, onValu
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-full p-0">
-                <Command className="w-full">
+                <Command className="w-[100dvw] md:w-full">
                     <CommandInput placeholder="Search politeknik..." className="h-9" />
                     <CommandList>
                         <CommandEmpty>No politeknik found.</CommandEmpty>

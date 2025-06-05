@@ -1,3 +1,4 @@
+import { formatTanggal } from "@/lib/formatTanggal";
 import { cn } from "@/lib/utils";
 import { CheckCircle, Clock, XCircle } from "lucide-react";
 
@@ -20,12 +21,12 @@ const statusIcons = {
   upcoming: <Clock className="h-6 w-6 text-gray-300" />,
 };
 
-export function TimelineItem({ 
-  title, 
-  date, 
-  description, 
-  status, 
-  isLast = false 
+export function TimelineItem({
+  title,
+  date,
+  description,
+  status,
+  isLast = false
 }: TimelineItemProps) {
   return (
     <li className="relative flex gap-6">
@@ -34,7 +35,7 @@ export function TimelineItem({
           {statusIcons[status]}
         </div>
         {!isLast && (
-          <div 
+          <div
             className={cn(
               "w-px grow",
               status === "completed" ? "bg-green-500" : "bg-gray-200"
@@ -48,11 +49,11 @@ export function TimelineItem({
       )}>
         <div className="flex flex-col gap-0.5">
           <h3 className="text-sm font-medium">{title}</h3>
-          <time className="text-xs text-muted-foreground">{date}</time>
+          <time className="text-xs text-muted-foreground">{formatTanggal(date)}</time>
         </div>
-        {description && (
-          <p className="mt-2 text-sm text-muted-foreground">{description}</p>
-        )}
+        {/* {description && (
+          <p className="mt-2 text-sm text-muted-foreground">{description.length > 100 ? `${description.slice(0, 100)}...` : description}</p>
+        )} */}
       </div>
     </li>
   );

@@ -233,11 +233,14 @@ export const downloadAttendace = async (req: Request, res: Response) => {
         // Masukkan data ke stream
         attendance.forEach((member) => {
             csvStream.write({
-                Nama: member.name,
+                'Nama Tim': member.Team.name,
+                "Nama Anggota": member.name,
                 NIM: member.nim,
                 Prodi: member.prodi,
-                'Nama Tim': member.Team.name,
-                Politeknik: member.Team.institution,
+                "Nomor WhatsApp": member.noWa,
+                "Peran": member.role === "leader" ? "Ketua" : "Anggota",
+                Email: member.email,
+                "Asal Politeknik": member.Team.institution,
             });
         });
 

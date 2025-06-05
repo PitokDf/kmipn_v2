@@ -14,7 +14,7 @@ const TimelineSchema = z.object({
     title: z.string().min(3, "Title timeline minimal 3 karakter"),
     description: z.string().min(15, "Deskripsi minimala 15 karakter"),
     startTime: z.date({ required_error: "Tanggal mulai harus diisi" }),
-    endTime: z.date({ required_error: "Tanggal berakhir harus diisi" })
+    endTime: z.date({ required_error: "Tanggal berakhir harus diisi" }).optional()
 })
 
 export type TimelineFormValues = z.infer<typeof TimelineSchema> & { id?: number }
@@ -39,7 +39,7 @@ export function TimelineDialog({
     defaultValues = {
         description: "",
         startTime: new Date(),
-        endTime: new Date(),
+        endTime: undefined,
         title: ""
     }
 }: TimelineDialogProps) {
@@ -125,7 +125,7 @@ export function TimelineDialog({
                             name="endTime"
                             render={({ field }) => (
                                 <FormItem className="flex flex-col">
-                                    <FormLabel>Tanggal Berakhir</FormLabel>
+                                    <FormLabel>Tanggal Berakhir (optional)</FormLabel>
                                     <FormControl>
                                         <DatePicker value={field.value} onChange={field.onChange} />
                                     </FormControl>

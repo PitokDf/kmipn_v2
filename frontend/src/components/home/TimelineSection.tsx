@@ -3,47 +3,23 @@
 import { useRef } from 'react';
 import { motion, useScroll } from 'framer-motion';
 import TimelineItem from './TimelineItem';
-
-const timelineData = [
-  {
-    year: '15 Maret - 10 Mei 2025',
-    title: 'Pendaftaran',
-    description: 'Proses pendaftaran untuk peserta kompetisi dimulai pada tanggal 15 Maret 2025 hingga 10 Mei 2025. Pada tahap ini, peserta diharuskan mengisi formulir pendaftaran dan mengunggah proposal yang berisi detail ide atau proyek mereka yang akan diikutsertakan dalam kompetisi.',
-    icon: '📝',
-  },
-  {
-    year: '22 Mei 2025',
-    title: 'Babak penyisihan',
-    description: 'Babak penyisihan untuk kategori pengembangan aplikasi permainan akan dilaksanakan pada tanggal 22 Mei 2025. Pada tahap ini, peserta akan diuji mengenai kemampuan mereka dalam merancang, mengembangkan, dan mempresentasikan aplikasi permainan dengan tema yang telah ditentukan sebelumnya.',
-    icon: '🎮',
-  },
-  {
-    year: '23 Mei 2025',
-    title: 'Penyisihan',
-    description: 'Babak penyisihan untuk kategori keamanan siber akan diselenggarakan pada tanggal 23 Mei 2025. Para peserta akan diberikan serangkaian tantangan terkait keamanan sistem, seperti analisis kerentanan dan simulasi serangan, untuk menguji kemampuan mereka dalam menjaga keamanan teknologi informasi.',
-    icon: '🛡️',
-  },
-  {
-    year: '9 Juni 2025',
-    title: 'Babak penyisihan kedua',
-    description: 'Tahap kedua dari babak penyisihan akan berlangsung pada tanggal 9 Juni 2025. Pada tahap ini, peserta yang telah lolos seleksi sebelumnya akan kembali bersaing untuk menunjukkan peningkatan dari hasil pengembangan aplikasi permainan yang telah mereka buat, dengan kriteria penilaian yang lebih ketat.',
-    icon: '⚙️',
-  },
-  {
-    year: '30 Juni 2025',
-    title: 'Pengumuman',
-    description: 'Pengumuman finalis kompetisi akan dilakukan pada tanggal 30 Juni 2025. Peserta yang berhasil lolos ke tahap final akan diinformasikan melalui situs resmi kompetisi dan juga melalui email yang terdaftar pada saat pendaftaran.',
-    icon: '📢',
-  },
-  {
-    year: '31 Juli - 3 Agustus 2025',
-    title: 'Final',
-    description: 'Babak final akan dilaksanakan dari tanggal 31 Juli hingga 3 Agustus 2025. Pada tahap ini, para finalis akan mempresentasikan hasil akhir dari proyek mereka di hadapan dewan juri. Penilaian akan dilakukan secara menyeluruh berdasarkan kreativitas, inovasi, dan dampak yang dihasilkan dari proyek tersebut.',
-    icon: '🏆',
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import { getAllTimeline } from '@/lib/apis/timeline';
+import { formatTanggal } from '@/lib/formatTanggal';
 
 const TimelineSection = () => {
+  const { data } = useQuery({
+    queryKey: ['timelines'],
+    queryFn: getAllTimeline
+  })
+
+  const timelineData = data?.map((timeline) => ({
+    year: `${timeline.endTime ? `${formatTanggal(timeline.startTime)} - ${formatTanggal(timeline.endTime)}` : formatTanggal(timeline.startTime)}`,
+    title: timeline.title,
+    description: timeline.description,
+    icon: null
+  })) || []
+
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -66,7 +42,7 @@ const TimelineSection = () => {
             initial={{ scale: 0.8, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="w-20 h-1 bg-blue-500 mx-auto rounded"
+            className="w-20 h-1 bg-orange-500 mx-auto rounded"
           ></motion.div>
         </div>
 
@@ -74,7 +50,7 @@ const TimelineSection = () => {
           {/* Timeline Line */}
           <div className="absolute left-1/2 transform -translate-x-px h-full w-0.5 bg-gray-200">
             <motion.div
-              className="absolute top-0 left-0 w-full bg-blue-600"
+              className="absolute top-0 left-0 w-full bg-orange-600"
               style={{
                 height: scrollYProgress,
                 scaleY: scrollYProgress

@@ -54,18 +54,13 @@ export function TimelineTable(
         },
         {
             accessorKey: "startTime",
-            header: "Tanggal Mulai",
+            header: "Rentang Waktu",
             cell: ({ row }) => {
-                return <div>{formatTanggal(row.getValue("startTime"))}</div>;
+                const timeline = row.original;
+                return <div>{timeline.endTime ? `${formatTanggal(timeline.startTime)} - ${formatTanggal(timeline.endTime)}` : formatTanggal(timeline.startTime)}</div>;
             },
         },
-        {
-            accessorKey: "endTime",
-            header: "Tanggal Berakhir",
-            cell: ({ row }) => {
-                return <div>{formatTanggal(row.getValue("endTime"))}</div>;
-            },
-        },
+
         {
             id: "actions",
             cell: ({ row }) => {

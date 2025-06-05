@@ -27,7 +27,7 @@ export const createProposal = async (req: Request, res: Response<ResponseApiType
 
         // upload file ke google drive
         const fileBuffer = file_proposal?.buffer;
-        const fileName = file_proposal?.originalname;
+        const fileName = `${team?.name}_${file_proposal?.originalname}`;
         const mimeType = file_proposal?.mimetype;
         // const folderId = process.env.GOOGLE_DRIVE_FOLDER_PROPOSAL_ID || '';
 
@@ -76,7 +76,7 @@ export async function replaceFileProposalController(req: Request, res: Response<
         }
 
         const fileBuffer = file?.buffer;
-        const fileName = file?.originalname;
+        const fileName = `${team?.name}_${file?.originalname}`;
         const mimeType = file?.mimetype;
 
         const uploadResult = await uploadFileToDrive(fileBuffer!, fileName!, mimeType!, team?.Category.driveFolderId!)

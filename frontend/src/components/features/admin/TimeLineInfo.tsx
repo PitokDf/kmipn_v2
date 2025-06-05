@@ -1,61 +1,57 @@
+'use client'
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Timeline } from "@/components/ui/timeline";
+import { getAllTimeline } from "@/lib/apis/timeline";
+import { formatTanggal } from "@/lib/formatTanggal";
+import { useQuery } from "@tanstack/react-query";
 import { HTMLAttributes } from "react";
 
 type TimelineStatus = "completed" | "current" | "upcoming";
 
+function getDateOnly(dateStr: string) {
+    return new Date(dateStr).toISOString().split("T")[0];
+}
+
+
 function getTimelineStatus(date: string, index: number, timeline: { date: string }[]): TimelineStatus {
-    const now = new Date();
-    const eventDate = new Date(date);
+    const today = new Date().toISOString().split("T")[0];
+    const eventDate = getDateOnly(date);
+    const nextEventDate = timeline[index + 1] ? getDateOnly(timeline[index + 1].date) : null;
 
-    const nextEventDate = timeline[index + 1] ? new Date(timeline[index + 1].date) : null;
-
-    if (eventDate < now && (!nextEventDate || nextEventDate > now)) {
+    if (eventDate < today && (!nextEventDate || nextEventDate > today)) {
         return "current";
-    } else if (eventDate < now) {
+    } else if (eventDate < today) {
         return "completed";
     } else {
         return "upcoming";
     }
 }
 
-const rawTimeline = [
-    {
-        title: "Pendaftaran Dibuka",
-        date: "Januari 1, 2025",
-        description: "Tim mulai mendaftar",
-    },
-    {
-        title: "Mengirimkan Proposal",
-        date: "February 15, 2025",
-        description: "Deadline for proposal submission",
-    },
-    {
-        title: "Preliminary Round",
-        date: "Mai 1, 2025",
-        description: "Preliminary judging and selection",
-    },
-    {
-        title: "Final Round",
-        date: "September 15, 2025",
-        description: "Final presentations and awards",
-    },
-];
-
-const competitionTimeline = rawTimeline.map((item, index, arr) => ({
-    ...item,
-    status: getTimelineStatus(item.date, index, arr),
-}));
-
-
 export function TimeLineInfo({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
+    const { data } = useQuery({
+        queryKey: ['timelines'],
+        queryFn: getAllTimeline
+    })
+
+    const rawTimeline = data?.map((time) => ({
+        id: time.id,
+        title: time.title,
+        description: time.description,
+        date: time.startTime as string
+    }))
+
+    const competitionTimeline = rawTimeline?.map((item, index, arr) => ({
+        ...item,
+        status: getTimelineStatus((item?.date as string), index, arr),
+    }));
     return (
         <Card className={className}>
             <CardHeader>
                 <CardTitle>Competition Timeline</CardTitle>
             </CardHeader>
             <CardContent>
-                <Timeline items={competitionTimeline} />
+                <Timeline items={competitionTimeline! || []} />
             </CardContent>
         </Card>
     )

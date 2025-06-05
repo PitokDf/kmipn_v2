@@ -27,7 +27,7 @@ const SambutanSection = () => {
                         initial={{ scale: 0.8, opacity: 0 }}
                         whileInView={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.6 }}
-                        className="w-24 h-1 bg-blue-600 mx-auto rounded-full mt-4"
+                        className="w-24 h-1 bg-orange-600 mx-auto rounded-full mt-4"
                     ></motion.div>
                 </div>
 
@@ -71,12 +71,12 @@ const SambutanSection = () => {
                             className="rounded-lg shadow-lg h-full"
                         />
                         {/* Decorative Element */}
-                        <div className="absolute -top-6 -left-6 w-14 h-14 object-fill bg-blue-100 rounded-full shadow-md"></div>
+                        <div className="absolute -top-6 -left-6 w-14 h-14 object-fill bg-orange-100 rounded-full shadow-md"></div>
                     </motion.div>
                 </div>
 
                 {/* Highlight Section */}
-                <div className="mt-16 bg-blue-50 p-8 rounded-lg shadow-md">
+                <div className="mt-16 bg-orange-50 p-8 rounded-lg shadow-md">
                     <motion.p
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
@@ -84,7 +84,7 @@ const SambutanSection = () => {
                         className="text-center text-lg md:text-xl text-gray-700 leading-relaxed"
                     >
                         <strong>Tema: </strong>
-                        <span className="text-blue-600 font-semibold">
+                        <span className="text-orange-600 font-semibold">
                             "Inovasi Vokasi dan Kreatifitas Informatika Menyongsong Indonesia Emas"
                         </span>
                     </motion.p>
@@ -97,7 +97,7 @@ const SambutanSection = () => {
                     transition={{ duration: 0.8 }}
                     className="mt-16 flex justify-center"
                 >
-                    <button className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition">
+                    <button className="px-6 py-3 bg-orange-600 text-white font-semibold rounded-lg shadow hover:bg-orange-700 transition">
                         Pelajari Lebih Lanjut
                     </button>
                 </motion.div>

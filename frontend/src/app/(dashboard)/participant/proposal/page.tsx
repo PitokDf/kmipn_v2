@@ -21,12 +21,10 @@ export default function ProposalsPage() {
         </div>
         <Link
           className="w-fit"
-          href={"/files/BUKU PANDUAN KMIPN VII.pdf"}
-          target="_blank"
-          rel="noopener noreferrer"
-          download={"PANDUAN-KMIPN.pdf"}>
+          href={"https://drive.google.com/drive/folders/1a4NvVdGX92Zh1VbFp3eYHLzKarB97-Dt?usp=sharing"}
+          target="_blank">
           <Button variant="outline" className="w-full bg-green-500 hover:bg-green-500/80 text-white">
-            <Download /> Unduh Pedoman sebagai PDF
+            <Download /> Lihat Panduan
           </Button>
         </Link>
       </div>

@@ -32,6 +32,9 @@ export async function getAllTeamMemberService() {
             name: true,
             nim: true,
             prodi: true,
+            noWa: true,
+            email: true,
+            role: true,
             Team: {
                 select: {
                     name: true,

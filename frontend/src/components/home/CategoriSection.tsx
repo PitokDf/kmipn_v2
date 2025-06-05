@@ -27,10 +27,10 @@ const KategoriSection = () => {
                         initial={{ scale: 0.8, opacity: 0 }}
                         whileInView={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.6 }}
-                        className="w-20 h-1 bg-blue-600 mx-auto rounded"
+                        className="w-20 h-1 bg-orange-600 mx-auto rounded"
                     />
                     <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto mt-4">
-                        Pilih kategori yang sesuai dengan minat dan keahlian kamu. Setiap kategori punya tantangan dan jadwalnya sendiri!
+                        Berbagai kategori lomba yang dapat kamu ikuti pada KMIPN 2025. Pilih bidang yang sesuai dengan minat dan keahlianmu!
                     </p>
                 </div>
 
@@ -49,7 +49,7 @@ const KategoriSection = () => {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="bg-white border border-gray-200 p-6 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300"
+                                    className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
                                 >
                                     <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">
                                         {category.categoriName}
@@ -62,7 +62,7 @@ const KategoriSection = () => {
                                         <span
                                             className={`px-3 py-1 text-sm rounded-full font-medium ${isExpired
                                                 ? 'bg-red-100 text-red-600'
-                                                : 'bg-green-100 text-green-700'
+                                                : 'bg-orange-100 text-orange-700'
                                                 }`}
                                         >
                                             {isExpired
@@ -97,7 +97,7 @@ const LokasiKami = () => {
                         initial={{ scale: 0.8, opacity: 0 }}
                         whileInView={{ scale: 1, opacity: 1 }}
                         transition={{ duration: 0.6 }}
-                        className="w-20 h-1 bg-blue-500 mx-auto rounded"
+                        className="w-20 h-1 bg-orange-500 mx-auto rounded"
                     ></motion.div>
                 </div>
                 <div className="flex flex-col md:flex-row items-center gap-8">
