@@ -45,7 +45,7 @@ export function EditTimeline({
             open={open}
             title="Edit Timeline"
             defaultValues={{ ...data, startTime: new Date(data.startTime), endTime: new Date(data.endTime) }}
-            onSave={async (data) => { mutateEditTimeline({ ...data, id: data.id! }) }}
+            onSave={async (data) => { mutateEditTimeline({ ...data, id: data.id!, endTime: data.endTime || "" }) }}
             onLoading={isPending}
         />
     )

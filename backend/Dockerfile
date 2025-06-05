@@ -24,4 +24,4 @@ COPY src/templates/*.html dist/src/templates/
 
 EXPOSE 2003
 
-CMD [ "node", "dist/src/app.js" ]
+CMD [ "sh", "-c", "npx prisma migrate deploy && npx prisma db seed && node dist/src/app.js" ]

@@ -20,15 +20,14 @@ services:
       - BASE_URL=http://192.168.221.41:2003
       - FRONTEND_URL=http://192.168.221.41:3000
       - PORT=2003
-      - JWT_SECRET=rahasia-banget-ini-mah
+      - JWT_SECRET=rahasia-banget-ini-mah # ganti see pak sesuai samo yang lebih kuat
 
   frontend:
     build: 
       context: ./frontend
       dockerfile: Dockerfile
     environment:
-      - NEXT_PUBLIC_API_URL=http://192.168.221.41:2003
-      - JWT_SECRET=rahasia-banget-ini-mah
+      - JWT_SECRET=rahasia-banget-ini-mah # ganti see pak sesuai samo yang lebih kuat
     ports:
       - "3000:3000"
     depends_on:
