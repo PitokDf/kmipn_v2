@@ -24,13 +24,17 @@ const allowedPathByRole: { [key: string]: string[] } = {
         "/admin/reports/teams",
         "/admin/teams",
         "/admin/users",
+        "/admin/timelines",
     ],
     "operator": [
         "/admin",
-        "/admin/categories",
-        "/admin/teams/proposal",
-        "/admin/teams/submission",
-        "/admin/teams"
+        "/admin/proposals",
+        "/admin/submission",
+        "/admin/assessments",
+        "/admin/rounds",
+        "/admin/reports/assessments",
+        "/admin/reports/teams",
+        "/admin/teams",
     ]
 }
 
@@ -101,7 +105,8 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/auth/login",
+    matcher: [
+        "/auth/login",
         "/auth/register",
         "/admin/:path*",
         "/participant/:path*",

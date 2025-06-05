@@ -4,7 +4,8 @@ import {
     Users, ChevronDown, ChevronRight, LucideProps,
     LayoutDashboard, FolderKanban, UserCog, FileSearch,
     FileEdit, Upload, ClipboardCheck, Flag, BarChart3,
-    LogOut, Settings, User as UserIcon
+    LogOut, Settings, User as UserIcon,
+    CalendarClock
 } from "lucide-react"
 import {
     Sidebar,
@@ -57,11 +58,20 @@ const items: itemsLink[] = [
         description: "Overview & Analytics"
     },
     {
+        title: "Users",
+        url: "/admin/users",
+        role: ["admin"],
+        icon: UserCog,
+        description: "User Administration",
+        badge: "Admin"
+    },
+    {
         title: "Category",
         url: "/admin/categories",
-        role: ["admin", "operator"],
+        role: ["admin"],
         icon: FolderKanban,
-        description: "Manage Competition Categories"
+        description: "Manage Competition Categories",
+        badge: "Admin"
     },
     {
         title: "Team",
@@ -70,14 +80,7 @@ const items: itemsLink[] = [
         icon: Users,
         description: "Team Management"
     },
-    {
-        title: "Users",
-        url: "/admin/users",
-        role: ["admin"],
-        icon: UserCog,
-        description: "User Administration",
-        badge: "Admin"
-    },
+
     {
         title: "Proposals",
         url: "/admin/proposals",
@@ -91,6 +94,13 @@ const items: itemsLink[] = [
         role: ["admin", "operator"],
         icon: Flag,
         description: "Competition Rounds"
+    },
+    {
+        title: "Timeline",
+        url: "/admin/timeline",
+        icon: CalendarClock,
+        badge: "Admin",
+        role: ["admin"],
     },
     {
         title: "Report",
