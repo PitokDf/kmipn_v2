@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Assesment {
+  id         Int      @id @default(autoincrement())
+  proposalID Int      @unique
+  juriID     String
+  score      Float
+  createdAt  DateTime @default(now())
+  User       User     @relation(fields: [juriID], references: [id], onDelete: Cascade)
+  Proposal   Proposal @relation(fields: [proposalID], references: [id], onDelete: Cascade)
+}
+
+model Category {
+  id           Int      @id @default(autoincrement())
+  categoriName String   @db.VarChar(100)
+  description  String?
+  deadline     DateTime
+  createdAt    DateTime @default(now())
+  Team         Team[]
+}
+
+model File {
+  id           String    @id
+  originalName String
+  fileName     String
+  fileSize     Int
+  type         String
+  path         String
+  createdAt    DateTime  @default(now())
+  Proposal     Proposal?
+}
+
+model Lecture {
+  id        Int      @id @default(autoincrement())
+  name      String
+  nip       String   @db.VarChar(18)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Team      Team[]
+}
+
+model Proposal {
+  id        Int            @id @default(autoincrement())
+  title     String         @db.VarChar(125)
+  teamId    Int
+  fileLink  String?
+  status    statusProposal @default(pending)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  comments  String?
+  fileId    String         @unique
+  Assesment Assesment?
+  File      File           @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  Team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
+}
+
+model Submission {
+  id          Int              @id @default(autoincrement())
+  teamId      Int
+  round       Round
+  title       String?
+  description String?
+  githubUrl   String?
+  fileUrl     String?
+  fileName    String?
+  status      statusSubmission @default(pending)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @default(now()) @updatedAt
+  Team        Team             @relation(fields: [teamId], references: [id], onDelete: Cascade)
+}
+
+model Team {
+  id          Int          @id @default(autoincrement())
+  name        String       @db.VarChar(125)
+  categoryID  Int
+  institution String
+  lectureID   Int
+  verified    Boolean      @default(false)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now())
+  Proposal    Proposal[]
+  Submission  Submission[]
+  Category    Category     @relation(fields: [categoryID], references: [id], onDelete: Cascade)
+  Lecture     Lecture      @relation(fields: [lectureID], references: [id], onDelete: Cascade)
+  TeamMember  TeamMember[]
+}
+
+model TeamMember {
+  id        Int            @id @default(autoincrement())
+  teamId    Int
+  userId    String?        @unique
+  role      RoleTeamMember
+  nim       String         @db.VarChar(12)
+  name      String
+  email     String
+  no_WA     String
+  prodi     String
+  fileKTM   String
+  createdAt DateTime       @default(now())
+  Team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  User      User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id         String      @id @default(cuid())
+  email      String      @unique @db.VarChar(125)
+  password   String      @db.VarChar(255)
+  name       String      @db.VarChar(255)
+  verified   Boolean     @default(false)
+  role       RoleUser    @default(participant)
+  createdAt  DateTime    @default(now())
+  Assesment  Assesment[]
+  TeamMember TeamMember?
+  UserToken  UserToken[]
+}
+
+model UserToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum RoleTeamMember {
+  leader
+  member
+}
+
+enum RoleUser {
+  participant
+  admin
+  operator
+}
+
+enum Round {
+  preliminary
+  final
+}
+
+enum statusProposal {
+  approve
+  pending
+  rejected
+}
+
+enum statusSubmission {
+  pending
+  passed
+  failed
+}

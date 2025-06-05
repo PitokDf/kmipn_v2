@@ -13,7 +13,7 @@ export function DownloadApproved() {
             const url = window.URL.createObjectURL(new Blob([res.data]))
             const a = document.createElement("a")
             a.href = url
-            a.download = "approved-proposals.zip"
+            a.download = "proposals.zip"
             document.body.appendChild(a)
             a.click()
             a.remove()
@@ -29,7 +29,7 @@ export function DownloadApproved() {
             disabled={loading}
             className="hover:scale-105 transition-all"
             onClick={downloadApproved}>
-            <Download className="w-4 h-4 mr-1" /> {loading ? "Loading..." : "Download All Approved"}
+            <Download className="w-4 h-4 mr-1" /> {loading ? "Loading..." : "Download Semua Proposal"}
         </Button>
     )
 }

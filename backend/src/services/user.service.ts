@@ -20,7 +20,19 @@ export const GetByID = async (id: string) => {
 export async function findTeamUser(userId: string) {
     const user = await prisma.user.findFirst({
         where: { id: userId, },
-        include: { TeamMember: { include: { Team: { select: { id: true, name: true } } } } }
+        include: {
+            TeamMember: {
+                include: {
+                    Team: {
+                        select:
+                        {
+                            id: true, name: true, Category: { select: { driveFolderId: true } },
+                            submissionFolderId: true
+                        }
+                    },
+                }
+            }
+        }
     })
 
     return user?.TeamMember?.Team

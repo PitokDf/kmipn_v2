@@ -14,10 +14,14 @@ export const createProposalService =
         const transaction = await prisma.$transaction(async () => {
             const file = await prisma.file.create({
                 data: {
-                    id: fileId, fileName, fileSize, type, originalName, path
+                    id: fileId, fileName, fileSize, type, originalName, path, usage: "proposal"
                 }
             });
-            const proposal = await prisma.proposal.create({ data: { teamId: teamID, fileLink: filelink, fileId: file.id, title: title, comments: comments } });
+            const proposal = await prisma.proposal.create(
+                {
+                    data:
+                        { teamId: teamID, fileId: file.id, title: title, comments: comments }
+                });
             return { file, proposal }
         });
         if (!transaction) throw new AppError("Failed create proposal", 400);
@@ -42,7 +46,7 @@ export async function getProposalTeamService(teamId: number) {
 }
 
 export const getProposalService = async () => {
-    const proposals = await prisma.proposal.findMany({ include: { Assesment: true, Team: { include: { Category: { select: { categoriName: true } } } }, File: true }, orderBy: { createdAt: "desc" } })
+    const proposals = await prisma.proposal.findMany({ include: { assesment: true, Team: { include: { Category: { select: { categoriName: true } } } }, File: true }, orderBy: { createdAt: "desc" } })
     if (!proposals) throw new AppError("Terjadi masalah saat mengambil data.", 400);
     return proposals;
 }
@@ -53,11 +57,11 @@ export const deleteProposalService = async (id: number) => {
 
     await deleteFileFromDrive(proposal?.fileId!)
     await prisma.proposal.delete({ where: { id: Number(id) } });
-    await prisma.file.delete({ where: { id: proposal.fileId } });
+    await prisma.file.delete({ where: { id: proposal.fileId! } });
     return proposal;
 }
 
-export const updateProposalService = async (id: number, status: $Enums.statusProposal, comments?: string) => {
+export const updateProposalService = async (id: number, status: $Enums.StatusProposal, comments?: string) => {
     const proposal = await prisma.proposal.findUnique({
         where: { id: Number(id) },
         include: {
@@ -94,7 +98,7 @@ export const updateProposalService = async (id: number, status: $Enums.statusPro
 
 export const getAllproposalAproveServices = async () => {
     const approvedProposal = await prisma.proposal.findMany({
-        where: { status: "approve" }, include: { File: true, Team: true }
+        include: { File: true, Team: true }
     });
 
     return approvedProposal;
@@ -113,12 +117,13 @@ export async function replaceFileProposalService
     const tr = await prisma.$transaction(async (tr) => {
         // update table file
         const file = await tr.file.update({
-            where: { id: proposal?.fileId },
+            where: { id: proposal?.fileId! },
             data: {
                 id: fileId,
                 fileName: fileName,
                 fileSize: fileSize,
-                originalName: originalName
+                originalName: originalName,
+                path: fileLink,
             }
         })
 
@@ -128,7 +133,6 @@ export async function replaceFileProposalService
             data: {
                 fileId: fileId,
                 status: "pending",
-                fileLink: fileLink
             },
             include: { Team: { select: { name: true } } }
         })

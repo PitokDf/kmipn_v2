@@ -18,10 +18,10 @@ export async function getAllTeamController(req: Request, res: Response<ResponseA
             createdAt: team.createdAt,
             category: team.Category.categoriName,
             institution: team.institution,
-            members: team.TeamMember.map((mem) => ({ ...mem, noWA: mem.no_WA })),
+            members: team.TeamMember.map((mem) => ({ ...mem, noWA: mem.noWa, fileKTM: mem.fileKtm?.path })),
             lecture: team.Lecture.name,
             status: team.verified ? "verified" : "pending",
-            proposalLink: team.Proposal.pop()?.fileLink || null
+            proposalLink: team.Proposal.pop()?.fileId || null
         }))
 
         return res.status(200).json({
@@ -41,6 +41,7 @@ export async function getInfoSubmissionController(req: Request, res: Response<Re
         const submission = await getInfoSubmissionService(id)
         const submissionMap = {
             id: submission?.id,
+            proposalApproved: submission.proposalApproved,
             teamId: submission?.teamId,
             round: submission?.round,
             status: submission?.status,

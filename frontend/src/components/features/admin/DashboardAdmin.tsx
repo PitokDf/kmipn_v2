@@ -47,7 +47,7 @@ export default function DashboardAdmin() {
                 <TimeLineInfo className="md:col-span-2" />
                 <Card className="md:col-span-3">
                     <CardHeader>
-                        <CardTitle>Recent Team Registrations</CardTitle>
+                        <CardTitle>Pendaftaran Tim Terbaru</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
@@ -69,7 +69,7 @@ export default function DashboardAdmin() {
                 </Card>
                 <Card className="md:col-span-3">
                     <CardHeader>
-                        <CardTitle>Recent Proposal Submissions</CardTitle>
+                        <CardTitle>Pengajuan Proposal Terbaru</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">

@@ -29,9 +29,9 @@ export const createProposal = async (req: Request, res: Response<ResponseApiType
         const fileBuffer = file_proposal?.buffer;
         const fileName = file_proposal?.originalname;
         const mimeType = file_proposal?.mimetype;
-        const folderId = process.env.GOOGLE_DRIVE_FOLDER_PROPOSAL_ID || '';
+        // const folderId = process.env.GOOGLE_DRIVE_FOLDER_PROPOSAL_ID || '';
 
-        const uploadResult = await uploadFileToDrive(fileBuffer!, fileName!, mimeType!, folderId)
+        const uploadResult = await uploadFileToDrive(fileBuffer!, fileName!, mimeType!, team?.Category.driveFolderId!)
 
         const fileLink = uploadResult.webViewLink;
         const proposal = await
@@ -43,7 +43,7 @@ export const createProposal = async (req: Request, res: Response<ResponseApiType
                 file_proposal?.size!,
                 file_proposal?.mimetype!,
                 file_proposal?.originalname!,
-                file_proposal?.path || "",
+                uploadResult.webViewLink!,
                 title,
                 comments
             );
@@ -61,7 +61,9 @@ export const createProposal = async (req: Request, res: Response<ResponseApiType
 export async function replaceFileProposalController(req: Request, res: Response<ResponseApiType>) {
     try {
         const { id } = req.params
-        console.log(id);
+        const user = (req as any).user
+
+        const team = await findTeamUser(user.id)
 
         const file = req.file
         const allowedMimeType = ["application/pdf"]; // type file yang diizinkan adalah pdf
@@ -76,12 +78,12 @@ export async function replaceFileProposalController(req: Request, res: Response<
         const fileBuffer = file?.buffer;
         const fileName = file?.originalname;
         const mimeType = file?.mimetype;
-        const folderId = env.folderProposalId || '';
 
-        const uploadResult = await uploadFileToDrive(fileBuffer!, fileName!, mimeType!, folderId)
+        const uploadResult = await uploadFileToDrive(fileBuffer!, fileName!, mimeType!, team?.Category.driveFolderId!)
 
         const fileLink = uploadResult.webViewLink;
         const replace = await replaceFileProposalService(Number(id), uploadResult.id!, fileLink!, fileName!, file?.size!, file?.originalname!)
+
         emitToAdmin("proposal:submitted", {
             message: `Tim "${replace?.Team.name}" baru saja mengganti file proposal mereka.`
         })
@@ -114,7 +116,7 @@ export async function getProposalTeamController(req: Request, res: Response<Resp
                 fileName: proposal?.File?.fileName,
                 deadline: proposal.Category?.deadline,
                 comments: proposal.comments,
-                fileLink: proposal.fileLink
+                fileLink: proposal.File?.path
             }
         })
     } catch (error) {
@@ -131,11 +133,11 @@ export const getAllproposal = async (req: Request, res: Response<ResponseApiType
                 id: p.id,
                 title: p.title,
                 status: p.status,
-                fileLink: p.fileLink,
+                fileLink: p.File?.path,
                 comments: p.comments,
                 createdAt: p.createdAt,
                 teamName: p.Team.name,
-                fileName: p.File.fileName,
+                fileName: p.File?.fileName,
                 teamCategory: p.Team.Category.categoriName,
             }
         })
@@ -187,14 +189,14 @@ export const reviewProposal = async (req: Request, res: Response<ResponseApiType
 export const downloadAllProposal = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const approvedProposal = await getAllproposalAproveServices();
-        res.attachment("approved-proposal.zip");
+        res.attachment("proposal.zip");
 
         if (approvedProposal.length === 0) {
             return res.status(404).json({ message: "Tidak ada proposal yang ditemukan!." })
         }
 
         res.setHeader('Content-Type', "application/zip")
-        res.setHeader('Content-Disposition', `attachment; filename="approved-proposals.zip"`)
+        res.setHeader('Content-Disposition', `attachment; filename="proposals.zip"`)
 
         const archive = archiver("zip", { zlib: { level: 9 } });
         archive.on("error", err => next(err))
@@ -202,10 +204,10 @@ export const downloadAllProposal = async (req: Request, res: Response, next: Nex
 
         for (const p of approvedProposal) {
             const driveRes = await drive.files.get(
-                { fileId: p.File.id, alt: "media" },
+                { fileId: p.File?.id, alt: "media" },
                 { responseType: "stream" }
             );
-            archive.append(driveRes.data as import("stream").Readable, { name: `${p.title}_${p.Team.name}.pdf` })
+            archive.append(driveRes.data as import("stream").Readable, { name: `${p.Team.name}_${p.title}.pdf` })
         }
         await archive.finalize()
     } catch (error: any) {

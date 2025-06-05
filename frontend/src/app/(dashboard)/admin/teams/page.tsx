@@ -107,9 +107,9 @@ export default function TeamsPage() {
                 </TabsContent>
             </Tabs>
 
-            {dialogs.detailMember && currentTeam !== null && (
+            {dialogs.detailMember && currentMember !== null && (
                 <TeamMemberDetailDialog
-                    member={currentMember || []}
+                    member={currentMember}
                     open={dialogs.detailMember}
                     onOpenChange={(open) => setDialogs((prev) => ({ ...prev, detailMember: open }))}
                 />

@@ -1,10 +1,15 @@
 import { Request, Response } from "express";
-import { addCategoriService, deleteCategoryService, getAllDataCategory, getCategoryStats, updateCategoryService } from "../services/categori.service";
-// import { ResponseApi } from "../types/ApiType";
-// import { AppError } from "../utils/AppError";
-// import { validationResult } from "express-validator";
+import {
+    addCategoriService,
+    deleteCategoryService,
+    getAllDataCategory,
+    getCategoryStats,
+    updateCategoryService
+} from "../services/categori.service";
 import { ResponseApiType } from "../types/api_types";
 import { handlerAnyError } from "../errors/api_errors";
+import { createDriveFolder } from "../services/google_drive.service";
+import { env } from "../configs/env";
 
 const now = new Date()
 
@@ -106,9 +111,10 @@ export const createCategory = async (req: Request, res: Response<ResponseApiType
     try {
         const { categoriName, description, deadline } = req.body;
         const convertDeadline = new Date(deadline);
-        console.log(deadline);
 
-        const newCategory = await addCategoriService(categoriName, description, convertDeadline);
+        const result = await createDriveFolder(categoriName, env.folderProposalId)
+
+        const newCategory = await addCategoriService(categoriName, description, convertDeadline, result);
         return res.status(200).json({ success: true, message: "Successfully added category", data: newCategory })
     } catch (error: any) {
         return handlerAnyError(error, res)

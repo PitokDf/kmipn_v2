@@ -19,7 +19,7 @@ export function CategoryChart({ data, className }: { data: TeamCategoryData[], c
             <CardHeader>
                 <CardTitle>Teams by Category</CardTitle>
                 <CardDescription>
-                    Distribution of teams across competition categories
+                    Distribusi tim berdasarkan kategori kompetisi
                 </CardDescription>
             </CardHeader>
             <CardContent>

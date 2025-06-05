@@ -6,8 +6,8 @@ export async function getAllTeamService() {
         include: {
             Category: { select: { categoriName: true } },
             Lecture: { select: { name: true } },
-            TeamMember: true,
-            Proposal: { select: { fileLink: true } },
+            TeamMember: { include: { fileKtm: { select: { path: true } } } },
+            Proposal: { select: { fileId: true } },
             Submission: { select: { id: true, title: true } }
         }
     })
@@ -47,8 +47,15 @@ export const unVerifyTeamService = async (teamID: number) => {
 export async function getInfoSubmissionService(userId: string) {
     const team = await prisma.team.findFirst({
         where: { TeamMember: { every: { userId } } },
-        select: { Submission: { take: 1, orderBy: { id: "desc" } }, Category: { select: { categoriName: true } } }
+        select: {
+            Proposal: { select: { status: true }, orderBy: { createdAt: 'desc' } },
+            Submission: {
+                take: 1,
+                orderBy: { id: "desc" }
+            },
+            Category: { select: { categoriName: true } }
+        }
     })
 
-    return { ...team?.Submission[0], category: team?.Category.categoriName }
+    return { ...team?.Submission[0], category: team?.Category.categoriName, proposalApproved: team?.Proposal[0] ? team?.Proposal[0].status === "approve" : false }
 }

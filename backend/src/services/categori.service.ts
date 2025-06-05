@@ -24,9 +24,9 @@ export const deleteCategoryService = async (id: number) => {
     return deletedCategory;
 }
 
-export const addCategoriService = async (categoriName: string, description: string, deadline: Date) => {
+export const addCategoriService = async (categoriName: string, description: string, deadline: Date, driveFolderId?: string) => {
     const newCategory = await prisma.category.create({
-        data: { categoriName: categoriName, description: description, deadline: deadline }
+        data: { categoriName: categoriName, description: description, deadline: deadline, driveFolderId }
     });
     if (!newCategory) throw new AppError("Fail saved category.", 400);
     return newCategory

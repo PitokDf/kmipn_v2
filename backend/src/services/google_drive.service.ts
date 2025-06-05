@@ -70,3 +70,26 @@ export async function deleteFileFromDrive(fileId: string) {
         throw error
     }
 }
+
+export async function createDriveFolder(folderName: string, parentFolderId?: string): Promise<string> {
+    try {
+        const fileMetaData: any = {
+            name: folderName,
+            mimeType: 'application/vnd.google-apps.folder',
+        }
+
+        if (parentFolderId) {
+            fileMetaData.parents = [parentFolderId];
+        }
+
+        const response = await drive.files.create({
+            requestBody: fileMetaData,
+            fields: 'id'
+        })
+
+        return response.data.id!
+    } catch (error) {
+        console.log(`Gagal membuat folder '${folderName}' di DRIVE`)
+        throw error
+    }
+}

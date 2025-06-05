@@ -86,13 +86,6 @@ const items: itemsLink[] = [
         description: "Review Proposals"
     },
     {
-        title: "Assessments",
-        url: "/admin/assessments",
-        role: ["admin", "operator"],
-        icon: ClipboardCheck,
-        description: "Evaluation & Scoring"
-    },
-    {
         title: "Rounds",
         url: "/admin/rounds",
         role: ["admin", "operator"],
@@ -106,7 +99,6 @@ const items: itemsLink[] = [
         icon: BarChart3,
         description: "Analytics & Reports",
         submenu: [
-            { title: "Assessments", url: "/admin/reports/assessments" },
             { title: "Teams", url: "/admin/reports/teams" },
         ]
     },

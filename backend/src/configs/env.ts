@@ -17,6 +17,7 @@ export const env = {
     pusherCluster: process.env.PUSHER_CLUSTER,
     folderKtmId: process.env.GOOGLE_DRIVE_FOLDER_KTM_ID,
     folderProposalId: process.env.GOOGLE_DRIVE_FOLDER_PROPOSAL_ID,
+    folderSubmissionId: process.env.GOOGLE_DRIVE_FOLDER_SUBMISSION_ID,
     googleClientEmail: process.env.GOOGLE_CLIENT_EMAIL,
     googlePrivateKey: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n') || "",
 }

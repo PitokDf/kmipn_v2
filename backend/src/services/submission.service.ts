@@ -34,7 +34,7 @@ export async function getAllSubmission() {
     return submissions
 }
 
-export async function updateSubmissionService(id: number, status: $Enums.statusSubmission) {
+export async function updateSubmissionService(id: number, status: $Enums.StatusSubmission) {
     const submission = await prisma.submission.update({
         where: { id },
         data: { status },

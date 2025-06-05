@@ -28,9 +28,8 @@ export async function createSubmissionController(req: Request, res: Response<Res
         const fileBuffer = file_submission?.buffer;
         const fileName = file_submission?.originalname;
         const mimeType = file_submission?.mimetype;
-        const folderId = process.env.GOOGLE_DRIVE_FOLDER_SUBMISSION_ID || '';
 
-        const uploadResult = await uploadFileToDrive(fileBuffer!, fileName!, mimeType!, folderId)
+        const uploadResult = await uploadFileToDrive(fileBuffer!, fileName!, mimeType!, team?.submissionFolderId!)
 
         const fileLink = uploadResult.webViewLink;
 

@@ -4,11 +4,11 @@ import { AppError } from "../errors/api_errors";
 
 export const createTeamMember = async (teamId: number, userId: string,
     role: RoleTeamMember, nim: string, name: string, email: string, no_WA: string,
-    prodi: string, fileName: string) => {
+    prodi: string, fileKtmId: string) => {
     const teamMember = await prisma.teamMember.create({
         data: {
             teamId: teamId, userId: userId, role: role,
-            nim: nim, name: name, email: email, no_WA: no_WA, prodi: prodi, fileKTM: fileName
+            nim: nim, name: name, email: email, noWa: no_WA, prodi: prodi, fileKtmId: fileKtmId
         }
     });
 
