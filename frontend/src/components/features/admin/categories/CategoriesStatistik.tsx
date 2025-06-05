@@ -13,9 +13,9 @@ export function CategoriesStatistik() {
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Category Statistics</CardTitle>
+                <CardTitle>Statistik Kategori</CardTitle>
                 <CardDescription>
-                    Overview of teams and proposals by category.
+                    Gambaran umum tim dan proposal berdasarkan kategori.
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -23,11 +23,11 @@ export function CategoriesStatistik() {
                     <table className="w-full">
                         <thead>
                             <tr className="border-b">
-                                <th className="text-left py-3 px-4">Category</th>
-                                <th className="text-center py-3 px-4">Registered Teams</th>
-                                <th className="text-center py-3 px-4">Submitted Proposals</th>
-                                <th className="text-center py-3 px-4">Submission Rate</th>
-                                <th className="text-center py-3 px-4">Days Until Deadline</th>
+                                <th className="text-left py-3 px-4">Kategori</th>
+                                <th className="text-center py-3 px-4">Tim Terdaftar</th>
+                                <th className="text-center py-3 px-4">Proposal yang Diserahkan</th>
+                                <th className="text-center py-3 px-4">Tingkat Pengiriman</th>
+                                <th className="text-center py-3 px-4">Hari Hingga Batas Waktu</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -64,11 +64,11 @@ export function CategoriesStatistik() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
                     <Card>
                         <CardHeader className="pb-2">
-                            <CardTitle className="text-lg">Total Teams</CardTitle>
+                            <CardTitle className="text-lg">Total Tim</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="text-3xl font-bold">{data?.totalTeams}</div>
-                            <p className="text-sm text-muted-foreground">Across all categories</p>
+                            <p className="text-sm text-muted-foreground">Di semua kategori</p>
                         </CardContent>
                     </Card>
 

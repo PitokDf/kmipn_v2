@@ -26,9 +26,9 @@ export default function CategoriesPage() {
         <>
             <div className="flex items-center justify-between mb-6">
                 <div>
-                    <h1 className="text-3xl font-bold">Categories Management</h1>
+                    <h1 className="text-3xl font-bold">Kategori Manajemen</h1>
                     <p className="text-muted-foreground">
-                        Manage competition categories and track statistics
+                        Kelola kategori kompetisi dan lacak statistik
                     </p>
                 </div>
                 <AddCategory />
@@ -43,9 +43,9 @@ export default function CategoriesPage() {
                 <TabsContent value="categories">
                     <Card>
                         <CardHeader>
-                            <CardTitle>Competition Categories</CardTitle>
+                            <CardTitle>Kategori Manajemen</CardTitle>
                             <CardDescription>
-                                A list of all categories in the KMIPN competition.
+                                Daftar semua kategori dalam kompetisi KMIPN.
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
