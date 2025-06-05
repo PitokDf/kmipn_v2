@@ -4,10 +4,10 @@ import WaveBackground from './WaveBackground';
 
 const HeroSection = () => {
     return (
-        <section id='home' className="h-[100dvh] bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A]"
+        <section id='home' className="flex justify-center items-center bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A]"
         >
             <WaveBackground />
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-40">
+            <div className="relative max-w-7xl mx-auto px-4  sm:px-6 lg:px-8 pt-32 pb-40">
                 <div className="text-center">
                     <h1 className="text-4xl flex justify-center md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg">
                         <span className="flex justify-center items-center flex-col">

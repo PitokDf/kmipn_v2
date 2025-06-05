@@ -1,6 +1,6 @@
 const WaveBackground = () => {
   return (
-    <div className="absolute inset-0 bottom-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden">
       <svg
         className="absolute bottom-0 w-full h-48 md:h-56 lg:h-64"
         xmlns="http://www.w3.org/2000/svg"

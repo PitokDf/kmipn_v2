@@ -17,8 +17,6 @@ export const useSocketRegister = (socket: Socket | undefined, user: User | null)
             if (user?.id && !registered.current) {
                 socket.emit('register', { userId: user.id })
                 registered.current = true
-                // console.log('✅ User registered on socket:', user.id)
-                toast.success("terhubung kembali")
             }
         }
 

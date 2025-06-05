@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   title: 'KMIPN - Kompetisi Mahasiswa Informatika Politeknik Nasional',
   description:
     'KMIPN adalah kompetisi tahunan bergengsi untuk mahasiswa informatika Politeknik Nasional. Tunjukkan kemampuan coding, inovasi, dan kreativitas lo di sini!',
-  icons: '/images/logos/kmipn-logo.pnp',
+  icons: '/images/logos/kmipn-logo.png',
   verification: {
     google: '7UVWLjtHfAA1ccchiarJNOFElAmh6e2a4nHTqbosAZU'
   },

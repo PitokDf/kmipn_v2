@@ -1,6 +1,7 @@
 'use client'
 
 import DashboardAdmin from "@/components/features/admin/DashboardAdmin"
+import { ChartPieLabelList } from "@/components/statistik/Proposal"
 import { useUser } from "@/context/UserContext"
 // import DashboardAdmin from "../participant/page"
 

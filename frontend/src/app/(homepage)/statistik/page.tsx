@@ -1,5 +1,8 @@
 'use client'
 
+import { ChartDistribusiCategory } from "@/components/statistik/ChartDistribusiCategory";
+import { ChartPieLabelList } from "@/components/statistik/Proposal";
+import { ChartTopInstitusi } from "@/components/statistik/TopInstitusi";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getStatistikData } from "@/lib/apis/dashboard";
 import { useQuery } from "@tanstack/react-query";
@@ -176,7 +179,7 @@ export default function StatistikPage() {
                     {summaryStats.map((stat, index) => {
                         const IconComponent = stat.icon;
                         return (
-                            <Card key={index} className="hover:shadow-lg transition-all duration-300 border-0 shadow-md">
+                            <Card key={index} className="hover:shadow-lg transition-all bg-white duration-300 border-0 shadow-md">
                                 <CardContent className="p-6">
                                     <div className="flex items-center justify-between">
                                         <div>
@@ -199,71 +202,20 @@ export default function StatistikPage() {
                 <div className="grid gap-8 lg:grid-cols-2">
                     {/* Category Distribution */}
                     {isLoading ? <LoadingCard /> : (
-                        <Card className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
-                            <CardHeader className="pb-4">
-                                <CardTitle className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                                    Distribusi Tim per Kategori
-                                </CardTitle>
-                                <p className="text-sm text-gray-600">Total {data?.categoryStatsData.reduce((sum, item) => sum + item.count, 0)} tim terdaftar</p>
-                            </CardHeader>
-                            <CardContent className="h-80">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={data?.categoryStatsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                                        <XAxis
-                                            dataKey="category"
-                                            tick={{ fontSize: 12 }}
-                                            angle={-45}
-                                            textAnchor="end"
-                                            height={80}
-                                        />
-                                        <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
-                                        <Tooltip content={<CustomTooltip />} />
-                                        <Bar dataKey="count" fill="#3B82F6" radius={[4, 4, 0, 0]} />
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </CardContent>
-                        </Card>
+                        <ChartDistribusiCategory
+                            data={data?.categoryStatsData}
+                        />
+
                     )}
 
                     {/* Proposal Status */}
                     {isLoading ? <LoadingCard /> : (
-                        <Card className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
-                            <CardHeader className="pb-4">
-                                <CardTitle className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                                    <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                                    Status Proposal
-                                </CardTitle>
-                                <p className="text-sm text-gray-600">Distribusi status proposal tim</p>
-                            </CardHeader>
-                            <CardContent className="h-80">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <PieChart>
-                                        <Pie
-                                            data={data?.proposalStatusStatsData}
-                                            dataKey="value"
-                                            nameKey="status"
-                                            cx="50%"
-                                            cy="50%"
-                                            outerRadius={80}
-                                            label={({ status, percent }) => `${status} ${(percent * 100).toFixed(0)}%`}
-                                            labelLine={false}
-                                        >
-                                            {proposalStatusData.map((entry, index) => (
-                                                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                            ))}
-                                        </Pie>
-                                        <Tooltip />
-                                        <Legend />
-                                    </PieChart>
-                                </ResponsiveContainer>
-                            </CardContent>
-                        </Card>
+                        <ChartPieLabelList data={data?.proposalStatusStatsData} />
                     )}
 
                     {/* Verified Teams */}
                     {isLoading ? <LoadingCard /> : (
-                        <Card className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
+                        <Card className="hover:shadow-lg bg-white transition-shadow duration-300 border-0 shadow-md">
                             <CardHeader className="pb-4">
                                 <CardTitle className="text-xl font-semibold text-gray-800 flex items-center gap-2">
                                     <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -286,35 +238,12 @@ export default function StatistikPage() {
 
                     {/* Top Institutions */}
                     {isLoading ? <LoadingCard /> : (
-                        <Card className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
-                            <CardHeader className="pb-4">
-                                <CardTitle className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                                    <div className="w-3 h-3 bg-purple-500 rounded-full"></div>
-                                    Top Institusi
-                                </CardTitle>
-                                <p className="text-sm text-gray-600">Institusi dengan partisipasi terbanyak</p>
-                            </CardHeader>
-                            <CardContent className="h-80">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart layout="vertical" data={data?.institutionStatsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                                        <XAxis type="number" allowDecimals={false} tick={{ fontSize: 12 }} />
-                                        <YAxis
-                                            type="category"
-                                            dataKey="institution"
-                                            tick={{ fontSize: 11 }}
-                                            width={150}
-                                        />
-                                        <Tooltip content={<CustomTooltip />} />
-                                        <Bar dataKey="count" fill="#8B5CF6" radius={[0, 4, 4, 0]} />
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </CardContent>
-                        </Card>
+                        <ChartTopInstitusi data={data?.institutionStatsData!} />
                     )}
 
                     {/* Submission Status by Round */}
                     {isLoading ? <LoadingCard /> : (
-                        <Card className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
+                        <Card className="hover:shadow-lg bg-white transition-shadow duration-300 border-0 shadow-md">
                             <CardHeader className="pb-4">
                                 <CardTitle className="text-xl font-semibold text-gray-800 flex items-center gap-2">
                                     <div className="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -329,29 +258,6 @@ export default function StatistikPage() {
                                         <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
                                         <Tooltip content={<CustomTooltip />} />
                                         <Bar dataKey="count" fill="#EF4444" radius={[4, 4, 0, 0]} />
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </CardContent>
-                        </Card>
-                    )}
-
-                    {/* Score Distribution */}
-                    {isLoading ? <LoadingCard /> : (
-                        <Card className="hover:shadow-lg transition-shadow duration-300 border-0 shadow-md">
-                            <CardHeader className="pb-4">
-                                <CardTitle className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                                    <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
-                                    Distribusi Skor Assessment
-                                </CardTitle>
-                                <p className="text-sm text-gray-600">Sebaran nilai dari penilaian juri</p>
-                            </CardHeader>
-                            <CardContent className="h-80">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={data?.scoreDistribution!} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                                        <XAxis dataKey="range" tick={{ fontSize: 12 }} />
-                                        <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
-                                        <Tooltip content={<CustomTooltip />} />
-                                        <Bar dataKey="value" fill="#F97316" radius={[4, 4, 0, 0]} />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </CardContent>

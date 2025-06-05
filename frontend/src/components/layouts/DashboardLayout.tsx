@@ -35,14 +35,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
     const qc = useQueryClient()
 
-
-    // useWindowFocus(() => {
-    //     if (!registered.current && user?.id) {
-    //         socket.emit('register', { userId: user?.id })
-    //         registered.current = true
-    //     }
-    // })
-
     useEffect(() => {
         if (!user?.id) return
         socket.emit("register", { userId: user.id })

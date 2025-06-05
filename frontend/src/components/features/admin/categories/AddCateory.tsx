@@ -18,10 +18,7 @@ export function AddCategory() {
         onSuccess: () => {
             qc.invalidateQueries({ queryKey: ['categories'] })
             setIsOpen(!isOpen)
-            toast.success("New Class.", {
-                description: "Berhasil menambahkan kategori baru.",
-                duration: 2000
-            })
+            toast.success("Berhasil menambahkan kategori baru.")
         },
         onError: (error: any) => {
             const errors = error.response?.data?.errors || [];

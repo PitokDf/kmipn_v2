@@ -1,3 +1,4 @@
+import "../globals.css"
 import Navbar from "@/components/home/Navbar";
 import "../../styles/homepage.css"
 import BackToTop from "@/components/home/BackToTop";

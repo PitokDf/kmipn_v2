@@ -12,7 +12,7 @@ interface TimeLeft {
 
 const CountdownTimer = () => {
   const calculateTimeLeft = (): TimeLeft => {
-    const targetDate = new Date('2025-10-12').getTime();
+    const targetDate = new Date('2025-10-12').setHours(0, 0, 0, 0);
     const now = new Date().getTime();
     const difference = targetDate - now;
 

@@ -17,7 +17,7 @@ services:
       - postgres
     environment:
       - DATABASE_URL=postgresql://pitok:pitok234@postgres:5432/kmipn_db
-      - BASE_URL=http://192.168.221.41:2003
+      - BASE_URL=http://192.168.221.41:2003 # backend ip atau backend domain
       - FRONTEND_URL=http://192.168.221.41:3000
       - PORT=2003
       - JWT_SECRET=rahasia-banget-ini-mah # ganti see pak sesuai samo yang lebih kuat
