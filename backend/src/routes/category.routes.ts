@@ -3,13 +3,14 @@ import { createCategory, deleteCategory, getAllCategoryClose, getCategoryStatsCo
 import { CategoriValidator } from "../validators/CategoriValidator";
 import { handleValidationErrors } from "../middlewares/handle_validation_errors";
 import { jwtCheckToken } from "../middlewares/jwt_check_token";
+import { isRole } from "../middlewares/check_role";
 
 const categoryRouter = Router()
 
 categoryRouter.get("/", getAllCategoryClose)
-categoryRouter.post("/", jwtCheckToken, CategoriValidator, handleValidationErrors, createCategory)
-categoryRouter.put("/:id", jwtCheckToken, CategoriValidator, handleValidationErrors, updateCategory)
-categoryRouter.delete("/:id", jwtCheckToken, deleteCategory)
-categoryRouter.get("/stats", jwtCheckToken, getCategoryStatsController)
+categoryRouter.post("/", jwtCheckToken, isRole(['admin']), CategoriValidator, handleValidationErrors, createCategory)
+categoryRouter.put("/:id", jwtCheckToken, isRole(['admin']), CategoriValidator, handleValidationErrors, updateCategory)
+categoryRouter.delete("/:id", jwtCheckToken, isRole(['admin']), deleteCategory)
+categoryRouter.get("/stats", jwtCheckToken, isRole(['admin']), getCategoryStatsController)
 
 export default categoryRouter

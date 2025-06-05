@@ -10,6 +10,8 @@ import userRouter from "./user.routes";
 import submissionRouter from "./submissions.routes";
 import reportRouter from "./report.routes";
 import { getStatsController } from "../controllers/dashboard.controller";
+import timelineRouter from "./timeline.routes";
+import { isRole } from "../middlewares/check_role";
 
 const apiRoute = Router()
 
@@ -19,9 +21,10 @@ apiRoute.use("/proposals", jwtCheckToken, proposalRouter)
 apiRoute.use("/team-member", jwtCheckToken, teamMemberRouter)
 apiRoute.use("/category", categoryRouter)
 apiRoute.use("/teams", jwtCheckToken, teamRouter)
-apiRoute.use("/users", jwtCheckToken, userRouter)
+apiRoute.use("/users", jwtCheckToken, isRole(['admin']), userRouter)
 apiRoute.use("/submissions", jwtCheckToken, submissionRouter)
 apiRoute.use("/reports", jwtCheckToken, reportRouter)
+apiRoute.use("/timelines", timelineRouter)
 apiRoute.get("/statistik", getStatsController)
 
 export default apiRoute

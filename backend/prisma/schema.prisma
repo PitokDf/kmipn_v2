@@ -168,3 +168,14 @@ model File {
     Proposal     Proposal[]   @relation("ProposalFile")
     TeamMembers  TeamMember[] @relation("KtmFile")
 }
+
+model Timeline {
+    id          Int      @id @default(autoincrement())
+    title       String
+    description String   @db.Text
+    startTime   DateTime
+    endTime     DateTime
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
