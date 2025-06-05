@@ -24,7 +24,7 @@ const allowedPathByRole: { [key: string]: string[] } = {
         "/admin/reports/teams",
         "/admin/teams",
         "/admin/users",
-        "/admin/timelines",
+        "/admin/timeline",
     ],
     "operator": [
         "/admin",
@@ -89,7 +89,7 @@ export async function middleware(req: NextRequest) {
 
         const allowedPath = allowedPathByRole[roleUser] || [];
         if (!allowedPath.includes(req.nextUrl.pathname)) {
-            return NextResponse.rewrite(new URL("/unauthorized", req.nextUrl))
+            return NextResponse.rewrite(new URL("/401", req.nextUrl))
         }
 
         return NextResponse.next({ request: { headers: requestHeaders, } })

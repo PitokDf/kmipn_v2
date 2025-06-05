@@ -8,6 +8,8 @@ import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import axiosInstance from '@/lib/axios'
 
+let trying = 1
+
 export default function VerifyEmailPage() {
     const [isLoading, setIsLoading] = useState(true)
     const [success, setSuccess] = useState(false)
@@ -36,7 +38,10 @@ export default function VerifyEmailPage() {
             }
         }
         if (token) {
-            verify()
+            if (trying === 1) {
+                verify()
+                trying = 0
+            }
         } else {
             setMsg('Token verifikasi tidak ditemukan.')
             setIsLoading(false)
@@ -44,7 +49,7 @@ export default function VerifyEmailPage() {
     }, [])
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-muted px-4">
+        <div className="flex min-h-screen items-center justify-center px-4">
             <Card className="w-full max-w-md text-center shadow-lg">
                 {isLoading ? (
                     <div className="flex flex-col items-center justify-center p-6">
