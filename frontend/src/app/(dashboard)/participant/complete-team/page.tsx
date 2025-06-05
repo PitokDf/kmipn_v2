@@ -12,9 +12,9 @@ export default function () {
             </Alert>
             <Card>
                 <CardHeader>
-                    <CardTitle>Team Details</CardTitle>
+                    <CardTitle>Detail Tim</CardTitle>
                     <CardDescription>
-                        View and update your team information
+                        Isi Informasi tim kamu dibawah ini
                     </CardDescription>
                 </CardHeader>
                 <CardContent>

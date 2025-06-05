@@ -13,7 +13,7 @@ export default function ProposalsPage() {
   return (
     <>
       <div className="flex md:items-center flex-col md:flex-row justify-between mb-6">
-        <div>
+        <div className="space-x-3">
           <h1 className="text-3xl font-bold">Manajemen proposal</h1>
           <p className="text-muted-foreground">
             Kirimkan dan kelola proposal tim Anda

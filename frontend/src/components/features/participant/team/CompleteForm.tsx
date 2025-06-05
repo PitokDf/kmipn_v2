@@ -116,7 +116,7 @@ export default function CompleteForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6  mx-auto ">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6  mx-auto overflow-hidden">
         {/* Nama Tim */}
         <FormField
           control={form.control}

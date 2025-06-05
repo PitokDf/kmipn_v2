@@ -27,8 +27,6 @@ export function Preliminary() {
         }
     })
 
-    console.log(preliminarySubmission);
-
 
     if (isPending && !preliminarySubmission) return (
         <p>Loading...</p>
