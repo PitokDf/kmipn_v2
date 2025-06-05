@@ -8,6 +8,7 @@ import apiRoute from "./routes/index.routes"
 import { env } from "./configs/env"
 import http from "http"
 import { socketHandler } from "./socket"
+import path from "node:path"
 
 dotenv.config()
 const app = express()
@@ -28,6 +29,8 @@ app.use(cors({
     origin: env.frontendUrl,
     credentials: true
 }))
+
+app.use('/public', express.static(path.join(__dirname, '..', 'public')))
 
 app.use("/api", apiRoute)
 socketHandler(io)

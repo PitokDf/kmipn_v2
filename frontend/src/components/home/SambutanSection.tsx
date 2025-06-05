@@ -89,18 +89,6 @@ const SambutanSection = () => {
                         </span>
                     </motion.p>
                 </div>
-
-                {/* Button Section */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8 }}
-                    className="mt-16 flex justify-center"
-                >
-                    <button className="px-6 py-3 bg-orange-600 text-white font-semibold rounded-lg shadow hover:bg-orange-700 transition">
-                        Pelajari Lebih Lanjut
-                    </button>
-                </motion.div>
             </div>
         </section>
     );
