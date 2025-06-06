@@ -6,6 +6,7 @@ import TimelineItem from './TimelineItem';
 import { useQuery } from '@tanstack/react-query';
 import { getAllTimeline } from '@/lib/apis/timeline';
 import { formatTanggal } from '@/lib/formatTanggal';
+import LombaScheduleDialog from './TimelineInfo';
 
 const TimelineSection = () => {
   const { data } = useQuery({
@@ -70,6 +71,7 @@ const TimelineSection = () => {
           </div>
         </div>
       </div>
+      <LombaScheduleDialog />
     </section>
   );
 };

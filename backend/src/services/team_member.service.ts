@@ -35,17 +35,14 @@ export async function getAllTeamMemberService() {
             noWa: true,
             email: true,
             role: true,
+            fileKtm: { select: { path: true } },
             Team: {
                 select: {
                     name: true,
                     institution: true,
+                    verified: true
                 },
             },
-        },
-        where: {
-            Team: {
-                NOT: { verified: false }
-            }
         },
         orderBy: {
             Team: { name: "asc" }

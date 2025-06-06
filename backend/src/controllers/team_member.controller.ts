@@ -9,44 +9,6 @@ import { generateToken } from "../utils/jwt";
 import { emitToAdmin } from "../socket";
 import { format } from "@fast-csv/format";
 import { env } from "../configs/env";
-// import { createTeamMember, getTeamMemberByUserIDService } from "../services/TeamMemberService";
-// import { AppError } from "../utils/AppError";
-// import { ResponseApi } from "../types/ApiType";
-// import { userLogin } from "../config/jwt";
-// import { unVerifyTeamService, verifyTeamService } from "../services/TeamService";
-// import path from "path";
-// import { readHtmlFile } from "../utils/readHtmlFile";
-// import { replacePlaceholders } from "../utils/replacePlaceholder";
-// import { sendEmail } from "../utils/NodeMailer";
-// import { db } from "../config/database";
-// import fs from "fs";
-// import { $Enums } from "@prisma/client";
-// import { pusher } from "../config/pusher";
-// import { createObjectCsvWriter } from "csv-writer";
-// import { format } from "@fast-csv/format";
-// import { uploadFileToDrive } from "../services/GoogleDriveServices";
-
-type clientInput = {
-    name: string,
-    nim: string,
-    noWa: string,
-    email: string,
-    prodi: string
-}
-
-type members = {
-    id?: number;
-    teamId: number;
-    userId: string | null;
-    role: $Enums.RoleTeamMember;
-    nim: string;
-    name: string;
-    email: string;
-    no_WA: string;
-    prodi: string;
-    fileKTM: string;
-    createdAt?: Date;
-}
 
 export const saveTeamMember = async (req: Request, res: Response) => {
     try {
@@ -94,7 +56,7 @@ export const saveTeamMember = async (req: Request, res: Response) => {
                     fileName: file.originalname,
                     fileSize: file.size,
                     originalName: file.originalname,
-                    path: `https://drive.google.com/uc?id=${uploadResult.id}`,
+                    path: `https://drive.google.com/uc?export=view&id=${uploadResult.id}`,
                     type: file.mimetype,
                     usage: "ktm"
                 }
@@ -234,6 +196,7 @@ export const downloadAttendace = async (req: Request, res: Response) => {
         attendance.forEach((member) => {
             csvStream.write({
                 'Nama Tim': member.Team.name,
+                "Status Tim": member.Team.verified ? "Terverifikasi" : "Belum Diverifikasi",
                 "Nama Anggota": member.name,
                 NIM: member.nim,
                 Prodi: member.prodi,
@@ -241,6 +204,7 @@ export const downloadAttendace = async (req: Request, res: Response) => {
                 "Peran": member.role === "leader" ? "Ketua" : "Anggota",
                 Email: member.email,
                 "Asal Politeknik": member.Team.institution,
+                "Link KTM": member.fileKtm?.path
             });
         });
 
