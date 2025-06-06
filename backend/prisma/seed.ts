@@ -4,14 +4,15 @@ import { hashing } from '../src/utils/bcrypt';
 const prisma = new PrismaClient();
 
 async function main() {
-    await prisma.user.create({
+    await prisma.user.createMany({
         data: {
             email: "adminkmipn@gmail.com",
             name: "Admin KMIPN",
             password: (await hashing("Password!23"))!,
             role: "admin",
             verified: true
-        }
+        },
+        skipDuplicates: true
     })
 
     console.log('User seeding completed.');

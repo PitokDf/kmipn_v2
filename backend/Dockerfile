@@ -4,23 +4,20 @@ WORKDIR /app
 
 COPY package*.json ./
 
-COPY prisma prisma
-
 RUN npm install
 
 COPY .env.production .env
 
-COPY . .
-
-RUN npm run popinstall
+COPY prisma ./prisma
 
 RUN npx prisma generate
 
+COPY . .
+
 RUN npm run build
 
-RUN mkdir -p dist/templates
-
-COPY src/templates/*.html dist/src/templates/
+RUN mkdir -p dist/templates && \
+    cp src/templates/*.html dist/src/templates/
 
 EXPOSE 2003
 
