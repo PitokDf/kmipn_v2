@@ -1,10 +1,10 @@
-FROM node:lts-slim
+FROM node:lts-alpine3.22
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install -g npm@latest && npm install
 
 COPY .env.production .env
 
@@ -16,7 +16,7 @@ COPY . .
 
 RUN npm run build
 
-RUN mkdir -p dist/templates && \
+RUN mkdir -p dist/src/templates && \
     cp src/templates/*.html dist/src/templates/
 
 EXPOSE 2003

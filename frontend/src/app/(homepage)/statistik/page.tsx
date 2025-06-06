@@ -7,102 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getStatistikData } from "@/lib/apis/dashboard";
 import { useQuery } from "@tanstack/react-query";
 import { TrendingUp, Users, CheckCircle, Building, Trophy } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Bar, BarChart, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-
-const COLORS = ["#3B82F6", "#10B981", "#F59E0B", "#EF4444", "#8B5CF6", "#06B6D4"];
-
-// Mock data based on your database schema
-const mockCategoryData = [
-    { category: "Software Engineering", count: 45 },
-    { category: "Data Science", count: 32 },
-    { category: "Cybersecurity", count: 28 },
-    { category: "Game Development", count: 19 },
-    { category: "IoT & Embedded", count: 15 }
-];
-
-const mockProposalStatusData = [
-    { status: "Approve", value: 85 },
-    { status: "Pending", value: 34 },
-    { status: "Rejected", value: 20 }
-];
-
-const mockVerifiedTeams = [
-    { status: "Terverifikasi", count: 98 },
-    { status: "Belum Terverifikasi", count: 41 }
-];
-
-const mockInstitutionData = [
-    { institution: "Universitas Indonesia", count: 23 },
-    { institution: "Institut Teknologi Bandung", count: 19 },
-    { institution: "Universitas Gadjah Mada", count: 16 },
-    { institution: "Institut Teknologi Sepuluh Nopember", count: 14 },
-    { institution: "Universitas Brawijaya", count: 12 }
-];
-
-const mockSubmissionData = [
-    { round: "Preliminary", count: 139 },
-    { round: "Final", count: 32 }
-];
-
-const mockScoreDistribution = [
-    { range: "90-100", count: 12 },
-    { range: "80-89", count: 28 },
-    { range: "70-79", count: 45 },
-    { range: "60-69", count: 31 },
-    { range: "< 60", count: 15 }
-];
-
-const mockUserRoleData = [
-    { role: "Participant", count: 420 },
-    { role: "Admin", count: 5 },
-    { role: "Operator", count: 12 }
-];
 
 export default function StatistikPage() {
     const { data, isPending: isLoading } = useQuery({
         queryKey: ['statistik'],
         queryFn: getStatistikData
     })
-    const [categoryData, setCategoryData] = useState([]);
-    const [proposalStatusData, setProposalStatusData] = useState([]);
-    const [verifiedTeams, setVerifiedTeams] = useState([]);
-    const [institutionData, setInstitutionData] = useState([]);
-    const [submissionData, setSubmissionData] = useState([]);
-    const [scoreDistribution, setScoreDistribution] = useState([]);
-    const [userRoleData, setUserRoleData] = useState([]);
-    // const [isLoading, setIsLoading] = useState(true);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             // Simulate API call
-    //             setTimeout(() => {
-    //                 setCategoryData(mockCategoryData);
-    //                 setProposalStatusData(mockProposalStatusData);
-    //                 setVerifiedTeams(mockVerifiedTeams);
-    //                 setInstitutionData(mockInstitutionData);
-    //                 setSubmissionData(mockSubmissionData);
-    //                 setScoreDistribution(mockScoreDistribution);
-    //                 setUserRoleData(mockUserRoleData);
-    //                 setIsLoading(false);
-    //             }, 1000);
-
-    //             // Uncomment when API is ready
-    //             // const res = await axios.get("/api/statistics");
-    //             // const data = res.data;
-    //             // setCategoryData(data.categoryDistribution);
-    //             // setProposalStatusData(data.proposalStatuses);
-    //             // setVerifiedTeams(data.verifiedVsUnverified);
-    //             // setInstitutionData(data.topInstitutions);
-    //             // setRoundData(data.finalRoundProgress);
-    //         } catch (error) {
-    //             console.error("Error fetching statistics:", error);
-    //             setIsLoading(false);
-    //         }
-    //     };
-    //     fetchData();
-    // }, []);
 
     const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
         if (active && payload && payload.length) {
@@ -203,14 +114,14 @@ export default function StatistikPage() {
                     {/* Category Distribution */}
                     {isLoading ? <LoadingCard /> : (
                         <ChartDistribusiCategory
-                            data={data?.categoryStatsData}
+                            data={data?.categoryStatsData || []}
                         />
 
                     )}
 
                     {/* Proposal Status */}
                     {isLoading ? <LoadingCard /> : (
-                        <ChartPieLabelList data={data?.proposalStatusStatsData} />
+                        <ChartPieLabelList data={data?.proposalStatusStatsData || []} />
                     )}
 
                     {/* Verified Teams */}
@@ -225,7 +136,7 @@ export default function StatistikPage() {
                             </CardHeader>
                             <CardContent className="h-80">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={data?.verifiedTeamStatsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                    <BarChart data={data?.verifiedTeamStatsData || []} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                                         <XAxis dataKey="status" tick={{ fontSize: 12 }} />
                                         <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
                                         <Tooltip content={<CustomTooltip />} />
@@ -238,7 +149,7 @@ export default function StatistikPage() {
 
                     {/* Top Institutions */}
                     {isLoading ? <LoadingCard /> : (
-                        <ChartTopInstitusi data={data?.institutionStatsData!} />
+                        <ChartTopInstitusi data={data?.institutionStatsData || []} />
                     )}
 
                     {/* Submission Status by Round */}
@@ -253,7 +164,7 @@ export default function StatistikPage() {
                             </CardHeader>
                             <CardContent className="h-80">
                                 <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={data?.submissionStatsData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                                    <BarChart data={data?.submissionStatsData || []} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                                         <XAxis dataKey="round" tick={{ fontSize: 12 }} />
                                         <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
                                         <Tooltip content={<CustomTooltip />} />

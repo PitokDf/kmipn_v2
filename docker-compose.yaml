@@ -14,16 +14,17 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    build: ./backend
-    network_mode: host
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "2003:2003"
     depends_on:
       - postgres
     environment:
       - DATABASE_URL=postgresql://pitok:pitok234@postgres:5432/kmipn_db
-      - BASE_URL=http://backend:2003 # backend ip atau backend domain
-      - FRONTEND_URL=http://frontend:3000
+      - BASE_URL=http://192.168.221.41:2003 # backend ip atau backend domain
+      - FRONTEND_URL=http://192.168.221.41:3000 # sesusiakan
       - PORT=2003
       - JWT_SECRET=rahasia-banget-ini-mah # ganti see pak sesuai samo yang lebih kuat
 

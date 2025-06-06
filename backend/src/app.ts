@@ -33,6 +33,11 @@ app.use(cors({
 app.use('/public', express.static(path.join(__dirname, '..', 'public')))
 
 app.use("/api", apiRoute)
+app.use('/', (req, res) => {
+    return res.status(200).json({
+        message: "Server running, keep ENJOYYY"
+    })
+})
 socketHandler(io)
 
 function getNetworkAdresses(): string[] {
