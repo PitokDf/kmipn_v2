@@ -65,13 +65,13 @@ export const sendEmailVerfikasi = async (user: User, password?: string) => {
     const verificationLink = `${process.env.FRONTEND_URL}/auth/verify-email?token=${verivicationToken}`;
     const placeholders = {
         "{{ verificationLink }}": verificationLink,
-        "{{ type_of_action }}": "Verify email",
+        "{{ type_of_action }}": "Verifikasi Email",
         "{{ name }}": user.name,
         "{{ email }}": user.email,
         "{{ password }}": password ?? ""
     };
     emailContent = replacePlaceholders(emailContent, placeholders)
-    const sendEmailSuccess = await sendEmail(user.email, "Verify email", emailContent);
+    const sendEmailSuccess = await sendEmail(user.email, "Verifikasi Email", emailContent);
 
     // jika email verifikasi gagal terkirim maka lempar error dan hapus user
     if (!sendEmailSuccess) {
