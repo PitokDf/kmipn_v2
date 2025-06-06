@@ -14,7 +14,7 @@ export function TeamMemberDetailDialog({ member, onOpenChange, open }
     return (
         <>
             <Dialog open={open} onOpenChange={onOpenChange}>
-                <DialogContent className="sm:max-w-[500px]">
+                <DialogContent className="sm:max-w-[500px] md:w-[600px] max-h-[100dvh] overflow-auto">
                     <DialogHeader>
                         <DialogTitle>Detail Anggota Tim</DialogTitle>
                     </DialogHeader>
