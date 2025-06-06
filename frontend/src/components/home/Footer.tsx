@@ -59,7 +59,7 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-bold text-white mb-4">Contact Us</h3>
                         <ul className="space-y-2 text-gray-400">
-                            <li>Email: <a href="mailto:kmipn@ono.ac.id" className="hover:text-blue-500">kmipn@pnp.ac.id</a></li>
+                            <li>Email: <a href="mailto:kmipn@pnp.ac.id" className="hover:text-blue-500">kmipn@pnp.ac.id</a></li>
                             <li>Phone: <a href="tel:+075172590" className="hover:text-blue-500">0751-72590</a></li>
                             <li>Address: Politeknik Negeri Padang</li>
                         </ul>
