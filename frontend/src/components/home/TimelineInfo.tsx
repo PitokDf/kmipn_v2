@@ -107,7 +107,7 @@ const LombaScheduleDialog = () => {
                     </Button>
                 </DialogTrigger>
 
-                <DialogContent className="max-w-6xl w-[95vw] h-[90vh] flex flex-col sm:w-auto">
+                <DialogContent className="max-w-6xl w-[95vw] h-[90vh] bg-white flex flex-col sm:w-auto">
                     <DialogHeader className="flex-shrink-0 pb-4 border-b border-gray-200">
                         <DialogTitle className="text-xl sm:text-2xl font-bold text-center text-gray-800 mb-2">
                             <Trophy className="inline-block mr-2 h-5 w-5 sm:h-6 sm:w-6 text-yellow-600" />
@@ -120,7 +120,7 @@ const LombaScheduleDialog = () => {
 
                     <div className="flex-1 overflow-y-auto px-1 sm:px-2 py-4 space-y-4 sm:space-y-6">
                         {lombaData.map((lomba, index) => (
-                            <div key={index} className="border rounded-lg p-3 sm:p-4 bg-gradient-to-r from-white to-gray-50 shadow-sm hover:shadow-md transition-shadow">
+                            <div key={index} className="border dark:border-gray-200 rounded-lg p-3 sm:p-4 bg-gradient-to-r from-white to-gray-50 shadow-sm hover:shadow-md transition-shadow">
                                 <div className="flex items-center mb-3">
                                     <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-300 font-semibold text-xs sm:text-sm px-2 py-1">
                                         {lomba.kategori}

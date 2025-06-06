@@ -32,7 +32,7 @@ const chartData = [
 const chartConfig = {
     count: {
         label: "Kategori",
-        color: "var(--chart-1)",
+        color: "hsl(var(--chart-1))",
     },
 } satisfies ChartConfig
 
@@ -58,13 +58,24 @@ export function ChartDistribusiCategory({ data }: { data: any }) {
                             tickLine={false}
                             tickMargin={10}
                             axisLine={false}
-                            tickFormatter={(value) => value.slice(0, 3)}
+                            tickFormatter={(value) => value.slice(0, 15)}
                         />
                         <ChartTooltip
                             cursor={false}
-                            content={<ChartTooltipContent hideLabel />}
+                            content={({ payload }) => {
+                                if (!payload?.length) return null;
+                                const item = payload[0];
+                                return (
+                                    <div className="rounded-md border dark:border-gray-100 bg-white p-2 shadow-sm text-sm text-black">
+                                        <div>
+                                            <strong>{item.payload.category}</strong>: {item.payload.count} tim
+                                        </div>
+                                    </div>
+                                );
+                            }}
                         />
-                        <Bar dataKey="count" fill="#f97316" radius={8}>
+
+                        <Bar dataKey="count" fill="var(--color-count)" radius={8}>
                             <LabelList
                                 position="top"
                                 offset={12}
