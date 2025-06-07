@@ -165,7 +165,7 @@ export const getTeamMemberByUserID = async (req: Request, res: Response<Response
                 noWA: member.noWa,
                 role: member.role,
                 prodi: member.prodi,
-                fileKTM: member.fileKtmId
+                fileKTM: member.fileKtm?.path
             })),
         }
         return res.status(200).json({

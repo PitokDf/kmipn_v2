@@ -19,7 +19,15 @@ export const createTeamMember = async (teamId: number, userId: string,
 export const getTeamMemberByUserIDService = async (userID: string) => {
     const teamMemberByUser = await prisma.teamMember.findUnique({
         where: { userId: userID }, include: {
-            Team: { include: { Lecture: true, Category: true, TeamMember: { orderBy: { role: "asc" } } } },
+            Team: {
+                include: {
+                    Lecture: true, Category: true,
+                    TeamMember: {
+                        orderBy: { role: "asc" },
+                        include: { fileKtm: { select: { path: true } } }
+                    }
+                }
+            },
         }
     });
     if (!teamMemberByUser) throw new AppError("Team member not found", 404);
