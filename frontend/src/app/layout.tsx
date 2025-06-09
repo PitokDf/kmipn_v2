@@ -42,12 +42,13 @@ export const metadata: Metadata = {
     title: 'KMIPN - Kompetisi Mahasiswa Informatika Politeknik Nasional',
     description:
       'Buktikan kemampuan team kamu di KMIPN! Kompetisi bergengsi yang menguji kreativitas dan skill coding mahasiswa informatika Politeknik Nasional.',
-    url: 'kmipnpnp-develop.vercel.app',
+    url: 'https://kmipn.pnp.ac.id',
     siteName: 'KMIPN',
     images: ['/images/logos/kmipn-logo.png'],
     locale: 'id_ID',
     type: 'website'
   },
+
   robots: {
     index: true,
     follow: true,
@@ -62,9 +63,14 @@ export const metadata: Metadata = {
   authors: [
     {
       name: 'Pito Desri Pauzi',
-      url: 'https://protofolio-ashy-one.vercel.app/'
-    }
-  ]
+      url: 'https://protofolio-ashy-one.vercel.app/',
+    },
+    { name: "Pito Desri Pauzi", url: "https://github.com/PitokDf" }
+  ],
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+  }
 };
 
 

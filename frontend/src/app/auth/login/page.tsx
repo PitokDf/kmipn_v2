@@ -7,7 +7,13 @@ import ThemeToggle from "@/components/theme-toogle";
 
 export const metadata: Metadata = {
     title: "Login | KMIPN VII ",
-    description: "Login ke akun kamu, untuk melihat kemajuan teamkamu"
+    description: "Login ke akun kamu, untuk melihat kemajuan team kamu",
+    openGraph: {
+        title: "Login KMIPN VII",
+        description: "Portal login peserta Kompetisi Mahasiswa Informatika Politeknik Negeri ke-7",
+        type: "website",
+        locale: "id_ID",
+    },
 }
 
 export default function LoginPage() {

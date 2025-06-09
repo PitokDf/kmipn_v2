@@ -34,12 +34,21 @@ export function ChartDistribusiCategory({ data }: { data: any }) {
                 <CardDescription>Total {(data as any[])?.reduce((sum, item) => sum + item.count, 0)} tim terdaftar</CardDescription>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={chartConfig}>
+                <ChartContainer
+                    config={chartConfig}
+                    className="w-full"
+                    style={{ height: '400px' }}
+                >
                     <BarChart
                         accessibilityLayer
                         data={data}
+                        width={100}
+                        height={100}
                         margin={{
                             top: 20,
+                            right: 20,
+                            bottom: 20,
+                            left: 20
                         }}
                     >
                         <CartesianGrid vertical={false} />

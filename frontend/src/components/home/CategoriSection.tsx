@@ -37,7 +37,7 @@ const KategoriSection = () => {
                 {isLoading ? (
                     <p className="text-center text-gray-500">Loading kategori...</p>
                 ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="flex flex-wrap justify-center gap-8">
                         {categories?.map((category, index: number) => {
                             const now = new Date()
                             now.setHours(0, 0, 0, 0)
@@ -49,7 +49,7 @@ const KategoriSection = () => {
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+                                    className="w-full sm:w-[48%] lg:w-[30%] max-w-sm p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
                                 >
                                     <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">
                                         {category.categoriName}

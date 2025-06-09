@@ -5,10 +5,6 @@ import HeroSection from "@/components/home/hero/HeroSection";
 import SambutanSection from "@/components/home/SambutanSection";
 import TimelineSection from "@/components/home/TimelineSection";
 
-export const metadata = {
-    title: 'KMIPN VII',
-};
-
 export default function HomePage() {
     return (
         <>
