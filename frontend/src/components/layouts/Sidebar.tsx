@@ -23,6 +23,7 @@ import React, { useState, useTransition } from "react"
 import ThemeToggle from "../theme-toogle"
 import { useUser } from "@/context/UserContext"
 import { Badge } from "@/components/ui/badge"
+import { SidebarSkeleton } from "./SidebarSkeleton"
 
 type itemsLink = {
     title: string;
@@ -248,7 +249,7 @@ export function AppSidebar() {
 
     const filteredItems = items.filter(e => e.role?.includes(user?.role!))
 
-    return (
+    return (!user ? (<SidebarSkeleton />) :
         <Sidebar variant="sidebar" className="border-r border-border/50 dark:border-gray-800">
             <SidebarHeader className="p-6 border-b border-border/50 dark:border-gray-800">
                 <div className="flex items-center gap-3">

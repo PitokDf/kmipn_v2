@@ -33,11 +33,11 @@ export function SubmissionForm() {
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.[0].size! > FILE_SIZE) {
-            toast.error('File too large (max 100MB)')
+            toast.error('File terlalu besar (max 100MB)')
             return
         }
         if (e.target.files?.[0].type !== 'application/zip') {
-            toast.error('Only ZIP files are allowed')
+            toast.error('Hanya file ZIP yang diizinkan')
             return
         }
         if (e.target.files?.[0]) {
@@ -61,11 +61,11 @@ export function SubmissionForm() {
         const droppedFile = e.dataTransfer.files?.[0]
         if (droppedFile) {
             if (droppedFile.type !== 'application/zip') {
-                toast.error('Only ZIP files are allowed')
+                toast.error('Hanya file ZIP yang diizinkan')
                 return
             }
             if (droppedFile.size > 100 * 1024 * 1024) {
-                toast.error('File too large (max 100MB)')
+                toast.error('File terlalu besar (max 100MB)')
                 return
             }
 
@@ -75,7 +75,7 @@ export function SubmissionForm() {
 
     const handleSubmit = async () => {
         if (!title || !description || !file) {
-            toast.error('Isi semua input')
+            toast.error('Isi semua isian yang diperlukan')
             return
         }
 
@@ -110,26 +110,26 @@ export function SubmissionForm() {
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>Submission Requirements</AlertTitle>
                 <AlertDescription>
-                    Your preliminary submission should include a working prototype of your project along with documentation.
+                    Pengajuan awal Anda harus menyertakan prototipe kerja proyek Anda beserta dokumentasinya.
                 </AlertDescription>
             </Alert>
 
             <div className="space-y-4">
                 <div className="space-y-2">
-                    <Label htmlFor="project-title">Project Title</Label>
+                    <Label htmlFor="project-title">Judul Projek</Label>
                     <Input id="project-title"
                         value={title}
                         onChange={e => setTitle(e.target.value)}
-                        placeholder="Enter project title" />
+                        placeholder="Masukkan judul projek" />
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="project-description">Project Description</Label>
+                    <Label htmlFor="project-description">Deskripsi Projek</Label>
                     <Textarea
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         id="project-description"
-                        placeholder="Enter a brief description of your project"
+                        placeholder="Masukkan deskripsi singkat tentang proyek Anda"
                         rows={4}
                     />
                 </div>
@@ -140,12 +140,12 @@ export function SubmissionForm() {
                         value={githubUrl}
                         onChange={handleGithubUrlChange}
                         id="github-link"
-                        placeholder="https://github.com/yourusername/your-repo" />
+                        placeholder="https://github.com/PitokDf/PitokDf" />
                     {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
                 </div>
 
                 <div className="space-y-2">
-                    <Label>Upload Project Files</Label>
+                    <Label>Unggah File Projek</Label>
                     <label htmlFor="submission-file" className='pt-3'>
                         <div
                             onDragOver={handleDragOver}

@@ -6,8 +6,6 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -48,7 +46,7 @@ export default function Topbar({ onMenuToggle }: TopbarProps) {
                             </Avatar>
                             <div className="hidden md:block text-left">
                                 <p className="text-sm font-medium text-foreground">{user?.name}</p>
-                                <p className="text-xs text-muted-foreground">{user?.role}</p>
+                                <p className="text-xs text-muted-foreground">{user?.role === "admin" ? "Admin" : (user?.role === "operator" ? "Operator" : "Peserta")}</p>
                             </div>
                             <ChevronDown className="h-4 w-4 text-foreground" />
                         </Button>
