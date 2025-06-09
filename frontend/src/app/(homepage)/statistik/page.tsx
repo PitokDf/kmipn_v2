@@ -1,44 +1,25 @@
-'use client'
-
 import { ChartDistribusiCategory } from "@/components/statistik/ChartDistribusiCategory";
+import { ChartSubmissionPerRound } from "@/components/statistik/ChartSubmissionPerRound";
+import { ChartStatusTimVerifikasi } from "@/components/statistik/ChartTimVerifikasi";
 import { ChartPieLabelList } from "@/components/statistik/Proposal";
 import { ChartTopInstitusi } from "@/components/statistik/TopInstitusi";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getStatistikData } from "@/lib/apis/dashboard";
-import { useQuery } from "@tanstack/react-query";
+import { Card, CardContent } from "@/components/ui/card";
+import { StatistikData } from "@/types/api";
 import { TrendingUp, Users, CheckCircle, Building, Trophy } from "lucide-react";
-import { Bar, BarChart, Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import Head from "next/head";
 
-export default function StatistikPage() {
-    const { data, isPending: isLoading } = useQuery({
-        queryKey: ['statistik'],
-        queryFn: getStatistikData
-    })
+export const metadata = {
+    title: "Dashboard Statistik | KMIPN",
+    description: "Statistik kompetisi mahasiswa politeknik se-Indonesia",
+};
 
-    const CustomTooltip = ({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string }) => {
-        if (active && payload && payload.length) {
-            return (
-                <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
-                    <p className="font-medium text-gray-900">{label}</p>
-                    <p className="text-blue-600">
-                        {`${payload[0].dataKey}: ${payload[0].value}`}
-                    </p>
-                </div>
-            );
-        }
-        return null;
-    };
+export default async function StatistikPage() {
+    // const data = (await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/statistik`)) // SSR Fetching
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/statistik`, {
+        cache: 'no-store',
+    });
 
-    const LoadingCard = () => (
-        <Card className="animate-pulse">
-            <CardHeader>
-                <div className="h-6 bg-gray-200 rounded w-3/4"></div>
-            </CardHeader>
-            <CardContent className="h-64">
-                <div className="h-full bg-gray-100 rounded"></div>
-            </CardContent>
-        </Card>
-    );
+    const data = (await res.json()).data as StatistikData;
 
     const summaryStats = [
         {
@@ -71,111 +52,103 @@ export default function StatistikPage() {
         }
     ];
 
+    const structuredData = {
+        "@context": "https://schema.org",
+        "@type": "Dataset",
+        "name": "Statistik KMIPN",
+        "description": "Statistik kompetisi mahasiswa politeknik se-Indonesia.",
+        "url": "https://kmipn.pnp.ac.id/statistik",
+        "creator": {
+            "@type": "Organization",
+            "name": "Politeknik Negeri Padang",
+        },
+        "distribution": [
+            {
+                "@type": "DataDownload",
+                "encodingFormat": "application/json",
+                "contentUrl": `${process.env.NEXT_PUBLIC_API_URL}/api/statistik`,
+            }
+        ],
+        "variableMeasured": [
+            {
+                "@type": "PropertyValue",
+                "name": "Total Tim",
+                "value": data?.categoryStatsData.reduce((sum, item) => sum + item.count, 0),
+            },
+            {
+                "@type": "PropertyValue",
+                "name": "Proposal Disetujui",
+                "value": data.proposalStatusStatsData.find(item => item.status === "Disetujui")?.value || 0
+            },
+            {
+                "@type": "PropertyValue",
+                "name": "Tim Terverifikasi",
+                "value": data.verifiedTeamStatsData.find(item => item.status === "Terverifikasi")?.count || 0,
+            },
+            {
+                "@type": "PropertyValue",
+                "name": "Institusi Aktif",
+                "value": data.institutionStatsData.length
+            },
+        ]
+    }
+
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
-            <div className="max-w-7xl mx-auto space-y-8">
-                {/* Header Section */}
-                <div className="text-center space-y-4">
-                    <h1 className="text-4xl font-bold text-gray-900 flex items-center justify-center gap-3">
-                        <TrendingUp className="text-blue-600" size={40} />
-                        Dashboard Statistik
-                    </h1>
-                    <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                        Pantau perkembangan kompetisi dengan data real-time dan visualisasi yang interaktif
-                    </p>
-                </div>
+        <>
+            <Head>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+                />
+            </Head>
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+                <div className="max-w-7xl mx-auto space-y-8">
+                    {/* Header Section */}
+                    <div className="text-center space-y-4">
+                        <h1 className="text-4xl font-bold text-gray-900 flex items-center justify-center gap-3">
+                            <TrendingUp className="text-blue-600" size={40} />
+                            Dashboard Statistik
+                        </h1>
+                        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                            Pantau perkembangan kompetisi dengan data real-time dan visualisasi yang interaktif
+                        </p>
+                    </div>
 
-                {/* Summary Stats */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {summaryStats.map((stat, index) => {
-                        const IconComponent = stat.icon;
-                        return (
-                            <Card key={index} className="hover:shadow-lg transition-all bg-white duration-300 border-0 shadow-md">
-                                <CardContent className="p-6">
-                                    <div className="flex items-center justify-between">
-                                        <div>
-                                            <p className="text-sm font-medium text-gray-600 mb-1">{stat.title}</p>
-                                            <p className="text-3xl font-bold text-gray-900">
-                                                {isLoading ? "..." : stat?.value!.toLocaleString()}
-                                            </p>
+                    {/* Summary Stats */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {summaryStats.map((stat, index) => {
+                            const IconComponent = stat.icon;
+                            return (
+                                <Card key={index} className="hover:shadow-lg transition-all bg-white duration-300 border-0 shadow-md">
+                                    <CardContent className="p-6">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <p className="text-sm font-medium text-gray-600 mb-1">{stat.title}</p>
+                                                <p className="text-3xl font-bold text-gray-900">
+                                                    {stat?.value!.toLocaleString()}
+                                                </p>
+                                            </div>
+                                            <div className={`p-3 rounded-full ${stat.bgColor}`}>
+                                                <IconComponent className={`${stat.color}`} size={24} />
+                                            </div>
                                         </div>
-                                        <div className={`p-3 rounded-full ${stat.bgColor}`}>
-                                            <IconComponent className={`${stat.color}`} size={24} />
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        );
-                    })}
-                </div>
+                                    </CardContent>
+                                </Card>
+                            );
+                        })}
+                    </div>
 
-                {/* Charts Grid */}
-                <div className="grid gap-8 lg:grid-cols-2">
-                    {/* Category Distribution */}
-                    {isLoading ? <LoadingCard /> : (
-                        <ChartDistribusiCategory
-                            data={data?.categoryStatsData || []}
-                        />
-
-                    )}
-
-                    {/* Proposal Status */}
-                    {isLoading ? <LoadingCard /> : (
+                    {/* Charts Grid */}
+                    <div className="grid gap-8 lg:grid-cols-2">
+                        <ChartDistribusiCategory data={data?.categoryStatsData || []} />
                         <ChartPieLabelList data={data?.proposalStatusStatsData || []} />
-                    )}
-
-                    {/* Verified Teams */}
-                    {isLoading ? <LoadingCard /> : (
-                        <Card className="hover:shadow-lg bg-white transition-shadow duration-300 border-0 shadow-md">
-                            <CardHeader className="pb-4">
-                                <CardTitle className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                                    <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                                    Status Verifikasi Tim
-                                </CardTitle>
-                                <p className="text-sm text-gray-600">Perbandingan tim terverifikasi dan belum</p>
-                            </CardHeader>
-                            <CardContent className="h-80">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={data?.verifiedTeamStatsData || []} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                                        <XAxis dataKey="status" tick={{ fontSize: 12 }} />
-                                        <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
-                                        <Tooltip content={<CustomTooltip />} />
-                                        <Bar dataKey="count" fill="#10B981" radius={[4, 4, 0, 0]} />
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </CardContent>
-                        </Card>
-                    )}
-
-                    {/* Top Institutions */}
-                    {isLoading ? <LoadingCard /> : (
+                        <ChartStatusTimVerifikasi data={data.verifiedTeamStatsData} />
                         <ChartTopInstitusi data={data?.institutionStatsData || []} />
-                    )}
-
-                    {/* Submission Status by Round */}
-                    {isLoading ? <LoadingCard /> : (
-                        <Card className="hover:shadow-lg bg-white transition-shadow duration-300 border-0 shadow-md">
-                            <CardHeader className="pb-4">
-                                <CardTitle className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                                    <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                                    Submission per Round
-                                </CardTitle>
-                                <p className="text-sm text-gray-600">Jumlah submission di setiap babak</p>
-                            </CardHeader>
-                            <CardContent className="h-80">
-                                <ResponsiveContainer width="100%" height="100%">
-                                    <BarChart data={data?.submissionStatsData || []} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-                                        <XAxis dataKey="round" tick={{ fontSize: 12 }} />
-                                        <YAxis allowDecimals={false} tick={{ fontSize: 12 }} />
-                                        <Tooltip content={<CustomTooltip />} />
-                                        <Bar dataKey="count" fill="#EF4444" radius={[4, 4, 0, 0]} />
-                                    </BarChart>
-                                </ResponsiveContainer>
-                            </CardContent>
-                        </Card>
-                    )}
+                        <ChartSubmissionPerRound data={data.submissionStatsData} />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }

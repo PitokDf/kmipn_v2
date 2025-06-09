@@ -1,10 +1,9 @@
 'use client'
 
 import {
-    Users, ChevronDown, ChevronRight, LucideProps,
+    Users, ChevronDown, LucideProps,
     LayoutDashboard, FolderKanban, UserCog, FileSearch,
-    FileEdit, Upload, ClipboardCheck, Flag, BarChart3,
-    LogOut, Settings, User as UserIcon,
+    FileEdit, Upload, Flag, BarChart3,
     CalendarClock
 } from "lucide-react"
 import {
@@ -24,15 +23,6 @@ import React, { useState, useTransition } from "react"
 import ThemeToggle from "../theme-toogle"
 import { useUser } from "@/context/UserContext"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { Button } from "@/components/ui/button"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 type itemsLink = {
     title: string;
@@ -161,19 +151,6 @@ export function AppSidebar() {
                 ? prev.filter(t => t !== title)
                 : [...prev, title]
         )
-    }
-
-    const getRoleColor = (role: string) => {
-        switch (role) {
-            case 'admin':
-                return 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-300'
-            case 'operator':
-                return 'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300'
-            case 'participant':
-                return 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300'
-            default:
-                return 'bg-gray-100 dark:bg-gray-900/30 text-gray-800 dark:text-gray-300'
-        }
     }
 
     const NavItem = ({
