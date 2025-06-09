@@ -196,7 +196,7 @@ export function ListProposals({
             (activeTab === "approve" && p.status === "approve") ||
             (activeTab === "rejected" && p.status === "rejected");
         const matchesSearch = !searchParams ||
-            p.title.toLowerCase().includes(searchParams.toLowerCase()) ||
+            p.fileName.toLowerCase().includes(searchParams.toLowerCase()) ||
             p.teamName.toLowerCase().includes(searchParams.toLowerCase());
         const matchesCategory = categoryFilter === "all" || p.teamCategory === categoryFilter;
         return matchesTab && matchesSearch && matchesCategory;

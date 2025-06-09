@@ -53,16 +53,23 @@ export const metadata: Metadata = {
     },
 };
 
+let data: StatistikData | null = null
+
 export default async function StatistikPage() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/statistik`, {
-        next: { revalidate: 180 },
-    });
 
-    if (!res.ok) {
-        throw new Error('Failed to fetch statistics data');
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/statistik`, {
+            next: { revalidate: 180 },
+        });
+
+        if (!res.ok) {
+            throw new Error('Failed to fetch statistics data');
+        }
+
+        data = (await res.json()).data as StatistikData;
+    } catch (error) {
+        console.error("Fetch statistik gagal: ", error);
     }
-
-    const data = (await res.json()).data as StatistikData;
 
     const totalTim = data?.categoryStatsData.reduce((sum, item) => sum + item.count, 0) || 0;
     const proposalApproved = data?.proposalStatusStatsData.find(item => item.status === "Disetujui")?.value || 0;
@@ -217,7 +224,7 @@ export default async function StatistikPage() {
                         <h2 id="visualisasi-data" className="text-2xl font-bold text-gray-900 mb-6 text-center">
                             Visualisasi Data Kompetisi
                         </h2>
-                        <div className="grid gap-8 lg:grid-cols-2">
+                        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
                             <div role="img" aria-labelledby="chart-kategori" className="lg:col-span-2">
                                 <h3 id="chart-kategori" className="sr-only">Distribusi Tim per Kategori Kompetisi</h3>
                                 <ChartDistribusiCategory data={data?.categoryStatsData || []} />
@@ -230,7 +237,7 @@ export default async function StatistikPage() {
 
                             <div role="img" aria-labelledby="chart-verifikasi">
                                 <h3 id="chart-verifikasi" className="sr-only">Status Verifikasi Tim</h3>
-                                <ChartStatusTimVerifikasi data={data.verifiedTeamStatsData} />
+                                <ChartStatusTimVerifikasi data={data?.verifiedTeamStatsData || []} />
                             </div>
 
                             <div role="img" aria-labelledby="chart-institusi">
@@ -240,7 +247,7 @@ export default async function StatistikPage() {
 
                             <div role="img" aria-labelledby="chart-submission" className="">
                                 <h3 id="chart-submission" className="sr-only">Submission per Tahap Kompetisi</h3>
-                                <ChartSubmissionPerRound data={data.submissionStatsData} />
+                                <ChartSubmissionPerRound data={data?.submissionStatsData || []} />
                             </div>
                         </div>
                     </section>

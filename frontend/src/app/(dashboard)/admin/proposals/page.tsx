@@ -7,11 +7,12 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { ListProposals } from "@/components/features/admin/proposals/ListProposals";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Proposal } from "@/types/api";
 import { DownloadApproved } from "@/components/features/admin/proposals/DownloadApproved";
 import { ReviewProposal } from "@/components/features/admin/proposals/ReviewProposal";
 import { DeleteProposal } from "@/components/features/admin/proposals/DeleteProposals";
+import { getAllProposal } from "@/lib/apis/proposal";
 
 
 export default function ProposalsPage() {
@@ -21,10 +22,13 @@ export default function ProposalsPage() {
     const [isDialogReviewOpen, setIsDialogReviewOpen] = useState(false)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
     const [currentProposal, setCurrentProposal] = useState<Omit<Proposal, "creadAt" | "deadline"> | null>(null)
+    const { data } = useQuery({
+        queryKey: ["proposals"],
+        queryFn: getAllProposal,
+        staleTime: 5 * 60 * 1000
+    });
 
-    const qc = useQueryClient()
-    const data = qc.getQueryData(["proposals"]) as Proposal[] || []
-    const allCategories = data.map(p => p.teamCategory)
+    const allCategories = data?.map(p => p.teamCategory)
     const uniqueCategory = Array.from(new Set(allCategories)) as [] || []
 
     return (

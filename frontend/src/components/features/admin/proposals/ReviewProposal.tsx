@@ -73,17 +73,29 @@ export function ReviewProposal({
         await mutateReviewProposal({ id: proposal.id, comments: data.comments, status: data.status })
     })
     return (
-        <Dialog onOpenChange={onOnpenChange} open={open}>
+        <Dialog
+            onOpenChange={onOnpenChange}
+            open={open}
+        >
             <DialogTrigger asChild>
                 <Button variant="outline">Review Proposal</Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[600px]">
+            <DialogContent
+
+                className="sm:max-w-[600px] max-h-[90dvh] overflow-auto lg:w-[800px] py-3"
+            >
                 <DialogHeader>
                     <DialogTitle>Review Proposal</DialogTitle>
                     <DialogDescription>
                         Update the status and provide feedback for this proposal.
                     </DialogDescription>
                 </DialogHeader>
+                <iframe
+                    src={`https://drive.google.com/file/d/${proposal.fileLink.match(/\/d\/(.+?)\//)?.[1]}/preview`}
+                    width="100%"
+                    height="500"
+                    allow="autoplay"
+                />
                 <Form {...form}>
                     <form onSubmit={handleSubmit} className="space-y-4 py-2">
                         <FormField

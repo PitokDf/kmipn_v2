@@ -19,6 +19,6 @@ RUN npm run build
 RUN mkdir -p dist/src/templates && \
     cp src/templates/*.html dist/src/templates/
 
-EXPOSE 2003
+EXPOSE 2222
 
 CMD [ "sh", "-c", "npx prisma migrate deploy && npx prisma db seed && node dist/src/app.js" ]

@@ -18,25 +18,25 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "2003:2003"
+      - "2222:2222"
     depends_on:
       - postgres
     environment:
       - NODE_ENV="development"
       - DATABASE_URL=postgresql://pitok:pitok234@postgres:5432/kmipn_db
-      - BASE_URL=http://192.168.221.41:2003 # backend ip atau backend domain
-      - FRONTEND_URL=http://192.168.221.41:3000 # sesusiakan
-      - PORT=2003
-      - JWT_SECRET=rahasia-banget-ini-mah # ganti see pak sesuai samo yang lebih kuat
+      - BASE_URL=http://192.168.221.41:2222 # backend ip atau backend domain
+      - FRONTEND_URL=http://192.168.221.41:3333 # sesuaikan
+      - PORT=2222
+      - JWT_SECRET=rahasia-banget-ini-mah # ganti samo yang lebih kuat
 
   frontend:
     build: 
       context: ./frontend
       dockerfile: Dockerfile
     environment:
-      - JWT_SECRET=rahasia-banget-ini-mah # ganti see pak sesuai samo yang lebih kuat
+      - JWT_SECRET=rahasia-banget-ini-mah # ganti samo yang lebih kuat
     ports:
-      - "3000:3000"
+      - "3333:3000"
     depends_on:
       - backend
 

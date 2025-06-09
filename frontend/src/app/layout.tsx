@@ -23,6 +23,7 @@ export const metadata: Metadata = {
   verification: {
     google: '7UVWLjtHfAA1ccchiarJNOFElAmh6e2a4nHTqbosAZU'
   },
+  metadataBase: new URL("https://kmipn.pnp.ac.id"),
   keywords: [
     'kmipn',
     'kmipn pnp',
@@ -67,10 +68,6 @@ export const metadata: Metadata = {
     },
     { name: "Pito Desri Pauzi", url: "https://github.com/PitokDf" }
   ],
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  }
 };
 
 
