@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
@@ -9,8 +9,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
-import { Login, register } from "@/lib/apis/auth";
+import { register } from "@/lib/apis/auth";
 import { toast } from "sonner";
+import { ReCAPTCHAComponent } from "./ReCAPTCHA";
 
 const formSchema = z
     .object({
@@ -32,6 +33,8 @@ const formSchema = z
 type registerValues = z.infer<typeof formSchema>
 
 export default function RegisterForm() {
+    const recaptchaRef = useRef(null)
+    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [infoMsg, setInfoMsg] = useState("")
@@ -62,7 +65,15 @@ export default function RegisterForm() {
         const login = async () => {
             try {
                 setIsLoading(true);
-                const res = await register(values)
+
+                const token = await (recaptchaRef.current as any).executeAsync();
+                if (!token) {
+                    setInfoMsg("Verifikasi reCAPTCHA gagal.");
+                    setIsLoading(false);
+                    return;
+                }
+
+                const res = await register({ ...values, recaptchaToken: token })
 
                 if (res.success) {
                     setInfoMsg(res.message)
@@ -83,6 +94,7 @@ export default function RegisterForm() {
                     toast('Server error, coba lagi.');
                 }
             } finally {
+                (recaptchaRef.current as any).reset();
                 setIsLoading(false)
             }
         }
@@ -210,6 +222,10 @@ export default function RegisterForm() {
                             <FormMessage />
                         </FormItem>
                     )}
+                />
+                <ReCAPTCHAComponent
+                    recaptchaRef={recaptchaRef}
+                    setRecaptchaToken={setRecaptchaToken}
                 />
                 <Link href={"/auth/resend"} className="text-blue-500 text-sm pt-2">Kirim ulang email verifikasi?</Link>
                 <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-600" disabled={isLoading}>

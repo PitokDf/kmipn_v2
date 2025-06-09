@@ -1,17 +1,17 @@
 import axiosInstace from "../axios";
 
-export async function Login(data: { email: string, password: string }) {
+export async function Login(data: { email: string, password: string, recaptchaToken: string }) {
     const res = await axiosInstace.post("/auth/login", data)
     return res.data
 }
 
-export async function register(data: { email: string, name: string, password: string }) {
+export async function register(data: { email: string, name: string, password: string, recaptchaToken: string }) {
     const res = await axiosInstace.post("/auth/register", data)
     return res.data
 }
 
-export async function sendEmailForgotPassword(email: string) {
-    const res = await axiosInstace.post("/auth/forgot-password", { email })
+export async function sendEmailForgotPassword(data: { email: string, recaptchaToken: string }) {
+    const res = await axiosInstace.post("/auth/forgot-password", data)
     return res.data
 }
 
@@ -25,7 +25,7 @@ export async function resetPassword(data: { password: string, userId: string }) 
     return res.data
 }
 
-export async function resendEmailVerifikasi(email: string) {
-    const res = await axiosInstace.post("/auth/resend-verifikasi-email", { email })
+export async function resendEmailVerifikasi(data: { email: string, recaptchaToken: string }) {
+    const res = await axiosInstace.post("/auth/resend-verifikasi-email", data)
     return res.data
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
@@ -11,6 +11,9 @@ import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
 import { Login } from "@/lib/apis/auth";
 import { toast } from "sonner";
+import ReCAPTCHA from "react-google-recaptcha"
+import { useTheme } from "next-themes";
+import { ReCAPTCHAComponent } from "./ReCAPTCHA";
 
 const formSchema = z.object({
     email: z.string().email({
@@ -28,6 +31,8 @@ export default function LoginForm() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState("")
     const [serverErrors, setServerErrors] = useState<{ msg: string, path: string }[]>([])
+    const recaptchaRef = useRef(null)
+    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -36,6 +41,7 @@ export default function LoginForm() {
             password: "",
         },
     });
+
 
     useEffect(() => {
         serverErrors?.forEach(e => {
@@ -49,13 +55,17 @@ export default function LoginForm() {
     }, [serverErrors])
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-
         const login = async () => {
             try {
                 setIsLoading(true);
-                const res = await Login(values)
+                const token = await (recaptchaRef.current as any).executeAsync();
+                if (!token) {
+                    setErrorMsg("Verifikasi reCAPTCHA gagal.");
+                    setIsLoading(false);
+                    return;
+                }
 
-                console.log(res);
+                const res = await Login({ ...values, recaptchaToken: token })
 
                 if (res.success) {
                     setErrorMsg("")
@@ -77,6 +87,7 @@ export default function LoginForm() {
                     toast('Server error, coba lagi.');
                 }
             } finally {
+                (recaptchaRef.current as any).reset();
                 setIsLoading(false)
             }
         }
@@ -146,6 +157,10 @@ export default function LoginForm() {
                             <FormMessage />
                         </FormItem>
                     )}
+                />
+                <ReCAPTCHAComponent
+                    recaptchaRef={recaptchaRef}
+                    setRecaptchaToken={setRecaptchaToken}
                 />
                 <div className="flex justify-end">
                     <div className="text-sm text-center">

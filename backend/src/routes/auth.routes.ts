@@ -13,16 +13,17 @@ import {
 } from "../controllers/auth.controller";
 import { loginValidator } from "../validators/LoginValidator";
 import { resetPasswords } from "../validators/reset_password.validator";
+import { verifyRecaptcha } from "../middlewares/verifyCaptcha";
 
 const authRouter = Router()
 
-authRouter.post("/register", RegisterValidator, handleValidationErrors, register)
-authRouter.post("/login", loginValidator, handleValidationErrors, login)
+authRouter.post("/register", verifyRecaptcha, RegisterValidator, handleValidationErrors, register)
+authRouter.post("/login", verifyRecaptcha, loginValidator, handleValidationErrors, login)
 authRouter.post("/logout", logout)
 authRouter.post("/verify-email", verifyEmail)
-authRouter.post("/forgot-password", forgotPassword)
+authRouter.post("/forgot-password", verifyRecaptcha, forgotPassword)
 authRouter.post("/reset-password", resetPasswords, resetPassword)
-authRouter.post("/resend-verifikasi-email", resendEmailVerifikasi)
+authRouter.post("/resend-verifikasi-email", verifyRecaptcha, resendEmailVerifikasi)
 authRouter.get("/check-token/:token", checkTokenReset)
 
 export default authRouter

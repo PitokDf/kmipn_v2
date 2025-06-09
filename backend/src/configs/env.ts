@@ -1,4 +1,5 @@
 export const env = {
+    RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
     port: process.env.PORT,
     baseUrl: process.env.BASE_URL,
     emailUser: process.env.EMAIL_USER,

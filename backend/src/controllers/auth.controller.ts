@@ -29,7 +29,6 @@ export const verifyEmail = async (req: Request, res: Response<ResponseApiType>) 
 
 
 export const login = async (req: Request, res: Response<ResponseApiType>) => {
-    // const existsAccessToken = req.cookies.accessToken;
     // if (existsAccessToken) { return res.status(400).json({ success: false, message: "You already login." }) }
     const { email, password } = req.body;
     try {

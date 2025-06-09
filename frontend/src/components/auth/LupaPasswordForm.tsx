@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { sendEmailForgotPassword } from "@/lib/apis/auth";
+import { ReCAPTCHAComponent } from "./ReCAPTCHA";
 
 const formSchema = z.object({
     email: z.string().email({
@@ -19,6 +20,8 @@ const formSchema = z.object({
 type loginValues = z.infer<typeof formSchema>
 
 export default function ForgotPasswordForm() {
+    const recaptchaRef = useRef(null)
+    const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setmessage] = useState("")
     const [messageStatus, setmessageStatus] = useState<"success" | "error" | null>(null)
@@ -46,7 +49,16 @@ export default function ForgotPasswordForm() {
 
         try {
             setIsLoading(true);
-            const res = await sendEmailForgotPassword(values.email)
+
+            const token = await (recaptchaRef.current as any).executeAsync();
+            if (!token) {
+                setmessage("Verifikasi reCAPTCHA gagal.");
+                setmessageStatus("error")
+                setIsLoading(false);
+                return;
+            }
+
+            const res = await sendEmailForgotPassword({ email: values.email, recaptchaToken: token })
 
             if (res.success) {
                 setmessage("")
@@ -66,6 +78,7 @@ export default function ForgotPasswordForm() {
                 toast('Server error, coba lagi.');
             }
         } finally {
+            (recaptchaRef.current as any).reset();
             setIsLoading(false)
         }
     }
@@ -94,6 +107,10 @@ export default function ForgotPasswordForm() {
                             <FormMessage />
                         </FormItem>
                     )}
+                />
+                <ReCAPTCHAComponent
+                    recaptchaRef={recaptchaRef}
+                    setRecaptchaToken={setRecaptchaToken}
                 />
                 <Button type="submit" className="w-full bg-orange-500 hover:bg-orange-700" disabled={isLoading}>
                     {isLoading ? "Mengirim..." : "Kirim"}
