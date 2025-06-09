@@ -21,7 +21,7 @@ export async function getAllTeamController(req: Request, res: Response<ResponseA
             members: team.TeamMember.map((mem) => ({ ...mem, noWA: mem.noWa, fileKTM: mem.fileKtm?.path })),
             lecture: team.Lecture.name,
             status: team.verified ? "verified" : "pending",
-            proposalLink: team.Proposal.pop()?.fileId || null
+            proposalLink: team.Proposal.pop()?.File?.path || null
         }))
 
         return res.status(200).json({

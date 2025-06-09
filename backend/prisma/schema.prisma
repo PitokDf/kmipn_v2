@@ -52,6 +52,8 @@ model User {
     Assesment  Assesment[]
     TeamMember TeamMember?
     UserToken  UserToken[]
+
+    @@index([email])
 }
 
 model UserToken {
@@ -61,6 +63,9 @@ model UserToken {
     expiresAt DateTime
     createdAt DateTime @default(now())
     User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
+    @@index([expiresAt])
 }
 
 model Lecture {
@@ -98,6 +103,10 @@ model Team {
     Category           Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
     Lecture            Lecture      @relation(fields: [lectureId], references: [id], onDelete: Cascade)
     TeamMember         TeamMember[]
+
+    @@index([categoryId])
+    @@index([lectureId])
+    @@index([verified])
 }
 
 model TeamMember {
@@ -115,6 +124,11 @@ model TeamMember {
     Team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
     User      User?          @relation(fields: [userId], references: [id], onDelete: Cascade)
     fileKtm   File?          @relation("KtmFile", fields: [fileKtmId], references: [id], onDelete: Cascade)
+
+    @@index([teamId])
+    @@index([userId])
+    @@index([fileKtmId])
+    @@index([role])
 }
 
 model Proposal {
@@ -129,6 +143,10 @@ model Proposal {
     assesment Assesment?
     File      File?          @relation("ProposalFile", fields: [fileId], references: [id], onDelete: Cascade)
     Team      Team           @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+    @@index([teamId])
+    @@index([fileId])
+    @@index([status])
 }
 
 model Submission {
@@ -144,6 +162,10 @@ model Submission {
     createdAt   DateTime         @default(now())
     updatedAt   DateTime         @default(now()) @updatedAt
     Team        Team             @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+    @@index([teamId])
+    @@index([round])
+    @@index([status])
 }
 
 model Assesment {
@@ -154,6 +176,9 @@ model Assesment {
     createdAt  DateTime @default(now())
     User       User     @relation(fields: [juriId], references: [id], onDelete: Cascade)
     Proposal   Proposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+
+    @@index([proposalId])
+    @@index([juriId])
 }
 
 model File {
@@ -167,6 +192,9 @@ model File {
     createdAt    DateTime     @default(now())
     Proposal     Proposal[]   @relation("ProposalFile")
     TeamMembers  TeamMember[] @relation("KtmFile")
+
+    @@index([usage])
+    @@index([createdAt])
 }
 
 model Timeline {
@@ -178,4 +206,7 @@ model Timeline {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    @@index([startTime])
+    @@index([endTime])
 }
