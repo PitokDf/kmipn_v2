@@ -96,9 +96,15 @@ export const updateProposalService = async (id: number, status: $Enums.StatusPro
     return proposal;
 }
 
-export const getAllproposalAproveServices = async () => {
+export const getAllproposalAproveServices = async (category?: string) => {
+    let where: any = {}
+    if (category && category !== "all") {
+        where.Team = { Category: { categoriName: category } }
+    }
+
     const approvedProposal = await prisma.proposal.findMany({
-        include: { File: true, Team: true }
+        include: { File: true, Team: true },
+        where
     });
 
     return approvedProposal;

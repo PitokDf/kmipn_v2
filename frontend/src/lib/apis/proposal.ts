@@ -21,8 +21,8 @@ export async function getProposalTeam(): Promise<Proposal> {
     return res.data.data
 }
 
-export async function downloadApprovedProposal() {
-    const res = await axiosInstace.get("proposals/download-approved", { responseType: "blob" })
+export async function downloadApprovedProposal(category: string) {
+    const res = await axiosInstace.get(`proposals/download-approved?category=${category}`, { responseType: "blob" })
     return res
 }
 

@@ -188,7 +188,8 @@ export const reviewProposal = async (req: Request, res: Response<ResponseApiType
 
 export const downloadAllProposal = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const approvedProposal = await getAllproposalAproveServices();
+        const { category } = req.query
+        const approvedProposal = await getAllproposalAproveServices(category as string);
         res.attachment("proposal.zip");
 
         if (approvedProposal.length === 0) {
