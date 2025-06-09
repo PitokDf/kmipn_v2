@@ -55,8 +55,7 @@ export const metadata: Metadata = {
 
 export default async function StatistikPage() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/statistik`, {
-        cache: 'no-store',
-        next: { revalidate: 300 },
+        next: { revalidate: 180 },
     });
 
     if (!res.ok) {
@@ -182,14 +181,7 @@ export default async function StatistikPage() {
                             dan institusi politeknik dari seluruh Indonesia.
                         </p>
                         <div className="text-sm text-gray-500">
-                            Data diperbarui secara otomatis | Terakhir update: {new Date().toLocaleDateString('id-ID', {
-                                day: '2-digit',
-                                month: "long",
-                                year: "numeric",
-                                hour: "numeric",
-                                minute: "2-digit",
-                                second: "2-digit"
-                            }).replaceAll(".", " : ")}
+                            Data diperbarui secara otomatis | Terakhir update: {(data as any).timestamps}
                         </div>
                     </header>
 
@@ -251,19 +243,6 @@ export default async function StatistikPage() {
                                 <ChartSubmissionPerRound data={data.submissionStatsData} />
                             </div>
                         </div>
-                    </section>
-
-                    {/* Additional SEO Content */}
-                    <section className="bg-white rounded-lg p-6 shadow-md">
-                        <h2 className="text-xl font-semibold text-gray-900 mb-4">
-                            Tentang Kompetisi Mahasiswa Politeknik Indonesia (KMIPN)
-                        </h2>
-                        <p className="text-gray-700 leading-relaxed">
-                            KMIPN adalah kompetisi bergengsi tingkat nasional yang mempertemukan mahasiswa-mahasiswa
-                            terbaik dari berbagai politeknik di Indonesia. Kompetisi ini mencakup berbagai bidang seperti
-                            teknologi, bisnis, dan inovasi untuk mengembangkan potensi mahasiswa politeknik dalam
-                            berkarya dan berinovasi.
-                        </p>
                     </section>
                 </div>
             </div>

@@ -2,6 +2,7 @@ import "../globals.css"
 import Navbar from "@/components/home/Navbar";
 import "../../styles/homepage.css"
 import BackToTop from "@/components/home/BackToTop";
+import Footer from "@/components/home/Footer";
 
 
 export default function HomePageLayout({ children }: { children: React.ReactNode }) {
@@ -12,6 +13,7 @@ export default function HomePageLayout({ children }: { children: React.ReactNode
                 {children}
             </main>
             <BackToTop />
+            <Footer />
         </>
     );
 }

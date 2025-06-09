@@ -1,6 +1,5 @@
 import { KategoriSection, LokasiKami } from "@/components/home/CategoriSection";
 import DownloadAssetSection from "@/components/home/DownloadAssets";
-import Footer from "@/components/home/Footer";
 import HeroSection from "@/components/home/hero/HeroSection";
 import SambutanSection from "@/components/home/SambutanSection";
 import TimelineSection from "@/components/home/TimelineSection";
@@ -14,7 +13,6 @@ export default function HomePage() {
             <TimelineSection />
             <KategoriSection />
             <LokasiKami />
-            <Footer />
         </>
     );
 }

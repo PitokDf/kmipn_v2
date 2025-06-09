@@ -158,7 +158,15 @@ export async function getStatsController(req: Request, res: Response<ResponseApi
                     range, value
                 })),
                 submissionStatsData,
-                verifiedTeamStatsData
+                verifiedTeamStatsData,
+                timestamps: new Date().toLocaleDateString('id-ID', {
+                    day: '2-digit',
+                    month: "long",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                    second: "2-digit"
+                })
             }
         })
     } catch (error) {

@@ -79,7 +79,7 @@ export async function middleware(req: NextRequest) {
 
         // Team completion check untuk participant
         if (roleUser === "participant" && !teamDataCompleate) {
-            if (pathname.startsWith("/participant/complete-team")) {
+            if (pathname.startsWith("/participant/complete-team") || pathname === "/api/user-context") {
                 return NextResponse.next({ request: { headers: requestHeaders } });
             }
             return NextResponse.redirect(new URL(`/participant/complete-team`, req.nextUrl))
