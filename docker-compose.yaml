@@ -22,6 +22,7 @@ services:
     depends_on:
       - postgres
     environment:
+      - NODE_ENV="development"
       - DATABASE_URL=postgresql://pitok:pitok234@postgres:5432/kmipn_db
       - BASE_URL=http://192.168.221.41:2003 # backend ip atau backend domain
       - FRONTEND_URL=http://192.168.221.41:3000 # sesusiakan
