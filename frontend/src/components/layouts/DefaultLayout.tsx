@@ -4,7 +4,6 @@ import { LoaderPinwheel } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { UserProvider } from "@/context/UserContext";
 
 const qc = new QueryClient()
 export default function DefaultLayout({ children }: { children: React.ReactNode }) {
@@ -23,7 +22,7 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
         }
     }, [])
     return (
-        <UserProvider>
+        <>
             <QueryClientProvider client={qc}>
                 {
                     isLoading ? (
@@ -38,6 +37,6 @@ export default function DefaultLayout({ children }: { children: React.ReactNode 
                 }
             </QueryClientProvider>
             <Toaster position="top-right" richColors />
-        </UserProvider>
+        </>
     );
 }

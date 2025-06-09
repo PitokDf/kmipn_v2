@@ -109,6 +109,7 @@ const LokasiKami = () => {
                             style={{ border: 0 }}
                             allowFullScreen={true}
                             loading="lazy"
+                            title='Lokasi Kompetisi'
                             referrerPolicy="no-referrer-when-downgrade"
                         ></iframe>
                     </div>

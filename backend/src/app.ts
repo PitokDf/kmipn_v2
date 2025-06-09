@@ -9,6 +9,7 @@ import { env } from "./configs/env"
 import http from "http"
 import { socketHandler } from "./socket"
 import path from "node:path"
+import { applySecurityHeaders } from "./middlewares/security"
 
 dotenv.config()
 const app = express()
@@ -23,6 +24,7 @@ export const io = new SocketIOServer(server, {
 
 const PORT: number = parseInt(process.env.PORT || "2003", 10)
 
+applySecurityHeaders(app)
 app.use(express.json())
 app.use(morgan("dev"))
 app.use(cors({

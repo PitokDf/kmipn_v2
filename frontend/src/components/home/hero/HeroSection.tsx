@@ -13,6 +13,9 @@ const HeroSection = () => {
                         <span className="flex justify-center items-center flex-col">
                             Welcome to
                             <Image
+                                loading='eager'
+                                fetchPriority='high'
+                                priority
                                 className='w-[200px] md:w-[400px]'
                                 height={200}
                                 width={400}
@@ -36,7 +39,7 @@ const HeroSection = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <a
                             href="/auth/register"
-                            className="px-8 py-3 bg-white text-orange-600 rounded-full font-semibold shadow-lg hover:bg-orange-50 
+                            className="px-8 py-3 bg-white text-orange-800 rounded-full font-semibold shadow-lg hover:bg-orange-50 
                             transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-orange-400">
                             Daftar Sekarang
                         </a>
