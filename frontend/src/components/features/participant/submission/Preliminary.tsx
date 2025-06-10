@@ -14,6 +14,7 @@ import Link from "next/link"
 
 export function Preliminary() {
     const user = useUser()
+    if (!user) return null
     const { data: preliminarySubmission, isPending } = useQuery({
         queryKey: ["submission_preliminary"],
         queryFn: async () => {

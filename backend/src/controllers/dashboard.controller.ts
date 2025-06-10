@@ -159,11 +159,12 @@ export async function getStatsController(req: Request, res: Response<ResponseApi
                 })),
                 submissionStatsData,
                 verifiedTeamStatsData,
-                timestamps: new Date().toLocaleDateString('id-ID', {
+                timestamps: new Date().toLocaleString('id-ID', {
+                    timeZone: 'Asia/Jakarta',
                     day: '2-digit',
                     month: "long",
                     year: "numeric",
-                    hour: "numeric",
+                    hour: "2-digit",
                     minute: "2-digit",
                     second: "2-digit"
                 })
