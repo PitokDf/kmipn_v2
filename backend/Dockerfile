@@ -21,4 +21,4 @@ RUN mkdir -p dist/src/templates && \
 
 EXPOSE 2222
 
-CMD [ "sh", "-c", "npx prisma migrate deploy && npx prisma db seed && node dist/src/app.js" ]
+CMD [ "sh", "-c", "node dist/src/app.js" ]

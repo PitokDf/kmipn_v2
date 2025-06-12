@@ -73,17 +73,17 @@ export default function CompleteForm() {
     },
   })
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "members",
+  })
+
   useEffect(() => {
     if (user?.email) {
       form.setValue(`members.0.email`, user.email)
       form.setValue(`members.0.name`, user.name)
     }
-  }, [user?.email, form])
-
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: "members",
-  })
+  }, [user?.email, form, fields?.length])
 
   async function onSubmit(data: FormValues) {
     try {

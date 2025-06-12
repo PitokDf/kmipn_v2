@@ -52,7 +52,7 @@ const Navbar = () => {
                     <div className="flex gap-3 items-center">
                         <Link
                             href="/"
-                            className="flex items-center space-x-3 group"
+                            className="hidden md:flex items-center space-x-3 group"
                         >
                             <Image
                                 width={40}
@@ -63,7 +63,7 @@ const Navbar = () => {
                         </Link>
                         <Link
                             href="/"
-                            className="flex items-center space-x-3 group"
+                            className="hidden md:flex items-center space-x-3 group"
                         >
                             <Image
                                 width={40}
@@ -79,8 +79,8 @@ const Navbar = () => {
                             <Image
                                 width={40}
                                 height={40}
-                                alt='pens logo'
-                                src={'/images/logos/pens.png'}
+                                alt='pnp logo'
+                                src={'/images/logos/logo-pnp.png'}
                             />
                         </Link>
                         <Link

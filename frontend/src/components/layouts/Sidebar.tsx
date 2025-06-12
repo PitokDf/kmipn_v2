@@ -252,7 +252,9 @@ export function AppSidebar() {
     return (!user ? (<SidebarSkeleton />) :
         <Sidebar variant="sidebar" className="border-r border-border/50 dark:border-gray-800">
             <SidebarHeader className="p-6 border-b border-border/50 dark:border-gray-800">
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3" onClick={() => {
+                    window.location.href = "/"
+                }}>
                     <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
                         <span className="font-bold text-white text-lg">K</span>
                     </div>
