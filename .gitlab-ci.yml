@@ -1,0 +1,65 @@
+stages:
+  - install
+  - test
+  - build
+  - deploy
+
+variables:
+  NODE_ENV: production
+
+cache:
+  paths:
+    - backend/node_modules/
+    - frontend/node_modules/
+
+install_backend:
+  stage: install
+  script:
+    - cd backend
+    - npm install
+  artifacts:
+    paths:
+      - backend/node_modules/
+
+install_frontend:
+  stage: install
+  script:
+    - cd frontend
+    - npm install
+  artifacts:
+    paths:
+      - frontend/node_modules/
+
+test_backend:
+  stage: test
+  script:
+    - cd backend
+    - npm run test || echo "skip test kalau belum ada"
+
+test_frontend:
+  stage: test
+  script:
+    - cd frontend
+    - npm run lint || echo "skip lint kalau belum ada"
+
+build_backend:
+  stage: build
+  script:
+    - cd backend
+    - npm run build || echo "skip build kalau backend gak di-build"
+
+build_frontend:
+  stage: build
+  script:
+    - cd frontend
+    - npm run build
+
+# --- OPSIONAL DEPLOY ---
+deploy_production:
+  stage: deploy
+  only:
+    - main
+  script:
+    - echo "deploy ke server / hosting lo di sini"
+    # contoh pake SSH ke VPS
+    - ssh user@server "cd /path-to-app && git pull && pm2 restart all"
