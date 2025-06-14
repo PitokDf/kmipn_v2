@@ -9,7 +9,7 @@ export const env = {
     mailMailer: process.env.MAIL_MAILER,
     smtpHost: process.env.SMTP_HOST,
     smtpPort: Number(process.env.SMTP_PORT),
-    smtpSecure: process.env.SMTP_SECURE,
+    smtpSecure: process.env.SMTP_SECURE === 'true' ? true : false as boolean,
     smtpUser: process.env.SMTP_USER,
     smtpPass: process.env.SMTP_PASS,
     pusherAppId: process.env.PUSHER_APPID,
@@ -21,4 +21,4 @@ export const env = {
     folderSubmissionId: process.env.GOOGLE_DRIVE_FOLDER_SUBMISSION_ID,
     googleClientEmail: process.env.GOOGLE_CLIENT_EMAIL,
     googlePrivateKey: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n') || "",
-}
+} as const

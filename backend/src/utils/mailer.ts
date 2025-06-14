@@ -7,7 +7,8 @@ dotenv.config();
 const transporter = nodemailer.createTransport({
     host: env.smtpHost,
     port: env.smtpPort,
-    secure: env.smtpSecure! === 'true', // true untuk port 465, false untuk port lainnya
+    connectionTimeout: 30_000,
+    secure: env.smtpSecure, // true untuk port 465, false untuk port lainnya
     auth: {
         user: env.smtpUser,
         pass: env.smtpPass,
