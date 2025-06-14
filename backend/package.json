@@ -7,7 +7,7 @@
         "popinstall": "prisma generate",
         "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
         "start": "node --openssl-legacy-provider dist/src/app.js",
-        "build": "tsc --project tsconfig.json"
+        "build": "node --max-old-space-size=2048 ./node_modules/.bin/tsc --project tsconfig.json"
     },
     "keywords": [
         "tugas",

@@ -63,7 +63,7 @@ export default async function StatistikPage() {
         });
 
         if (!res.ok) {
-            throw new Error('Failed to fetch statistics data');
+            console.log('error');
         }
 
         data = (await res.json()).data as StatistikData;
@@ -165,6 +165,10 @@ export default async function StatistikPage() {
         },
         "temporalCoverage": "2025"
     };
+
+    if (!data) return <div className="min-h-screen flex items-center justify-center">
+        <p className="text-gray-500">Statistik tidak tersedia saat ini. Coba lagi nanti.</p>
+    </div>
 
     return (
         <>
